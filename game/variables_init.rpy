@@ -5,7 +5,6 @@ define mom = Character("Mommy Sheilly")
 define greg = Character("Gregory")
 define emil = Character("Emil")
 define carlos = Character("Carlos")
-define jus = Character("Justin")
 define madam = Character("Madam Alexandra")
 define aling = Character("Aling Erin")
 define lurs = Character("Johnny")
@@ -20,8 +19,6 @@ define points = 0
 define emil_decision = ""
 define madam_decision = ""
 define johnny_decision = ""
-define pronoun_reffered = ""
-define pronoun_belonging = ""
 default persistent.gender = ""
 
 
