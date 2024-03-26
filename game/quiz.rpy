@@ -57,7 +57,7 @@ init python:
         return keywords
 
     def get_keys():
-        file_path = get_path(f"kodigo1/game/python/docs/{quiz_title}_keys.json")
+        file_path = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
 
         with open(file_path, 'r') as file:
             keywords = json.load(file)
@@ -71,7 +71,7 @@ init python:
         return str
 
     def get_sents_len():
-        file_path = get_path(f"kodigo1/game/python/docs/{quiz_title}.json")
+        file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
 
         with open(file_path, 'r') as file:
             sents = json.load(file)
@@ -79,7 +79,7 @@ init python:
         return len(sents)
 
     def get_text(quiz_notes):
-        file_path = get_path(f"kodigo1/game/python/docs/{quiz_notes}.txt")
+        file_path = get_path(f"kodigo/game/python/docs/{quiz_notes}.txt")
         with open(file_path, 'r') as file:
             # Read the entire file contents into a string
             texts = file.read()
@@ -103,7 +103,7 @@ init python:
         global quiz_record #for all for now
         quiz_record = {} #put this somewhere else
 
-        file_path = get_path(f"kodigo1/game/python/quizzes/q_records.json")
+        file_path = get_path(f"kodigo/game/python/quizzes/q_records.json")
 
         with open(file_path, 'r') as file:
             quiz_record = json.load(file)
@@ -124,7 +124,7 @@ init python:
         quiz_type  = type
 
     def get_notes(quiz_notes):
-        file_path = get_path(f"kodigo1/game/python/docs/{quiz_notes}.txt")
+        file_path = get_path(f"kodigo/game/python/docs/{quiz_notes}.txt")
         with open(file_path, 'r') as file:
             notes = file.readlines()
         return notes
@@ -135,7 +135,7 @@ init python:
         global answers   #letters
         global answers_word
 
-        file_path = get_path(f"kodigo1/game/python/quizzes/OS Fundamentals.json")
+        file_path = get_path(f"kodigo/game/python/quizzes/OS Fundamentals.json")
         with open(file_path, 'r') as file:
             quiz = json.load(file)
 
@@ -184,7 +184,7 @@ init python:
                 max += 1
 
     def save_quiz_record():
-        file_path = get_path(f"kodigo1/game/python/quizzes/q_records.json")
+        file_path = get_path(f"kodigo/game/python/quizzes/q_records.json")
         with open(file_path, "w") as json_file:
             json.dump(quiz_record, json_file)
 
@@ -250,7 +250,7 @@ screen program_quiz_protocol():
         yalign 0.7
         xalign 0.5
 
-    #$ process = subprocess.Popen(["D:/renpy-8.1.3-sdk/kodigo1/game/python/python.exe", "D:/renpy-8.1.3-sdk/kodigo1/game/python/MCQ.py"]) #this works
+    #$ process = subprocess.Popen(["D:/renpy-8.1.3-sdk/kodigo/game/python/python.exe", "D:/renpy-8.1.3-sdk/kodigo/game/python/MCQ.py"]) #this works
     #, creationflags=subprocess.CREATE_NO_WINDOW
 
     # Check if the subprocess has finished
@@ -293,18 +293,18 @@ screen create_quiz:
         xalign 0.86
         yalign 0.04
 
-    $ file_path = get_path(f"kodigo1/game/python/docs/{quiz_title}.txt")
+    $ file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
 
     if os.path.exists(file_path):
         $ notes = get_notes(quiz_title)
 
-    $ file_path_keys = get_path(f"kodigo1/game/python/docs/{quiz_title}_keys.json")
+    $ file_path_keys = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
 
     if os.path.exists(file_path_keys):
         $ keywords = get_keys()
         $ keys = get_str(keywords)
 
-    $ file_path_mapped = get_path(f"kodigo1/game/python/docs/{quiz_title}_mapped.json")
+    $ file_path_mapped = get_path(f"kodigo/game/python/docs/{quiz_title}_mapped.json")
 
     if os.path.exists(file_path_mapped):
         $ keywords = get_keys()
@@ -413,7 +413,7 @@ screen create_quiz:
 label upload_warning:
     #check if quiz_file of the same name don't exist yet then give warning
     # meaning the quiz isn't done yet
-    $ file_path = f"kodigo1/game/python/quizzes/{quiz_title}.json"
+    $ file_path = f"kodigo/game/python/quizzes/{quiz_title}.json"
 
     if not os.path.exists(file_path):
         $ show_s("create_quiz_dull")
@@ -463,9 +463,9 @@ label warning_2:
 
     #if player wants to exit
     if bool:
-        $ file_path = f"kodigo1/game/python/docs/{quiz_title}.txt"
-        $ file_path_json = f"kodigo1/game/python/docs/{quiz_title}.json"
-        $ file_path_keys = f"kodigo1/game/python/docs/{quiz_title}_keys.json"
+        $ file_path = f"kodigo/game/python/docs/{quiz_title}.txt"
+        $ file_path_json = f"kodigo/game/python/docs/{quiz_title}.json"
+        $ file_path_keys = f"kodigo/game/python/docs/{quiz_title}_keys.json"
 
         if os.path.exists(file_path):
             $ os.remove(file_path) # remove notes
@@ -485,15 +485,15 @@ label edit_title:
     hide screen create_quiz
 
     python:
-        old_file_path = get_path(f"kodigo1/game/python/docs/{quiz_title}.txt")
-        old_file_path_json = get_path(f"kodigo1/game/python/docs/{quiz_title}.json")
-        old_file_path_keys = get_path(f"kodigo1/game/python/docs/{quiz_title}_keys.json")
+        old_file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
+        old_file_path_json = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
+        old_file_path_keys = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
         temp = renpy.input("Quiz name:", length=17)
         temp = temp.strip()
-        new_file_path = get_path(f"kodigo1/game/python/docs/{temp}.txt")
-        new_file_path_json = get_path(f"kodigo1/game/python/docs/{temp}.json")
-        new_file_path_keys = get_path(f"kodigo1/game/python/docs/{temp}_keys.json")
-        new_file_path_keys = get_path(f"kodigo1/game/python/docs/{temp}_keys.json")
+        new_file_path = get_path(f"kodigo/game/python/docs/{temp}.txt")
+        new_file_path_json = get_path(f"kodigo/game/python/docs/{temp}.json")
+        new_file_path_keys = get_path(f"kodigo/game/python/docs/{temp}_keys.json")
+        new_file_path_keys = get_path(f"kodigo/game/python/docs/{temp}_keys.json")
 
     screen duplicate:
         vbox:
@@ -537,8 +537,8 @@ label upload_file:
     $ show_s("create_quiz_dull")
     show halfblack
     hide screen create_quiz
-    $ python_path = get_path(f"kodigo1/game/python/Python311/python.exe")
-    $ py_path = get_path(f"kodigo1/game/python/upload_file.py")
+    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe")
+    $ py_path = get_path(f"kodigo/game/python/upload_file.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
 
     screen terminate_process:
@@ -563,13 +563,13 @@ label upload_file:
 
     hide screen processing
 
-    $ file_path = f"kodigo1/game/python/docs/{quiz_title}.txt"
+    $ file_path = f"kodigo/game/python/docs/{quiz_title}.txt"
 
     #if uploading wasn't terminated
     if os.path.exists(file_path):
         hide screen terminate_process
         $ notes = get_text(quiz_title)
-        $ py_path = get_path(f"kodigo1/game/python/get_sentences.py")
+        $ py_path = get_path(f"kodigo/game/python/get_sentences.py")
         $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
 
         #might need to store this somewhere else for code minimization
@@ -600,8 +600,8 @@ label summarize:
     hide screen create_quiz
 
     $ notes = get_text(quiz_title)
-    $ python_path = get_path(f"kodigo1/game/python/Python311/python.exe")
-    $ py_path = get_path(f"kodigo1/game/python/summarize.py")
+    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe")
+    $ py_path = get_path(f"kodigo/game/python/summarize.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
 
     screen terminate_process:
@@ -636,8 +636,8 @@ label summarize:
 label get_keywords:
     $ notes = get_text(quiz_title)
     $ n = str(get_sents_len() + 20) #estimate number of keywords
-    $ python_path = get_path(f"kodigo1/game/python/Python311/python.exe") #this could be global
-    $ py_path = get_path(f"kodigo1/game/python/keywords.py")
+    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe") #this could be global
+    $ py_path = get_path(f"kodigo/game/python/keywords.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title, notes, n], creationflags=subprocess.CREATE_NO_WINDOW)
 
     #Check if the subprocess has finished
@@ -660,8 +660,8 @@ label get_keywords:
 #also to highlight/bolden the keywords.
 #ALSO there should be a case for multiple keywords per sentence???? don't know how to do that
 label mapping_sentences:
-    $ python_path = get_path(f"kodigo1/game/python/Python311/python.exe") #this could be global
-    $ py_path = get_path(f"kodigo1/game/python/map_sentences.py")
+    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe") #this could be global
+    $ py_path = get_path(f"kodigo/game/python/map_sentences.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title])#, creationflags=subprocess.CREATE_NO_WINDOW)
     #Check if the subprocess has finished
     while not is_subprocess_finished(process):
@@ -1155,12 +1155,12 @@ screen create_quiz_dull:
         xalign 0.86
         yalign 0.04
 
-    $ file_path = get_path(f"kodigo1/game/python/docs/{quiz_title}.txt")
+    $ file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
 
     if os.path.exists(file_path):
         $ notes = get_notes(quiz_title)
 
-    $ file_path_keys = get_path(f"kodigo1/game/python/docs/{quiz_title}_keys.json")
+    $ file_path_keys = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
 
     if os.path.exists(file_path_keys):
         $ keywords = get_keys()
