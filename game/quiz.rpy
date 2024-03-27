@@ -20,9 +20,6 @@ init:
     $ timer_jump = 0
     $ paused_time = 0
     $ time = 12
-    $ base_path = ""
-
-    $ quiz_title = f"Quiz {persistent.quiz_def_num}" #for uploading quiz
 
     $ timeout = 12 # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong'
@@ -34,7 +31,6 @@ init:
     $ G = 0.3 #that the student will answer correctly despite not knowing a skill
     $ A = 0 #action
     $ mastery_threshold = 0.8
-
 
 image halfblack = "#00000088"
 
@@ -54,20 +50,6 @@ init python:
                 keywords.append(a)
 
         return keywords
-
-    def get_keys():
-        file_path = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
-
-        with open(file_path, 'r') as file:
-            keywords = json.load(file)
-
-        return keywords
-
-    def get_str(arr):
-        str = ""
-        for a in arr:
-            str += a + ", "
-        return str
 
     def get_sents_len():
         file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
@@ -322,7 +304,7 @@ label summarize:
 #then run subprocess
 #can't be in the background because wtf would the user do?
 label get_keywords:
-    $ notes = get_text(quiz_title)
+    $ notes = get_notes()
     $ n = str(get_sents_len() + 20) #estimate number of keywords
     $ python_path = get_path(f"kodigo/game/python/Python311/python.exe") #this could be global
     $ py_path = get_path(f"kodigo/game/python/keywords.py")
