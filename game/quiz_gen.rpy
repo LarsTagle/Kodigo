@@ -365,6 +365,7 @@ screen create_quiz_dull:
 
     #get the notes if it exists
     $ notes = get_notes()
+    $ keywords = get_str(get_keys())
 
     $ file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
 
@@ -402,11 +403,11 @@ screen create_quiz_dull:
                 xalign 0.5
                 yalign 0.5
 
-    if os.path.exists(file_path):
+    if notes:
         imagebutton auto "images/Button/summarize_%s.png":
             xalign 0.28
             yalign 0.85
-    if os.path.exists(file_path_keys):
+    if keywords:
         imagebutton auto "images/Button/edit_%s.png":# action Jump("edit_keywords"): skip this for now
             xalign 0.85
             yalign 0.5
@@ -430,7 +431,7 @@ screen create_quiz_dull:
             background "#D9D9D9"
             yoffset 30
 
-            if os.path.exists(file_path_keys):
+            if keywords:
                 vpgrid:
                     cols 1
                     scrollbars "vertical"
@@ -438,7 +439,7 @@ screen create_quiz_dull:
                     mousewheel True
 
                     vbox:
-                        text keys:
+                        text keywords:
                             font "KronaOne-Regular.ttf"
                             size 24
                             color "#303031"

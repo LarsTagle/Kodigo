@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/quiz_gen.rpy", line 171: expected a keyword argument or child statement.
+    $ show_s("create_quiz_dull")
+    ^
+
+Ren'Py Version: Ren'Py 8.1.3.23091805
+Wed Mar 27 15:36:40 2024
