@@ -5,7 +5,7 @@ global quiz_title
 def init_json(fp):
     init_data = {
         "name": "",
-        "notes": "",
+        "notes": "hbfrhefjr",
         "sentences": [],
         "keywords": [],
         "answers": [],
@@ -43,3 +43,16 @@ new_data = {
     "questions": ["question1", "question2"]
 }
 init_json(r"D:\renpy-8.1.3-sdk\Kodigo\game\python\data.json")
+
+def get_notes(fp):
+    with open(fp, 'r') as file:
+        quiz = json.load(file)
+
+    if quiz["notes"]:
+        return quiz["notes"]
+
+    return None
+        
+        
+        
+print(get_notes(r"D:\renpy-8.1.3-sdk\Kodigo\game\python\data.json"))

@@ -21,7 +21,6 @@ define madam_decision = ""
 define johnny_decision = ""
 default persistent.gender = ""
 
-
 # NVL Characters are used for the phone texting
 define mc_nvl = Character("[mc]", kind=nvl, image="nighten", callback=Phone_SendSound)
 define g_nvl = Character("Gregory", kind=nvl, callback=Phone_SendSound)

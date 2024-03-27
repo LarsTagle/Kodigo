@@ -976,8 +976,9 @@ screen minigame():
                 background "#D9D9D9"
 
                 vbox:
-                    xalign 0.5
-                    yalign 0.5
+                    spacing 20
+                    #xalign 0.5
+                    #yalign 0.5
                     image "images/Minigames Menu/bg roomday.png"
 
                     text "Dormicleaning":
@@ -985,30 +986,37 @@ screen minigame():
                         color "#000000"
                         xalign 0.5
                         yalign 0.5
-                        yoffset 20  # Add spacing between image and text
+                        #yoffset 20  # Add spacing between image and text
 
-                    imagebutton auto "images/Button/play_%s.png" action Jump("dormicleaning"):
+                    vbox:
                         xalign 0.5
                         yalign 0.5
                         yoffset 30
+                        spacing 20
 
-                    imagebutton auto "images/Button/instructions_%s.png" action ShowMenu("dormicleaning_instructions"):
-                        xalign 0.5
-                        yalign 0.5
-                        yoffset 40
+                        imagebutton auto "images/Button/play_%s.png" action Jump("dormicleaning"):
+                            xalign 0.5
+                            yalign 0.5
+                            #yoffset 30
+
+                        imagebutton auto "images/Button/instructions_%s.png" action ShowMenu("dormicleaning_instructions"):
+                            xalign 0.5
+                            yalign 0.5
+                            #yoffset 50
 
             frame:
                 xpadding 40
                 ypadding 40
-                #xsize 756
+                #xsize 757
                 ysize 800
                 #xalign 0.5
                 #yalign 0.7
                 background "#D9D9D9"
 
                 vbox:
-                    xalign 0.5
-                    yalign 0.5
+                    spacing 20
+                    #xalign 0.5
+                    #yalign 0.5
                     image "images/Minigames Menu/bg quiz.png"
 
                     text "Program Quiz Protocol":
@@ -1016,17 +1024,22 @@ screen minigame():
                         color "#000000"
                         xalign 0.5
                         yalign 0.5
-                        yoffset 20  # Add spacing between image and text
+                        #yoffset 20  # Add spacing between image and text
 
-                    imagebutton auto "images/Button/play_%s.png" action ShowMenu("program_quiz_protocol"):
+                    vbox:
                         xalign 0.5
                         yalign 0.5
                         yoffset 30
+                        spacing 20
+                        imagebutton auto "images/Button/play_%s.png" action ShowMenu("program_quiz_protocol"):
+                            xalign 0.5
+                            yalign 0.5
+                            #yoffset 30
 
-                    imagebutton auto "images/Button/instructions_%s.png" action ShowMenu("quiz_instructions"):
-                        xalign 0.5
-                        yalign 0.5
-                        yoffset 40
+                        imagebutton auto "images/Button/instructions_%s.png" action ShowMenu("quiz_instructions"):
+                            xalign 0.5
+                            yalign 0.5
+                            #yoffset 50
 
     bar value XScrollValue("vp") yalign 1.0
 
