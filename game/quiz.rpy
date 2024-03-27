@@ -8,6 +8,9 @@ things to fix:
     6. if possible, add mini text editor
 """
 
+#reset this after creation for less processing
+define persistent.quiz_def_num = 1 #changes if the player want to save "Quiz 1", "Quiz 2" etc
+
 #back to status quo, error in mapping sentence
 
 init:
@@ -19,7 +22,7 @@ init:
     $ time = 12
     $ base_path = ""
 
-    $ quiz_title = "Quiz" #for uploading quiz
+    $ quiz_title = f"Quiz {persistent.quiz_def_num}" #for uploading quiz
 
     $ timeout = 12 # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong'
@@ -41,7 +44,40 @@ init python:
     import subprocess
     import os
 
-    base_path = os.getcwd()
+    base_path = os.getcwd() #get working directory
+
+    def get_path(relative_path):
+        return os.path.join(base_path, relative_path)
+
+    def init_json(): #file path
+        global fp
+        fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
+
+        init_data = {
+            "notes": "",
+            "sentences": [],
+            "keywords": [],
+            "answers": [],
+            "questions": []
+        }
+
+        with open(fp, 'w') as file:
+            json.dump(init_data, file)
+
+    #check if text is uploaded
+    def is_notes():
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+
+        if quiz["notes"]:
+            return True
+
+        return False
+
+    #deletes json file if it exists
+    def del_json():
+        if os.path.exists(fp):
+            os.remove(fp)
 
     def get_words(answers):
         keywords = []
@@ -93,9 +129,6 @@ init python:
     def terminate(process):
         process.terminate()
 
-    def get_path(relative_path):
-        return os.path.join(base_path, relative_path)
-
     def is_subprocess_finished(process):
         return process.poll() is not None
 
@@ -123,7 +156,7 @@ init python:
         global quiz_type
         quiz_type  = type
 
-    def get_notes(quiz_notes):
+    def notes(quiz_notes):
         file_path = get_path(f"kodigo/game/python/docs/{quiz_notes}.txt")
         with open(file_path, 'r') as file:
             notes = file.readlines()
@@ -261,6 +294,8 @@ screen custom_quizzes:
     tag menu
     add "bg quiz main"
 
+    $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
+
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("custom_quizzes"), ShowMenu("program_quiz_protocol")]:
         xalign 0.86
         yalign 0.04
@@ -280,7 +315,7 @@ screen custom_quizzes:
             xalign 0.25
             yalign 0.3
 
-    imagebutton auto "images/Button/create_quiz_%s.png" action ShowMenu("create_quiz"):
+    imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("create_quiz")]:
         xalign 0.5
         yalign 0.8
 
@@ -289,14 +324,16 @@ screen create_quiz:
     tag menu
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("create_quiz"), Jump("upload_warning")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("create_quiz"), Jump("quit_warning")]:
         xalign 0.86
         yalign 0.04
+
+    #get the notes if it exists
 
     $ file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
 
     if os.path.exists(file_path):
-        $ notes = get_notes(quiz_title)
+        $ notes = notes(quiz_title)
 
     $ file_path_keys = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
 
@@ -410,15 +447,15 @@ screen create_quiz:
             xalign 0.75
             yalign 0.8
 
-label upload_warning:
-    #check if quiz_file of the same name don't exist yet then give warning
-    # meaning the quiz isn't done yet
-    $ file_path = f"kodigo/game/python/quizzes/{quiz_title}.json"
-
-    if not os.path.exists(file_path):
+label quit_warning:
+    #checks if questions are generated
+    if is_notes():
         $ show_s("create_quiz_dull")
         show halfblack
         call screen warning
+    else:
+        $ del_json()
+        call screen custom_quizzes
 
     screen warning:
         frame:
@@ -455,8 +492,6 @@ label upload_warning:
                     imagebutton auto "images/Button/yes_%s.png" action [Hide("warning"), Function(set_bool, True), Jump("warning_2")]
                     imagebutton auto "images/Button/no_%s.png" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")]
 
-    call screen custom_quizzes
-
 label warning_2:
     $ hide_s("create_quiz_dull")
     hide halfblack
@@ -485,15 +520,10 @@ label edit_title:
     hide screen create_quiz
 
     python:
-        old_file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
-        old_file_path_json = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
-        old_file_path_keys = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
+        old_fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
         temp = renpy.input("Quiz name:", length=17)
         temp = temp.strip()
-        new_file_path = get_path(f"kodigo/game/python/docs/{temp}.txt")
-        new_file_path_json = get_path(f"kodigo/game/python/docs/{temp}.json")
-        new_file_path_keys = get_path(f"kodigo/game/python/docs/{temp}_keys.json")
-        new_file_path_keys = get_path(f"kodigo/game/python/docs/{temp}_keys.json")
+        new_fp = get_path(f"kodigo/game/python/docs/{temp}.json")
 
     screen duplicate:
         vbox:
@@ -515,21 +545,18 @@ label edit_title:
                 xalign 0.5
                 yalign 0.5
 
-    if os.path.exists(new_file_path) and old_file_path != new_file_path:
+    #duplicate name
+    if os.path.exists(new_fp) and old_fp != new_fp:
         show screen duplicate
         pause 2.0
         hide screen duplicate
         $ hide_s("create_quiz_dull")
         call screen create_quiz
-    else:
-        if os.path.exists(old_file_path):
-            $ os.rename(old_file_path, new_file_path)
-        if os.path.exists(old_file_path_json):
-            $ os.rename(old_file_path_json, new_file_path_json)
-        if os.path.exists(old_file_path_keys):
-            $ os.rename(old_file_path_keys, new_file_path_keys)
+    elif os.path.exists(old_fp):
+        $ os.rename(old_fp, new_fp)
+        $ quiz_title = temp
+        $ fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json") #reset
 
-    $ quiz_title = temp
     $ hide_s("create_quiz_dull")
     call screen create_quiz
 
@@ -725,7 +752,7 @@ screen standard_quizzes():
 screen display_notes():
     add "bg quiz main"
 
-    $ notes = get_notes(current_quiz)
+    $ notes = notes(current_quiz)
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu("standard_quizzes")]:
         xalign 0.86
@@ -1158,7 +1185,7 @@ screen create_quiz_dull:
     $ file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
 
     if os.path.exists(file_path):
-        $ notes = get_notes(quiz_title)
+        $ notes = notes(quiz_title)
 
     $ file_path_keys = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
 
