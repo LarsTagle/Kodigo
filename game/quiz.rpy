@@ -270,7 +270,7 @@ label summarize:
     hide screen create_quiz
 
     $ notes = get_text(quiz_title)
-    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe")
+    $ python_path = get_path("Python311/python.exe")
     $ py_path = get_path(f"kodigo/game/python/summarize.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
 
@@ -306,7 +306,7 @@ label summarize:
 label get_keywords:
     $ notes = get_notes()
     $ n = str(get_sents_len() + 20) #estimate number of keywords
-    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe") #this could be global
+    $ python_path = get_path("Python311/python.exe") #this could be global
     $ py_path = get_path(f"kodigo/game/python/keywords.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title, notes, n], creationflags=subprocess.CREATE_NO_WINDOW)
 
@@ -330,7 +330,7 @@ label get_keywords:
 #also to highlight/bolden the keywords.
 #ALSO there should be a case for multiple keywords per sentence???? don't know how to do that
 label mapping_sentences:
-    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe") #this could be global
+    $ python_path = get_path("Python311/python.exe") #this could be global
     $ py_path = get_path(f"kodigo/game/python/map_sentences.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title])#, creationflags=subprocess.CREATE_NO_WINDOW)
     #Check if the subprocess has finished

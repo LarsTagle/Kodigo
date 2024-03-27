@@ -299,7 +299,7 @@ label upload_file:
     $ show_s("create_quiz_dull")
     show halfblack
     hide screen create_quiz
-    $ python_path = get_path(f"kodigo/game/python/Python311/python.exe")
+    $ python_path = get_path("Python311/python.exe")
     $ py_path = get_path(f"kodigo/game/python/upload_file.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
 
