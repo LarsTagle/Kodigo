@@ -294,7 +294,7 @@ label chapter1_1:
     mc "Sounds great! Let's go."
 
     with dissolve
-    scene bg registar
+    scene bg registar # this is where I left off
     n "And there [friend_2] and [mcname] goes on to go to the registrar together to claim their respective, COR just as [mcname] came near the registrar windows, [pronoun_belonging] face turns pale as [pronoun_reffered] saw the mystery woman in the registrar’s office"
     show mc shocked_uniform at left with fade
     mc "Uhh………. Uhm………. Hi madam, I apologise for what happened last night huhu"
