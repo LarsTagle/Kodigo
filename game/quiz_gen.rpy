@@ -20,7 +20,7 @@
     1. Handle the uncreated json files. (either with adding a function to get app to ask the player to exit or not (like in story mode) just don't know at which part of the code that is
     2. Errors of unhidden bgs.
     3. Add condition on the code for the cheating.
-    4. etc 
+    4. etc
 
 """
 #there's an issue with sentence mapping
@@ -108,15 +108,15 @@ init python:
 init 1:
     $ python_path = get_path("Python311/python.exe")
 
-screen create_quiz:
+screen preprocess_text:
     tag menu
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("create_quiz"), Jump("quit_warning")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("preprocess_text"), Jump("quit_warning")]:
         xalign 0.86
         yalign 0.04
 
-    #get the notes if it exists
+    #get the notes and keywords if they exists
     $ notes = get_notes()
     $ keywords = get_str(get_keys())
 
@@ -148,6 +148,9 @@ screen create_quiz:
                 mousewheel True
 
                 vbox:
+                    #oki na to
+                    xsize 570
+                    ysize 590
                     text notes style "notes_style"
         else:
             ypadding 40
@@ -215,19 +218,19 @@ screen create_quiz:
         imagebutton auto "images/Button/edit_title_%s.png" action Jump("edit_title"):
             xoffset 40
 
-    if not notes:
+    if not keywords:
         imagebutton auto "images/Button/upload_%s.png" action Jump("upload_file"):
             xalign 0.75
             yalign 0.8
     else:
-        imagebutton auto "images/Button/create_quiz_%s.png": #since we are skipping editting the keywords & texts, we proceed here next
+        imagebutton auto "images/Button/create_quiz_%s.png" action [Hide("preprocess_text"), ShowMenu("create_quiz")]: #since we are skipping editting the keywords & texts, we proceed here next
             xalign 0.75
             yalign 0.8
 
 label quit_warning:
     #checks if questions are generated
     if is_notes():
-        $ show_s("create_quiz_dull")
+        $ show_s("preprocess_text_dull")
         show halfblack
         call screen warning
     else:
@@ -271,7 +274,7 @@ label quit_warning:
                     imagebutton auto "images/Button/no_%s.png" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")]
 
 label warning_2:
-    $ hide_s("create_quiz_dull")
+    $ hide_s("preprocess_text_dull")
     hide halfblack
 
     #if player wants to exit
@@ -288,11 +291,11 @@ label warning_2:
             $ os.remove(file_path_keys)
         call screen custom_quizzes with dissolve
     else:
-        call screen create_quiz
+        call screen preprocess_text
 
 label edit_title:
-    $ show_s("create_quiz_dull")
-    hide screen create_quiz
+    $ show_s("preprocess_text_dull")
+    hide screen preprocess_text
 
     python:
         old_fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
@@ -325,20 +328,20 @@ label edit_title:
         show screen duplicate
         pause 2.0
         hide screen duplicate
-        $ hide_s("create_quiz_dull")
-        call screen create_quiz
+        $ hide_s("preprocess_text_dull")
+        call screen preprocess_text
     elif os.path.exists(old_fp):
         $ os.rename(old_fp, new_fp)
         $ quiz_title = temp
         $ fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json") #reset
 
-    $ hide_s("create_quiz_dull")
-    call screen create_quiz
+    $ hide_s("preprocess_text_dull")
+    call screen preprocess_text
 
 label upload_file:
-    $ show_s("create_quiz_dull")
+    $ show_s("preprocess_text_dull")
     show halfblack
-    hide screen create_quiz
+    hide screen preprocess_text
 
     $ py_path = get_path(f"kodigo/game/python/upload_file.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
@@ -364,7 +367,7 @@ label upload_file:
             yalign 0.5
 
     hide screen uploading
-    jump ask_player
+    jump get_sentences
 
 #asks the player if they want to summarize first or have user input for keywords
 label ask_player:
@@ -381,7 +384,7 @@ label ask_player:
             background "#D9D9D9"
 
             vbox:
-                text "Would you like to summarize the text first before key extraction?":
+                text "Would you like to summarize the text first before keywords extraction?":
                     font "Copperplate Gothic Thirty-Three Regular.otf"
                     size 50
                     color "#303031"
@@ -395,7 +398,7 @@ label ask_player:
                     spacing 40
 
                     imagebutton auto "images/Button/yes_%s.png" action [Hide("ask"), Jump("summarize")]
-                    imagebutton auto "images/Button/no_%s.png" action [Hide("ask"), Jump("get_sentences")]
+                    imagebutton auto "images/Button/no_%s.png" action [Hide("ask"), Jump("get_keywords")]
 
 #should ask question first before proceeding
 label get_sentences:
@@ -420,13 +423,12 @@ label get_sentences:
                 yalign 0.5
 
         #maybe we should let the user know how many sentences there is
-
         hide screen extract_sent
-        jump get_keywords
+        jump ask_player
     else:
         hide halfblack
-        $ hide_s("create_quiz_dull")
-        call screen create_quiz
+        $ hide_s("preprocess_text_dull")
+        call screen preprocess_text
 
 label get_keywords:
     $ notes = get_notes()
@@ -461,42 +463,52 @@ label mapping_sentences:
         pause 0.1
 
     hide halfblack
-    $ hide_s("create_quiz_dull")
-    call screen create_quiz
+    $ hide_s("preprocess_text_dull")
+    call screen preprocess_text
 
 label summarize:
-    $ show_s("create_quiz_dull")
-    show halfblack
-    hide screen create_quiz
+    #I'll add the condition or screen for if < 15
+    if get_sents_len() < 15:
+        call screen preprocess_text
+    else:
+        $ show_s("preprocess_text_dull")
+        show halfblack
+        hide screen preprocess_text
 
-    $ notes = get_notes()
-    $ py_path = get_path(f"kodigo/game/python/summarize.py")
-    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
+        $ notes = get_notes()
+        $ py_path = get_path(f"kodigo/game/python/summarize.py")
+        $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
 
-    screen terminate_process:
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("terminate_process"), Function(terminate, process)]:
-            xalign 0.86
-            yalign 0.04
+        screen terminate_process:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("terminate_process"), Function(terminate, process)]:
+                xalign 0.86
+                yalign 0.04
 
-    show screen terminate_process
+        show screen terminate_process
 
-    #Check if the subprocess has finished
-    while not is_subprocess_finished(process):
-        show screen summarizing
-        pause 0.1
+        #Check if the subprocess has finished
+        while not is_subprocess_finished(process):
+            show screen summarizing
+            pause 0.1
 
-    screen summarizing:
-        text "Summarizing...":
-            font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 60
-            color "#FFFFFF"
-            xalign 0.5
-            yalign 0.5
+        screen summarizing:
+            text "Summarizing...":
+                font "Copperplate Gothic Thirty-Three Regular.otf"
+                size 60
+                color "#FFFFFF"
+                xalign 0.5
+                yalign 0.5
+        hide screen summarizing
+        jump get_keywords
 
-    hide screen summarizing
-    jump get_sentences
+screen create_quiz:
+    add "bg quiz main"
+    text "hear ye, hear ye":
+        xalign 0.5
+        yalign 0.5
+        
 
-screen create_quiz_dull:
+screen preprocess_text_dull:
     add "bg quiz main"
 
     imagebutton auto "images/Minigames Menu/exit_%s.png":

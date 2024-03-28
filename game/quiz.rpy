@@ -233,7 +233,7 @@ screen custom_quizzes:
     add "bg quiz main"
 
     $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
-    
+
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("custom_quizzes"), ShowMenu("program_quiz_protocol")]:
         xalign 0.86
         yalign 0.04
@@ -253,7 +253,7 @@ screen custom_quizzes:
             xalign 0.25
             yalign 0.3
 
-    imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("create_quiz")]:
+    imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:
         xalign 0.5
         yalign 0.8
 

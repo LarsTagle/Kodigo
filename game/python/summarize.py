@@ -34,7 +34,7 @@ def summarize(document_text):
     for sent in summarized_sents:
       summarized_text += " " + sent
       
-    return summarized_text
+    return summarized_text, summarized_sents
 
 fn = sys.argv[1]
 document_text = sys.argv[2]
@@ -43,7 +43,7 @@ base_path = os.getcwd()
 relative_path = f"kodigo\\game\\python\\docs\\{fn}.json"
 fp = os.path.join(base_path, relative_path)#r"D:\renpy-8.1.3-sdk\Kodigo\game\python\docs\Quiz 1.json"#
 
-summarized_text = summarize(document_text)
+summarized_text, summarized_sents = summarize(document_text)
 print(summarized_text)
 
 #read the json file
@@ -51,6 +51,7 @@ with open(fp, 'r') as file:
     quiz = json.load(file)
 
 quiz["notes"] = summarized_text
+quiz["sentences"] = summarized_sents
 
 #save the updated data back to json
 with open(fp, 'w') as file:
