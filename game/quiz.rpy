@@ -13,6 +13,8 @@ define persistent.quiz_def_num = 1 #changes if the player want to save "Quiz 1",
 
 #back to status quo, error in mapping sentence
 
+define persistent.learned = 0.1 #this needs to be added to the json file instead
+
 init:
     $ question_num = 0
     $ score = 0
@@ -25,7 +27,6 @@ init:
     $ timeout_label = 'wrong'
 
     #bkt
-    $ L  = 0.1 #initial probability that the student already knew a skill
     $ T = 0.1 #pprobability that the student will learn a skill on the next practice opportunity
     $ S = 0.1 #probability that the student will answer incorrectly despite knowing a skill
     $ G = 0.3 #that the student will answer correctly despite not knowing a skill
@@ -50,14 +51,6 @@ init python:
                 keywords.append(a)
 
         return keywords
-
-    def get_sents_len():
-        file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
-
-        with open(file_path, 'r') as file:
-            sents = json.load(file)
-
-        return len(sents)
 
     def get_text(quiz_notes):
         file_path = get_path(f"kodigo/game/python/docs/{quiz_notes}.txt")
@@ -240,7 +233,7 @@ screen custom_quizzes:
     add "bg quiz main"
 
     $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
-
+    
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("custom_quizzes"), ShowMenu("program_quiz_protocol")]:
         xalign 0.86
         yalign 0.04
@@ -263,93 +256,6 @@ screen custom_quizzes:
     imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("create_quiz")]:
         xalign 0.5
         yalign 0.8
-
-label summarize:
-    $ show_s("create_quiz_dull")
-    show halfblack
-    hide screen create_quiz
-
-    $ notes = get_text(quiz_title)
-    $ python_path = get_path("Python311/python.exe")
-    $ py_path = get_path(f"kodigo/game/python/summarize.py")
-    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
-
-    screen terminate_process:
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("terminate_process"), Function(terminate, process)]:
-            xalign 0.86
-            yalign 0.04
-
-    show screen terminate_process
-
-    #Check if the subprocess has finished
-    while not is_subprocess_finished(process):
-        show screen summarizing
-        pause 0.1
-
-    screen summarizing:
-        text "Summarizing...":
-            font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 60
-            color "#FFFFFF"
-            xalign 0.5
-            yalign 0.5
-
-    hide screen summarizing
-    hide halfblack
-    $ hide_s("create_quiz_dull")
-    call screen create_quiz
-
-#after the player uploads a document, follow it with this, dk if in background though
-#in this, first get the number of sentences to get the estimate number of keywords to find
-#then run subprocess
-#can't be in the background because wtf would the user do?
-label get_keywords:
-    $ notes = get_notes()
-    $ n = str(get_sents_len() + 20) #estimate number of keywords
-    $ python_path = get_path("Python311/python.exe") #this could be global
-    $ py_path = get_path(f"kodigo/game/python/keywords.py")
-    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes, n], creationflags=subprocess.CREATE_NO_WINDOW)
-
-    #Check if the subprocess has finished
-    while not is_subprocess_finished(process):
-        show screen getting_keys
-        pause 0.1
-
-    screen getting_keys:
-        text "Extracting keywords...":
-            font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 60
-            color "#FFFFFF"
-            xalign 0.5
-            yalign 0.5
-
-    hide getting_keys
-    jump mapping_sentences
-
-#can do this earlier so the processing for getting the quiz proper wouldn't be so big
-#also to highlight/bolden the keywords.
-#ALSO there should be a case for multiple keywords per sentence???? don't know how to do that
-label mapping_sentences:
-    $ python_path = get_path("Python311/python.exe") #this could be global
-    $ py_path = get_path(f"kodigo/game/python/map_sentences.py")
-    $ process = subprocess.Popen([python_path, py_path, quiz_title])#, creationflags=subprocess.CREATE_NO_WINDOW)
-    #Check if the subprocess has finished
-    while not is_subprocess_finished(process):
-        show screen mapping
-        pause 0.1
-
-    screen mapping:
-        text "Mapping keywords to sentences...":
-            font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 60
-            color "#FFFFFF"
-            xalign 0.5
-            yalign 0.5
-
-    hide screen mapping
-    hide halfblack
-    $ hide_s("create_quiz_dull")
-    call screen create_quiz
 
 screen standard_quizzes():
     $ hide_s("question_dull")
@@ -691,6 +597,7 @@ label results:
         $ in_story = False
         jump chapter_2
     else:
+        $ L = persistent.learned
         python:
             if score/15 >= 0.7:
                 A = (L*(1-S)) / (L*(1-S) + (1-L)*G)
@@ -703,6 +610,7 @@ label results:
         #reset
         $ score = 0
         $ mastery = round(L * 100, 2)
+        $ persistent.learned = L
         $ quiz_record['standard'][current_quiz]['mastery'].append(mastery)
 
         $ save_quiz_record()

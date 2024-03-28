@@ -15,7 +15,7 @@ init python:
         if persistent.gender == "male":
             pronoun_reffered = "he"
             pronoun_belonging = "his"
-            
+
         else:
             pronoun_reffered = "she"
             pronoun_belonging = "her"
@@ -32,7 +32,7 @@ init python:
         else:
             friend_1 = "Carla"
             friend_2 = "Jasmine"
-            
+
 
 screen gender_choose:
     image "bg mirror1"
@@ -392,7 +392,7 @@ label chapter1_1:
     menu:
         "Oh, hi there. Are you also a computer science freshman? My name is [mcname] and this is [friend_2]!":
             $ points += 1
-            show mc happy_uniform at left dissolve
+            show mc happy_uniform at left with dissolve
             lurs "Nice to meet you both! Yes, I am a freshman student of Computer Science! Thanks for having me. I'm Johnny, by the way."
             mc "Let's head to the section, shall we?"
             lurs "Sure."
@@ -405,7 +405,7 @@ label chapter1_1:
 
         "Watch it nerd! Are your glasses just for clout?":
             $ points -= 1
-            show mc angry_uniform at left 
+            show mc angry_uniform at left
             show lurs sad_casual at right
             lurs "I’m sorry! I’m sorry! I didn’t mean to bump into you!"
             $ johnny_decision = "bad"
@@ -459,7 +459,7 @@ label chapter1_1:
     mc "Yep. Time to go."
 
     "*Johnny goes away*"
-    
+
     hide mc
     hide friend_2
     scene bg dormday with pushup
@@ -810,7 +810,7 @@ label mom_convo:
     "*Johnny walks by*"
     show lurs happy_uniform at center with dissolve
     lurs "Oh, hi there fellas! The last time we saw each other was during the freshmen orientation, how ya’ll been doing?"
-    mc "Hello Johnny! Nice seeing you again and I see that your as lively as ever, the topics seem so hard don’t ya think?":
+    mc "Hello Johnny! Nice seeing you again and I see that your as lively as ever, the topics seem so hard don’t ya think?"
     hide friend_2
     show mc happy_uniform at left with dissolve
     show lurs happy_uniform at rght with dissolve

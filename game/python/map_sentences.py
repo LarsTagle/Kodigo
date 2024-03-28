@@ -32,27 +32,28 @@ def map(sentences, keywords):
 
     return sentences_final, answers_final
 
-filename = sys.argv[1]
+fn = sys.argv[1]
+base_path = os.getcwd()
+relative_path = f"kodigo\\game\\python\\docs\\{fn}.json"
+fp = r"D:\renpy-8.1.3-sdk\Kodigo\game\python\docs\Text.json"#os.path.join(base_path, relative_path)#####
 
-with open(r"D:\renpy-8.1.3-sdk\Kodigo\game\python\docs\Quiz_keys.json", 'r') as json_file:
-    keywords = json.load(json_file)
-    
-with open(r"D:\renpy-8.1.3-sdk\Kodigo\game\python\docs\Quiz.json", 'r') as json_file:
-    sentences = json.load(json_file)
+#read the json file
+with open(fp, 'r') as file:
+    quiz = json.load(file)
+
+keywords = quiz["keywords"]
+sentences = quiz["sentences"]
     
 sentences, answers = map(sentences, keywords)
 
 for i in range(len(sentences)):
-    print(f"{sentences[i]}: {keywords[i]}")
+    print(f"{sentences[i]}: {answers[i]}")
+
+quiz["answers"] = answers
+quiz["sentences"] = sentences 
+
+#save the updated data back to json
+with open(fp, 'w') as file:
+    json.dump(quiz, file)
     
-base_path = os.getcwd()
-relative_path = f"kodigo\\game\\python\\docs\\{filename}_mapped.json"
-fp = os.path.join(base_path, relative_path)#r"D:\renpy-8.1.3-sdk\Kodigo\game\python\docs\quiz_mapped.json"
-
-data = {
-    'sentences': sentences,
-    'answers': answers
-}
-
-with open(fp, "w") as json_file:
-    json.dump(data, json_file)
+print("done")

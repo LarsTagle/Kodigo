@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/quiz_gen.rpy", line 171: expected a keyword argument or child statement.
-    $ show_s("create_quiz_dull")
-    ^
+File "game/script.rpy", line 813: end of line expected.
+    mc "Hello Johnny! Nice seeing you again and I see that your as lively as ever, the topics seem so hard don’t ya think?":
+                                                                                                                           ^
 
 Ren'Py Version: Ren'Py 8.1.3.23091805
-Wed Mar 27 15:36:40 2024
+Thu Mar 28 12:22:36 2024
