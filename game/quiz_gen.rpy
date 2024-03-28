@@ -105,6 +105,10 @@ init python:
 
         return len(sentences)
 
+    def set_in_save(bool):
+        global in_save
+        in_save = bool
+
 init 1:
     $ python_path = get_path("Python311/python.exe")
 
@@ -164,7 +168,7 @@ screen preprocess_text:
             xalign 0.28
             yalign 0.85
     if keywords:
-        imagebutton auto "images/Button/edit_%s.png":# action Jump("edit_keywords"): skip this for now
+        imagebutton auto "images/Button/edit_%s.png" action Jump("edit_keywords"): #skip this for now
             xalign 0.85
             yalign 0.5
 
@@ -215,7 +219,7 @@ screen preprocess_text:
             size 70
             color "#FFFFFF"
 
-        imagebutton auto "images/Button/edit_title_%s.png" action Jump("edit_title"):
+        imagebutton auto "images/Button/edit_title_%s.png" action [Function(set_in_save, False), Jump("edit_title")]:
             xoffset 40
 
     if not keywords:
@@ -223,120 +227,9 @@ screen preprocess_text:
             xalign 0.75
             yalign 0.8
     else:
-        imagebutton auto "images/Button/create_quiz_%s.png" action [Hide("preprocess_text"), ShowMenu("create_quiz")]: #since we are skipping editting the keywords & texts, we proceed here next
+        imagebutton auto "images/Button/create_quiz_%s.png" action [Hide("preprocess_text"), ShowMenu("save_quiz")]: #since we are skipping editting the keywords & texts, we proceed here next
             xalign 0.75
             yalign 0.8
-
-label quit_warning:
-    #checks if questions are generated
-    if is_notes():
-        $ show_s("preprocess_text_dull")
-        show halfblack
-        call screen warning
-    else:
-        $ del_json()
-        $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
-        call screen custom_quizzes
-
-    screen warning:
-        frame:
-            xalign 0.5
-            yalign 0.5
-            xpadding 40
-            ypadding 40
-            xsize 450
-            ysize 420
-            background "#D9D9D9"
-
-            vbox:
-                xalign 0.5
-                yalign 0.5
-
-                text f"'{quiz_title}' is not yet created.":
-                    font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 50
-                    color "#303031"
-                    xalign 0.5
-                    yalign 0.5
-                text "Would you like to exit?":
-                    font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 30
-                    color "#303031"
-                    yoffset 10
-
-                hbox:
-                    xalign 0.5
-                    yalign 0.5
-                    yoffset 50
-                    spacing 40
-
-                    imagebutton auto "images/Button/yes_%s.png" action [Hide("warning"), Function(set_bool, True), Jump("warning_2")] #Function(set_bool, True) apparently was not necessary tangina
-                    imagebutton auto "images/Button/no_%s.png" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")]
-
-label warning_2:
-    $ hide_s("preprocess_text_dull")
-    hide halfblack
-
-    #if player wants to exit
-    if bool:
-        $ file_path = f"kodigo/game/python/docs/{quiz_title}.txt"
-        $ file_path_json = f"kodigo/game/python/docs/{quiz_title}.json"
-        $ file_path_keys = f"kodigo/game/python/docs/{quiz_title}_keys.json"
-
-        if os.path.exists(file_path):
-            $ os.remove(file_path) # remove notes
-        if os.path.exists(file_path_json):
-            $ os.remove(file_path_json)
-        if os.path.exists(file_path_keys):
-            $ os.remove(file_path_keys)
-        call screen custom_quizzes with dissolve
-    else:
-        call screen preprocess_text
-
-label edit_title:
-    $ show_s("preprocess_text_dull")
-    hide screen preprocess_text
-
-    python:
-        old_fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
-        temp = renpy.input("Quiz name:", length=17)
-        temp = temp.strip()
-        new_fp = get_path(f"kodigo/game/python/docs/{temp}.json")
-
-    screen duplicate:
-        vbox:
-            xalign 0.5
-            yalign 0.5
-            xsize 1000
-            ysize 100
-            spacing 5
-            text "Can't have multiple quizzes with the same name.":
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 60
-                color "#999999"
-                xalign 0.5
-                yalign 0.5
-            text "Try again.":
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 60
-                color "#999999"
-                xalign 0.5
-                yalign 0.5
-
-    #duplicate name
-    if os.path.exists(new_fp) and old_fp != new_fp:
-        show screen duplicate
-        pause 2.0
-        hide screen duplicate
-        $ hide_s("preprocess_text_dull")
-        call screen preprocess_text
-    elif os.path.exists(old_fp):
-        $ os.rename(old_fp, new_fp)
-        $ quiz_title = temp
-        $ fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json") #reset
-
-    $ hide_s("preprocess_text_dull")
-    call screen preprocess_text
 
 label upload_file:
     $ show_s("preprocess_text_dull")
@@ -501,118 +394,21 @@ label summarize:
         hide screen summarizing
         jump get_keywords
 
-screen create_quiz:
-    add "bg quiz main"
-    text "hear ye, hear ye":
-        xalign 0.5
-        yalign 0.5
-        
-
-screen preprocess_text_dull:
+screen save_quiz:
     add "bg quiz main"
 
     imagebutton auto "images/Minigames Menu/exit_%s.png":
         xalign 0.86
         yalign 0.04
 
-    #get the notes if it exists
-    $ notes = get_notes()
-    $ keywords = get_str(get_keys())
-
-    text "Notes":
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        size 48
-        color "#FFFFFF"
-        xalign 0.324
-        yalign 0.15
-
-    frame:
-        xalign 0.25
-        yalign 0.5
-        xsize 600
-        ysize 600
-        background "#D9D9D9"
-
-        if notes:
-            vpgrid:
-                cols 1
-                scrollbars "vertical"
-                spacing 5
-                mousewheel True
-
-                vbox:
-                    text notes style "notes_style"
-        else:
-            ypadding 40
-            xpadding 40
-            text "Texts from the document will appear here." style "notes_style":
-                xalign 0.5
-                yalign 0.5
-
-    if notes:
-        imagebutton auto "images/Button/summarize_%s.png":
-            xalign 0.28
-            yalign 0.85
-    if keywords:
-        imagebutton auto "images/Button/edit_%s.png":
-            xalign 0.85
-            yalign 0.5
-
-    vbox:
-        xalign 0.737
-        yalign 0.4
-
-        text "Keywords":
-            font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 48
-            color "#FFFFFF"
-            xalign 0.5
-            yalign 0.5
-
-        frame:
-            xalign 0.25
-            yalign 0.5
-            xsize 400
-            ysize 400
-            background "#D9D9D9"
-            yoffset 30
-
-            if keywords:
-                vpgrid:
-                    cols 1
-                    scrollbars "vertical"
-                    spacing 5
-                    mousewheel True
-
-                    vbox:
-                        text keywords:
-                            font "KronaOne-Regular.ttf"
-                            size 24
-                            color "#303031"
-            else:
-                ypadding 40
-                xpadding 40
-                text "Keywords from the text will appear here." style "notes_style":
-                    xalign 0.5
-                    yalign 0.5
-
     hbox:
-        xalign 0.690
-        yalign 0.15
-
+        xalign 0.5
+        yalign 0.1
         text "[quiz_title]": #specify with a number later
             font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 70
+            size 150
             color "#FFFFFF"
 
-        imagebutton auto "images/Button/edit_title_%s.png":
+        imagebutton auto "images/Button/edit_title_%s.png" action [Function(set_in_save, True), Jump("edit_title")]:
             xoffset 40
-
-    if not notes:
-        imagebutton auto "images/Button/upload_%s.png":
-            xalign 0.75
-            yalign 0.8
-    else:
-        imagebutton auto "images/Button/create_quiz_%s.png": #since we are skipping editting the keywords & texts, we proceed here next
-            xalign 0.75
-            yalign 0.8
+            yoffset 45

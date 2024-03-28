@@ -253,7 +253,7 @@ screen custom_quizzes:
             xalign 0.25
             yalign 0.3
 
-    imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:
+    imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:#action [Function(init_json), ShowMenu("preprocess_text")]:
         xalign 0.5
         yalign 0.8
 
