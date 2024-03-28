@@ -119,8 +119,6 @@ screen nvl_phonetext(dialogue):
                     yalign 1.0
                     if d.who == g_name and previous_d_who != d.who:
                         text d.who
-                    elif d.who != g_name and previous_d_who != d.who:
-                        text d.who
 
                     frame:
                         padding (20,20)

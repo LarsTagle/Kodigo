@@ -22,8 +22,8 @@ define johnny_decision = ""
 default persistent.gender = ""
 
 # NVL Characters are used for the phone texting
-define mc_nvl = Character("[mc]", kind=nvl, image="nighten", callback=Phone_SendSound)
-define g_nvl = Character("Gregory", kind=nvl, callback=Phone_SendSound)
+define mc_nvl = Character("[mc]", kind=nvl, image="mc", callback=Phone_SendSound)
+define g_nvl = Character("Gregory", kind=nvl, callback=Phone_ReceiveSound)
 
 define config.adv_nvl_transition = None
 define config.nvl_adv_transition = Dissolve(0.3)

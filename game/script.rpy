@@ -97,32 +97,24 @@ label start_2:
 
     nvl_narrator "Gregory is now online!"
     g_nvl "Yo, [mcname]! Have you seen the result?"
-    mc_nvl "What result are you talking about?"
-    show mc confused_casual at left with dissolve
+    mc_nvl confused_casual "What result are you talking about?"
 
     g_nvl "The BUCET result! It's already out. Go check it out already."
 
-    mc_nvl "Really?!"
-    show mc shocked_casual at left with dissolve
+    mc_nvl shocked_casual "Really?!"
 
     mc_nvl "This must have been why I'm so anxious today. Fine, I'll check it out right away."
 
-    # # Checks the result
-    # # Maybe an email saying congrats
-
+    mc_nvl happy_casual "{image=Phone Texting Images/Result.jpg}"
     mc_nvl "Gregory, I made it. I'm so happy!"
-    show mc happy_casual at left with dissolve
-
-    mc_nvl "But I don't see your name there. Are you not qualified?"
-    show mc sad_casual at left with dissolve
+    mc_nvl sad_casual "But I don't see your name there. Are you not qualified?"
 
     g_nvl "Yeah, I kinda figured it out."
     g_nvl "Don't worry, I have a backup school so we might be seeing each other sometime during our college days."
     mc_nvl "It feels so bad being happy that I passed but you don't. I was really thinking of the places we'd go there."
     g_nvl  "Oh, cheer up [mcname]."
     g_nvl "Let's look into what we could do for the meantime."
-    mc_nvl "I gotta tell this to Mommy. Let's go out later tonight to celebrate, shall we?"
-    show mc neutral_casual at left with dissolve
+    mc_nvl neutral_casual "I gotta tell this to Mommy. Let's go out later tonight to celebrate, shall we?"
 
     g_nvl "Yeah, that'll be fun! I'll see you tonight, [mcname]."
     g_nvl "Bye."
