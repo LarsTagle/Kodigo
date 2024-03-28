@@ -7,18 +7,23 @@ init python:
 
     def set_gender(selected_gender):
         persistent.gender = selected_gender
-        global pronoun_reffered
+        global pronoun_referred
         global pronoun_belonging
-        pronoun_reffered = ""
+        global pronoun_respect
+        pronoun_referred = ""
         pronoun_belonging = ""
+        pronoun_respect = ""
 
         if persistent.gender == "male":
-            pronoun_reffered = "he"
+            pronoun_referred = "he"
             pronoun_belonging = "his"
+            pronoun_respect = "mister"
 
         else:
-            pronoun_reffered = "she"
+            pronoun_referred = "she"
             pronoun_belonging = "her"
+            pronoun_respect = "miss"
+            
 
         specify_characters()
 
@@ -101,12 +106,12 @@ label start_2:
 
     g_nvl "The BUCET result! It's already out. Go check it out already."
 
-    mc_nvl shocked_casual "Really?!"
+    mc_nvl "Really?!"
 
     mc_nvl "This must have been why I'm so anxious today. Fine, I'll check it out right away."
 
-    mc_nvl happy_casual "{image=Phone Texting Images/Result.jpg}"
-    mc_nvl "Gregory, I made it. I'm so happy!"
+    mc_nvl shocked_casual "{image=Phone Texting Images/Result.jpg}"
+    mc_nvl happy_casual "Gregory, I made it. I'm so happy!"
     mc_nvl sad_casual "But I don't see your name there. Are you not qualified?"
 
     g_nvl "Yeah, I kinda figured it out."
@@ -141,8 +146,8 @@ label start_2:
     hide mom
     scene cutscene1 # random pics of Bicol University
 
-    n "[mcname], an incoming first year college student of Bicol University. It was [pronoun_belonging] first time being away from home and had no friends going to the new school [pronoun_reffered] enrolled in..."
-    n "and now that [pronoun_reffered] has arrived [pronoun_reffered] now has to face the challenges that every freshman must face."
+    n "[mcname], an incoming first year college student of Bicol University. It was [pronoun_belonging] first time being away from home and had no friends going to the new school [pronoun_referred] enrolled in..."
+    n "and now that [pronoun_referred] has arrived [pronoun_referred] now has to face the challenges that every freshman must face."
 
 
     jump chapter1
@@ -157,26 +162,27 @@ label chapter1:
 
     scene bg livday
     show emil angry
-    emil "Oyy you! Always sign in the log book before going in or outside the dormitory? Got it?!"
-    show emil angry at right
+    emil "Oyy you! Always sign in the logbook before going in or outside the dormitory? Got it?!"
+    show emil angry at right with dissolve
+    show mc confused_casual at left with dissolve
 
     menu:
         "Yes sir, I’m sorry I didn’t know, won’t happen again":
             $ emil_decision = "good"
             $ points += 1
-            show mc shocked_casual at left
-            show emil neutral at right
+            show mc shocked_casual at left with dissolve
+            show emil neutral at right with dissolve
             emil "Ok, sorry for raising my voice, but please do not forget when doing so, here’s the keys to your room."
 
         "Silence, (*proceeds to logbook*)":
             $ emil_decision = "neutral"
-            show mc sad_casual at left
+            show mc sad_casual at left with dissolve
             emil "(*silence*)"
 
         "Pff! Couldn’t you be any nicer to the new guys?!":
             $ emil_decision = "bad"
             $ points -= 1
-            show mc angry_casual at left
+            show mc angry_casual at left with dissolve
             emil "HUH! Is that how your mother taught you how to interact with others?! Anyways, here’s your key!"
 
     hide emil
@@ -215,15 +221,16 @@ label chapter1_1:
 
     hide mc
     hide friend_1
-    scene cutscene3 # time passes by
+    scene cutscene3 # time passes by CLOCK ANIMATIOOOOON
     scene cutscene4 # mc and a femc bumped each other
 
 
     show mc shocked_casual at left
+    show madam_alexandra shocked at right
     menu:
         "I’m sorry miss, I didn’t see you there.":
             $ points += 1
-            show madam_alexandra confused at right
+            show madam_alexandra neutral at right
             "???" "Oh, no worries."
             $ madam_decision = "good"
         "Watch where you're going miss!":
@@ -286,29 +293,29 @@ label chapter1_1:
     mc "Sounds great! Let's go."
 
     with dissolve
-    scene bg registar # this is where I left off GAMEEEEE
-    n "And there [friend_2] and [mcname] goes on to go to the registrar together to claim their respective, COR just as [mcname] came near the registrar windows, [pronoun_belonging] face turns pale as [pronoun_reffered] saw the mystery woman in the registrar’s office"
+    scene bg registrar # this is where I left off GAMEEEEE
+    n "And there [friend_2] and [mcname] goes on to go to the registrar together to claim their respective, COR just as [mcname] came near the registrar windows, [pronoun_belonging] face turns pale as [pronoun_referred] saw the mystery woman in the registrar’s office"
     show mc shocked_uniform at left with dissolve
     show madam_alexandra neutral at right with dissolve
     mc "Uhh………. Uhm………. Hi madam, I apologise for what happened last night huhu"
 
     if madam_decision == "good":
         show madam_alexandra happy at right with dissolve
-        madam "Hello there mister! I see that you are also from the College of Science, I also apologise for bumping into you yesterday. How may I help you?"
+        madam "Hello there, [pronoun_respect]! I see that you are also from the College of Science, I also apologise for bumping into you yesterday. How may I help you?"
     elif madam_decision == "bad" or madam_decision == "neutral":
         show madam_alexandra annoyed at right with dissolve
-        madam "Well well well, if it isn’t mister bump, no apology here, what can you do for you? (Neutral and Bad)"
+        madam "Well well well, if it isn’t [pronoun_respect] bump, no apology here, what can you do for you?"
 
-    show mc happy_uniform at left with dissolve
+    show mc neutral_uniform at left with dissolve
 
-    mc "I would like to get my COR so that if ever that our prof needs it we can show it."
+    mc "I would like to get my COR so that if ever that our professor needs it we can show it, Madam."
     madam "Sure, however it’ll take a few minutes before we can process it."
     mc "No problem Madam, thank you!"
 
     hide madam_alexandra
     hide mc
 
-    """*Waits a few minutes, [mcname] and [friend_2] goes out*"""
+    "*Waits a few minutes, [mcname] and [friend_2] goes out*"
 
     scene bg walkaft with dissolve
     show mc happy_uniform at left with dissolve
@@ -322,13 +329,13 @@ label chapter1_1:
     show mc happy_uniform at left with dissolve
     mc "{i}Tao po! Pwede po magpatahi uniform?{/i}"
     show erin happy at right with dissolve
-    aling "Good morning! Surely what is it that you needed sir?"
+    aling "Good morning! Surely, what is it that you needed [pronoun_respect]?"
     mc "I need a uniform po for BU, is it possible that it'd be finished this weekend?"
     aling "Sure {i}iho{/i}! Goodbye!"
     scene Grabs_wallet_scene with Pause(5)
     mc "Thank you po aling! I'll be on my way good ma'am!"
     aling "Ok iho! Take care"
-    n "*[mcname] goes back to [pronoun_belonging] dorm, and when [pronoun_reffered] arrives at [pronoun_belonging] room the door is locked and [pronoun_reffered] forgot [pronoun_belonging] keys. {c}[pronoun_reffered]{/c} goes and asks Kuya Emil if [pronoun_reffered] could borrow his keys*"
+    n "*[mcname] goes back to [pronoun_belonging] dorm, and when [pronoun_referred] arrives at [pronoun_belonging] room the door is locked and [pronoun_referred] forgot [pronoun_belonging] keys. {c}[pronoun_referred]{/c} goes and asks Kuya Emil if [pronoun_referred] could borrow his keys*"
 
     scene bg livday with zoomin
     show mc happy_uniform at left with dissolve
@@ -365,7 +372,7 @@ label chapter1_1:
     "*They proceed to the orientation hall*"
 
     scene bg building1 with dissolve
-    n "As they arrrive in the room, [pronoun_reffered] can hear students murmuring, the place as lively as usual"
+    n "As they arrrive in the room, [pronoun_referred] can hear students murmuring, the place as lively as usual"
     show friend_2 shocked_uniform at left with dissolve
     friend_2 "Sheeeesh, there are lots of students! I have no idea where we should be designated!"
     show mc shocked_uniform at right with fade
@@ -379,7 +386,7 @@ label chapter1_1:
     scene bg building1 with zoomin
     show lurs shocked_casual at right
     show lurs happy_casual at right
-    lurs "Ohhh... Sorry about that sir hehe, may I ask where the section is for Computer Science?"
+    lurs "Ohhh... Sorry about that [pronoun_respect] hehe, may I ask where the section is for Computer Science?"
 
     menu:
         "Oh, hi there. Are you also a computer science freshman? My name is [mcname] and this is [friend_2]!":
@@ -732,7 +739,7 @@ label mom_convo:
             show mc neutral_uniform
             mc " I should just go now or I’ll be late, and maybe I’ll still arrive in time"
             hide mc
-            "*Character goes through the canteen knowing that [pronoun_reffered] still has some time"
+            "*Character goes through the canteen knowing that [pronoun_referred] still has some time"
             scene bg canteenday with fade
             show mc neutral_uniform at center with dissolve
             mc "mm…….. There’s still a few more minutes before time, maybe I can stop by for a little snack *nag snack sa canteen*, oh shit! It’s almost time! I might get late."
@@ -766,7 +773,7 @@ label mom_convo:
     hide mich
     show mich happy with fade
     "*looks around*"
-    mich "alright let’s begin with you mister/miss."
+    mich "alright let’s begin with you [pronoun_respect]."
     menu:
         "Hello! My name is *character name*! I am from [loc] and I am pleased to meet you too madam Michelle!":
             $ points += 1
@@ -948,7 +955,7 @@ label mom_convo:
     dev "And lastly we have........."
     dev "*character*"
     show mc happy_pe at left with dissolve
-    mc "Hello sir! My name is *name* and I am from *place* it’s nice to meet you sir!"
+    mc "Hello sir! My name is [mcname] and I am from [loc], it’s nice to meet you sir!"
     dev "You don't look so so athletic there, just kidding HAHA"
     menu:
         "Hehehe, maybe sir, tho I am somehow confident in what I can do!":
@@ -1035,7 +1042,7 @@ label mom_convo:
     dev "Well done everyone! You all seem so fit to be great at this, as expected, you surpassed my expectation there character!"
     hide devier
     show mc tired_pe with dissolve
-    MC "Thank you sir *gasping for air*"
+    mc "Thank you sir *gasping for air*"
     hide mc
     show devier happy with dissolve
     dev "Ok now everyone, now that we are done with our first meeting, get some rest and prepare for your next subject. Class dismissed"
