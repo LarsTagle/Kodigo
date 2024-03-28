@@ -1,36 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 332, in script
-    aling "Good morning! Surely, what is it that you needed [pronoun_respect]?"
-KeyError: 'pronoun_respect'
+  File "game/script.rpy", line 521, in script
+    friend_2 neutral_uniform "Yeah, let's hope for the best. Shall we go back?"
+Exception: Say has image attributes ('neutral_uniform',), but there's no image tag associated with the speaking character.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 332, in script
-    aling "Good morning! Surely, what is it that you needed [pronoun_respect]?"
+  File "game/script.rpy", line 521, in script
+    friend_2 neutral_uniform "Yeah, let's hope for the best. Shall we go back?"
   File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 930, in execute
     renpy.exports.say(who, what, *args, **kwargs)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 1474, in say
-    who(what, *args, **kwargs)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1337, in __call__
-    what = self.prefix_suffix("what", self.what_prefix, what, self.what_suffix)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1251, in prefix_suffix
-    return (sub(prefix) + sub(body) + sub(suffix))
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1231, in sub
-    return renpy.substitutions.substitute(s, scope=scope, force=force, translate=translate)[0]
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\substitutions.py", line 278, in substitute
-    s = formatter.vformat(s, (), kwargs) # type: ignore
-  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/string.py", line 165, in vformat
-  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/string.py", line 205, in _vformat
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\substitutions.py", line 168, in get_field
-    obj, arg_used = super(Formatter, self).get_field(field_name, args, kwargs)
-  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/string.py", line 270, in get_field
-  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/string.py", line 227, in get_value
-KeyError: 'pronoun_respect'
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 1472, in say
+    renpy.store.say(who, what, *args, **kwargs)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\defaultstore.py", line 418, in say
+    who(what, interact=interact, *args, **kwargs)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1290, in __call__
+    old_attr_state = self.handle_say_attributes(False, interact)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1109, in handle_say_attributes
+    if self.resolve_say_attributes(predicting, attrs):
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1035, in resolve_say_attributes
+    raise Exception("Say has image attributes %r, but there's no image tag associated with the speaking character." % (attrs,))
+Exception: Say has image attributes ('neutral_uniform',), but there's no image tag associated with the speaking character.
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.1.3.23091805
 Kodigo 1.0
-Thu Mar 28 18:52:30 2024
+Thu Mar 28 22:29:13 2024
