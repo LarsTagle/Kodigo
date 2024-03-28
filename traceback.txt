@@ -1,58 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "renpy/common/00action_other.rpy", line 585, in __call__
-    rv = self.callable(*self.args, **self.kwargs)
-  File "game/quiz_gen.rpy", line 23, in init_json
-    fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
-NameError: name 'quiz_title' is not defined
+  File "game/quiz_gen.rpy", line 474, in script
+    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
+  File "game/quiz_gen.rpy", line 474, in <module>
+    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
+TypeError: expected str, bytes or os.PathLike object, not NoneType
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "renpy/common/_layout/screen_main_menu.rpym", line 28, in script
-    python hide:
-  File "D:\renpy-8.1.3-sdk\renpy\ast.py", line 1138, in execute
+  File "game/quiz_gen.rpy", line 474, in script
+    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1138, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\renpy-8.1.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\python.py", line 1122, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "renpy/common/_layout/screen_main_menu.rpym", line 28, in <module>
-    python hide:
-  File "renpy/common/_layout/screen_main_menu.rpym", line 35, in _execute_python_hide
-    ui.interact()
-  File "D:\renpy-8.1.3-sdk\renpy\ui.py", line 299, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "D:\renpy-8.1.3-sdk\renpy\display\core.py", line 3582, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\renpy-8.1.3-sdk\renpy\display\core.py", line 4543, in interact_core
-    rv = root_widget.event(ev, x, y, 0)
-  File "D:\renpy-8.1.3-sdk\renpy\display\layout.py", line 1179, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy-8.1.3-sdk\renpy\display\transition.py", line 53, in event
-    return self.new_widget.event(ev, x, y, st) # E1101
-  File "D:\renpy-8.1.3-sdk\renpy\display\layout.py", line 1179, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy-8.1.3-sdk\renpy\display\layout.py", line 1179, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy-8.1.3-sdk\renpy\display\screen.py", line 770, in event
-    rv = self.child.event(ev, x, y, st)
-  File "D:\renpy-8.1.3-sdk\renpy\display\layout.py", line 1179, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy-8.1.3-sdk\renpy\display\behavior.py", line 1142, in event
-    return handle_click(self.clicked)
-  File "D:\renpy-8.1.3-sdk\renpy\display\behavior.py", line 1075, in handle_click
-    rv = run(action)
-  File "D:\renpy-8.1.3-sdk\renpy\display\behavior.py", line 372, in run
-    new_rv = run(i, *args, **kwargs)
-  File "D:\renpy-8.1.3-sdk\renpy\display\behavior.py", line 379, in run
-    return action(*args, **kwargs)
-  File "renpy/common/00action_other.rpy", line 585, in __call__
-    rv = self.callable(*self.args, **self.kwargs)
-  File "game/quiz_gen.rpy", line 23, in init_json
-    fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
-NameError: name 'quiz_title' is not defined
+  File "game/quiz_gen.rpy", line 474, in <module>
+    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
+  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/subprocess.py", line 951, in __init__
+  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/subprocess.py", line 1360, in _execute_child
+  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/subprocess.py", line 565, in list2cmdline
+  File "/home/tom/ab/renpy-build-fix/tmp/install.linux-x86_64/lib/python3.9/os.py", line 822, in fsdecode
+TypeError: expected str, bytes or os.PathLike object, not NoneType
 
-Windows-10-10.0.22621 AMD64
+Windows-10-10.0.22631 AMD64
 Ren'Py 8.1.3.23091805
 Kodigo 1.0
-Thu Mar 28 07:29:05 2024
+Thu Mar 28 17:44:35 2024
