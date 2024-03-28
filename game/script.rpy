@@ -294,51 +294,52 @@ label chapter1_1:
     mc "Sounds great! Let's go."
 
     with dissolve
-    scene bg registar # this is where I left off
+    scene bg registar # this is where I left off GAMEEEEE
     n "And there [friend_2] and [mcname] goes on to go to the registrar together to claim their respective, COR just as [mcname] came near the registrar windows, [pronoun_belonging] face turns pale as [pronoun_reffered] saw the mystery woman in the registrar’s office"
-    show mc shocked_uniform at left with fade
+    show mc shocked_uniform at left with dissolve
+    show madam_alexandra neutral at right with dissolve
     mc "Uhh………. Uhm………. Hi madam, I apologise for what happened last night huhu"
 
     if madam_decision == "good":
-        madam "Hello there mister! I see that you are also from the College of Science, I also apologise for bumping into you yesterday. How may I help you?"
         show madam_alexandra happy at right with dissolve
+        madam "Hello there mister! I see that you are also from the College of Science, I also apologise for bumping into you yesterday. How may I help you?"
     elif madam_decision == "bad" or madam_decision == "neutral":
-        madam "Well well well, if it isn’t mister bump, no apology here, what can you do for you? (Neutral and Bad)"
         show madam_alexandra annoyed at right with dissolve
+        madam "Well well well, if it isn’t mister bump, no apology here, what can you do for you? (Neutral and Bad)"
 
-    show mc happy_uniform at left
+    show mc happy_uniform at left with dissolve
 
     mc "I would like to get my COR so that if ever that our prof needs it we can show it."
     madam "Sure, however it’ll take a few minutes before we can process it."
     mc "No problem Madam, thank you!"
 
-    hide madam_alexandra happy
-    hide mc happy_casual
+    hide madam_alexandra
+    hide mc
 
-    """*Waits a few minutes, character and dormate goes out*"""
+    """*Waits a few minutes, [mcname] and [friend_2] goes out*"""
 
     scene bg walkaft with dissolve
-    show friend_2 happy_uniform at right
+    show mc happy_uniform at left with dissolve
+    show friend_2 happy_uniform at right with dissolve
     friend_2 "Now that we have already claimed the COR, where are we going now?"
-    show mc happy_uniform at left
-    mc "I’m going to the tailor, I haven’t had my uniform sewn yet."
+    mc "I’m going to the tailor, I don't have enough uniforms to wear."
     friend_2 "Alright then, I’ll see you back to the dorm then!"
     mc "See ya!"
 
     scene bg tailorshop with pixellate
-    show mc happy_uniform at left
-    mc "Tao po! Pwede po magpatahi uniform?"
-    show erin happy at right
+    show mc happy_uniform at left with dissolve
+    mc "{i}Tao po! Pwede po magpatahi uniform?{/i}"
+    show erin happy at right with dissolve
     aling "Good morning! Surely what is it that you needed sir?"
-    mc "I need a uniform po for BU, is it possible that it'd be finished at  *date* "
-    aling "Sure iho! Goodbye!"
-    "Grabs wallet scene"
+    mc "I need a uniform po for BU, is it possible that it'd be finished this weekend?"
+    aling "Sure {i}iho{/i}! Goodbye!"
+    scene Grabs_wallet_scene with Pause(5)
     mc "Thank you po aling! I'll be on my way good ma'am!"
     aling "Ok iho! Take care"
-    "*Character goes back to his dorm, and when he arrives at his room the door is locked and he forgot his keys. He goes and asks kuya Emil if he could borrow his keys*"
+    n "*[mcname] goes back to [pronoun_belonging] dorm, and when [pronoun_reffered] arrives at [pronoun_belonging] room the door is locked and [pronoun_reffered] forgot [pronoun_belonging] keys. {c}[pronoun_reffered]{/c} goes and asks Kuya Emil if [pronoun_reffered] could borrow his keys*"
 
     scene bg livday with zoomin
-    show mc happy_uniform at left
+    show mc happy_uniform at left with dissolve
     mc "Kuya Emil can I borrow the keys for our room, I might’ve forgot the key inside"
 
     if emil_decision == "good":
@@ -348,24 +349,26 @@ label chapter1_1:
         show emil angry at right with dissolve
         emil "Heh! Keys are given to you to use for opening the door, not for decoration! Next time you forget your key you’ll be waiting for your roommate to come home before you open your door!"
 
-    n "The first official day for classes in Bicol University has officially began. The students and faculties are roaming as much as before, lots of students are having a hard time navigating the campus, the sound of vehicles during rush feels like the world has reverted back to normal. And just before official lectures start, orientation for freshmen will happen."
+    n "The first official day for classes in Bicol University has officially began. The students and faculties are roaming as much as before, lots of students are having a hard time navigating the campus, the sound of vehicles during rush feels like the world has reverted back to normal."
+    n "And just before official lectures start, orientation for freshmen will happen."
 
-    "*next day arrives*"
+    "*Next day arrives*"
 
     scene bg roomday with zoomout
     show mc happy_uniform at left with dissolve
-    mc "Today’s finally the day! I get to meet my new classmates, I wonder what they look like or their personality hmmm. Guess I’ll just go with Dormmate during the orientation, having a familiar face is always a good thing. Right Roommate?"
+    mc "Today’s finally the day! I get to meet my new classmates, I wonder what they look like or their personality hmmm."
+    mc "Guess I’ll just go with [friend_2] during the orientation, having a familiar face is always a good thing. Right, [friend_1]?"
     show friend_1 sleepy_casual at right with fade
-    "*snores*"
+    friend_1 "*snores*"
     show mc confused_uniform at left with dissolve
-    mc "Nevermind HAHAHAHA dude’s deadass asleep"
+    mc "Oh, nevermind. {c}[pronoun_referred]{/c}'s still asleep."
 
     scene bg livday with fade
     "*mc proceeds outside*"
     show friend_2 happy_uniform at right with fade
     friend_2 " Just in time character! I was waiting for you so we can go out together. "
     show mc happy_uniform at left with fade
-    mc "Let's go"
+    mc "Let's go!"
 
     "*They proceed to the orientation hall*"
 
@@ -374,79 +377,94 @@ label chapter1_1:
     show friend_2 shocked_uniform at left with dissolve
     friend_2 "Sheeeesh, there are lots of students! I have no idea where we should be designated!"
     show mc shocked_uniform at right with fade
-    mc "I guess we should just look for someone who we are familiar with, maybe a familiar face in the gc?"
-    friend_2 "I've never checked the GC so far LOL"
-    show mc confused_uniform at right
+    mc "I guess we should just look for someone who we are familiar with, maybe a familiar face in the groupchat?"
+    friend_2 "I've never checked the groupchat so far LOL"
+    show mc confused_uniform at right with dissolve
     mc "Then were doooommmeeeedddd!!!!!!"
-    "(*another student approaches, a guy with glasses with casual shirt and braces approaches*)"
+    "*another student approaches, a guy with glasses with casual shirt and braces approaches*"
     show lurs happy_casual with fade
-    lurs "*bumps in character*"
+    lurs "*bumps into [mcname]*"
     scene bg building1 with zoomin
     show lurs shocked_casual at right
     show lurs happy_casual at right
-    lurs "ohhh………sorry about that sir hehe, may I ask where the section is for Computer Science?"
+    lurs "Ohhh... Sorry about that sir hehe, may I ask where the section is for Computer Science?"
 
     menu:
-        "Oh, hi there. Are you also a computer science freshman? My name is *name* and this is Dormmate!":
+        "Oh, hi there. Are you also a computer science freshman? My name is [mcname] and this is [friend_2]!":
             $ points += 1
-            show mc happy_uniform at left
-            lurs "Nice to meet you both! Yes I am a freshman student of Com Sci! Thanks for having me"
+            show mc happy_uniform at left dissolve
+            lurs "Nice to meet you both! Yes, I am a freshman student of Computer Science! Thanks for having me. I'm Johnny, by the way."
+            mc "Let's head to the section, shall we?"
+            lurs "Sure."
             $ johnny_decision = "good"
 
         "*Ignores*":
-            show mc neutral_uniform at left
-            lurs "Oh............"
+            show mc neutral_uniform at left with dissolve
+            lurs "Uhmmm..."
             $ johnny_decision = "neutral"
 
-        "Watch it hobo! Are your glasses just for clout?":
+        "Watch it nerd! Are your glasses just for clout?":
             $ points -= 1
-            show mc angry_uniform at left
+            show mc angry_uniform at left 
             show lurs sad_casual at right
-            lurs "I’m sorry! I’m sorry! I didn’t mean to bump into you huhu!"
+            lurs "I’m sorry! I’m sorry! I didn’t mean to bump into you!"
             $ johnny_decision = "bad"
 
-    hide mc at left
-    hide lurs at right
-    "*They proceed to the computer science section"
+    hide mc
+    hide lurs
+    "*They proceed to the computer science section*"
 
     scene builing1 with pixellate
-    "*Orientation noise and shit*"
+    "*Orientation noise and mess*"
     scene building1 with squares
     "*orientation ends*"
     show joseyde happy at center
-    j "Ok now that the orientation has ended, I highly recommend that you get to know your blockmates first to bond and create memories. Thank you everyone and have a blessed afternoon"
-    "*applauses"
+    j "Ok, now that the orientation has ended, I highly recommend that you get to know your blockmates first to bond and create memories. Thank you everyone and have a blessed afternoon"
+    "*applauses*"
 
     scene bg fieldday with dissolve
-    show mc happy_uniform at left
-    mc "Where do we go now dormmate?"
-    show friend_2 confused_uniform at right
-    friend_2 "I dunno, maybe let’s go talk to  some of our classmates then?"
-    "*cutscene na naguusap chuchu*"
+    show mc happy_uniform at left with dissolve
+    mc "Where do we go now [friend_2]?"
+    show friend_2 confused_uniform at right with dissolve
+    friend_2 "I dunno, maybe let’s go talk to some of our classmates then?"
+    scene cutscene_chatting # CHATTING CUTSCENE PLEEEEEAAASEEEE
     "*encounters Johnny*"
 
+    hide friend_2
     if johnny_decision == "good":
-        hide friend_2
-        show lurs happy_uniform at right
-        lurs "Oh hey there fellas! It appears that we’re actually classmates! I hope to get to know you guys better!"
+        show lurs happy_uniform at right with dissolve
+        lurs "Oh, hey there! It appears that we’re actually classmates! I hope to get to know you guys better!"
+        show mc happy_uniform at left
+        show friend_2 happy_uniform at right
+        mc "Hey, there. Nice seeing you here."
+        friend_2 "Oh yeah. Where are you off to?"
+        lurs "I'm actually heading home, I have to do something today."
 
     elif johnny_decision == "bad" or johnny_decision == "neutral":
-        hide friend_2
-        show lurs sad_uniform at right
-        lurs "Ahh......... hehe"
+        show lurs sad_uniform at right with dissolve
+        lurs "Oh, hehe. Sorry about earlier."
+        mc "Actually, I should be the one to say sorry."
+        mc "Uhm... Sorry, Johnny, was it?"
+        lurs "Ah, yes! You knew?"
+        mc "Just heard someone talking to you and catch your name."
+        lurs "I see. Well, I'll be heading home now. Nice to officially meet you, by the way."
 
+    mc "Alright, then. See ya"
+    friend_2 "See you, next time"
+    lurs "Bye"
     hide lurs
+
+    mc "Oh well, I just hope we get to go along with our other classmates."
+    friend_2 "Yeah, let's hope for the best. Shall we go back?"
+    mc "Yep. Time to go."
+
     "*Johnny goes away*"
-    show mc happy_uniform at left
-    show friend_2 happy_uniform at right
-    mc " Oh well, I just hope we get to go along with our classmates!"
-    show friend_2 happy_uniform at right
-    friend_2 "Yeah, I guess I’ll be going home for the meantime."
-    mc "Aight, I think I'll go with you"
-
+    
+    hide mc
+    hide friend_2
     scene bg dormday with pushup
-    "*[mcname] and dormmate arrives at dormitory"
-
+    "*[mcname] and [friend_2] arrives at Dormitory"
+    # this is where I left off STORY REVISION
     scene bg momcall with dissolve
 
     menu:
@@ -783,7 +801,7 @@ label mom_convo:
     show michelle happy at center with dissolve
     mich "Now that I have given you the possible topics for the class, I expect everyone to have their expectations set on how the subject will, again I look forward to this semester with everyone and class dismissed."
     hide michelle
-    "*everyone goes into frenzy as the class ends"
+    "*everyone goes into frenzy as the class ends*"
     scene bg fieldday with move
     show friend_2 sad_uniform at right with dissolve
     friend_2 "Yow dude, did you just see the curriculum for that subject! Just by looking at the topics it feels like it’s getting brutal"
@@ -791,24 +809,14 @@ label mom_convo:
     mc "Tell me about it, just reading the first topic already made my mind about to explode."
     "*Johnny walks by*"
     show lurs happy_uniform at center with dissolve
-    lurs " Oh hi there fellas! The last time we saw each other was during the freshmen orientation, how ya’ll been doing?"
-    menu:
-        "Hello Johnny! Nice seeing you again and I see that your as lively as ever, the topics seem so hard don’t ya think? ":
-            $ points += 1
-            hide friend_2
-            show mc happy_uniform at left with dissolve
-            show lurs happy_uniform at rght with dissolve
-            mich "I think that it isn’t really that hard since it’s still just the basic when it comes to computer science,I can help you when things get rough for you!"
-            show mc happy_uniform at left with dissolve
-            mc "I'll keep that in min. Thanks!"
-        "You're the nerd that bumped me up during the freshman orientation! Not that it matters, what do you want?":
-            $ points -= 1
-            hide friend_2
-            show mc angry_uniform at left with dissolve
-            show lurs sad_uniform at right with dissolve
-            mich "orry! Sorry! Huhuhuhu, i really didn’t mean to run into you that time, I just wanted to make friends, however if you find anything difficult you can always ask me for help"
-            hide lurs
-            "*johnny leaves*"
+    lurs "Oh, hi there fellas! The last time we saw each other was during the freshmen orientation, how ya’ll been doing?"
+    mc "Hello Johnny! Nice seeing you again and I see that your as lively as ever, the topics seem so hard don’t ya think?":
+    hide friend_2
+    show mc happy_uniform at left with dissolve
+    show lurs happy_uniform at rght with dissolve
+    mich "I think that it isn’t really that hard since it’s still just the basic when it comes to computer science, I can help you when things get rough for you!"
+    show mc happy_uniform at left with dissolve
+    mc "I'll keep that in min. Thanks!"
 
     scene bg fieldday with move
     show friend_2 neutral_uniform at right with dissolve
