@@ -35,9 +35,6 @@ def keywords(text, n):
     return out
 
 fn = sys.argv[1]
-text = sys.argv[2]
-n = int(sys.argv[3])
-keywords = keywords(text, n)
 
 base_path = os.getcwd()
 relative_path = f"kodigo\\game\\python\\docs\\{fn}.json"
@@ -46,14 +43,16 @@ fp = os.path.join(base_path, relative_path)#f"D:\\renpy-8.1.3-sdk\\kodigo\\game\
 #read the json file
 with open(fp, 'r') as file:
     quiz = json.load(file)
+    
+text = quiz["ranked_sentences"]
+n = len(quiz["sentences"]) + 40
+keywords = keywords(text, n)
 
 quiz["keywords"] = keywords 
 
 #save the updated data back to json
 with open(fp, 'w') as file:
     json.dump(quiz, file)
-    
-print("done") 
 
 
 

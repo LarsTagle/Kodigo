@@ -46,6 +46,7 @@ init python:
         init_data = {
             "notes": "",
             "sentences": [],
+            "ranked_sentences": [],
             "keywords": [],
             "answers": [],
             "questions": []
@@ -144,24 +145,19 @@ screen preprocess_text:
         ysize 600
         background "#D9D9D9"
 
-        if notes:
-            vpgrid:
-                cols 1
-                scrollbars "vertical"
-                spacing 5
-                mousewheel True
+        vpgrid:
+            cols 1
+            scrollbars "vertical"
+            spacing 5
+            mousewheel True
 
-                vbox:
-                    #oki na to
-                    xsize 570
-                    ysize 590
+            vbox:
+                xsize 570
+                ysize 590
+                if notes:
                     text notes style "notes_style"
-        else:
-            ypadding 40
-            xpadding 40
-            text "Texts from the document will appear here." style "notes_style":
-                xalign 0.5
-                yalign 0.5
+                else:
+                    text "Texts from the document will appear here." style "notes_style"
 
     if notes:
         imagebutton auto "images/Button/summarize_%s.png" action Jump("summarize"):
@@ -191,25 +187,22 @@ screen preprocess_text:
             background "#D9D9D9"
             yoffset 30
 
-            if keywords:
-                vpgrid:
-                    cols 1
-                    scrollbars "vertical"
-                    spacing 5
-                    mousewheel True
+            vpgrid:
+                cols 1
+                scrollbars "vertical"
+                spacing 5
+                mousewheel True
 
-                    vbox:
+                vbox:
+                    xsize 370
+                    ysize 390
+                    if keywords:
                         text keywords:
                             font "KronaOne-Regular.ttf"
                             size 24
                             color "#303031"
-            else:
-                ypadding 40
-                xpadding 40
-                text "Keywords from the text will appear here." style "notes_style":
-                    xalign 0.5
-                    yalign 0.5
-
+                    else:
+                        text "Keywords from the text will appear here." style "notes_style"
     hbox:
         xalign 0.690
         yalign 0.15
@@ -227,7 +220,7 @@ screen preprocess_text:
             xalign 0.75
             yalign 0.8
     else:
-        imagebutton auto "images/Button/create_quiz_%s.png" action [Hide("preprocess_text"), ShowMenu("save_quiz")]: #since we are skipping editting the keywords & texts, we proceed here next
+        imagebutton auto "images/Button/create_quiz_%s.png" action [Hide("preprocess_text"), Jump("genarating_quiz")]: #since we are skipping editting the keywords & texts, we proceed here next
             xalign 0.75
             yalign 0.8
 
@@ -324,10 +317,8 @@ label get_sentences:
         call screen preprocess_text
 
 label get_keywords:
-    $ notes = get_notes()
-    $ n = str(get_sents_len() + 20) #estimate number of keywords
     $ py_path = get_path(f"kodigo/game/python/keywords.py")
-    $ process = subprocess.Popen([python_path, py_path, quiz_title, notes, n], creationflags=subprocess.CREATE_NO_WINDOW)
+    $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
 
     #Check if the subprocess has finished
     while not is_subprocess_finished(process):
@@ -372,13 +363,6 @@ label summarize:
         $ py_path = get_path(f"kodigo/game/python/summarize.py")
         $ process = subprocess.Popen([python_path, py_path, quiz_title, notes], creationflags=subprocess.CREATE_NO_WINDOW)
 
-        screen terminate_process:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("terminate_process"), Function(terminate, process)]:
-                xalign 0.86
-                yalign 0.04
-
-        show screen terminate_process
-
         #Check if the subprocess has finished
         while not is_subprocess_finished(process):
             show screen summarizing
@@ -393,6 +377,33 @@ label summarize:
                 yalign 0.5
         hide screen summarizing
         jump get_keywords
+
+label genarating_quiz:
+    $ show_s("preprocess_text_dull")
+    show halfblack
+    hide screen preprocess_text
+
+    $ py_path = get_path(f"kodigo/game/python/fill_in_blanks.py")
+    $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
+
+    #Check if the subprocess has finished
+    while not is_subprocess_finished(process):
+        pause 0.1
+
+    screen success:
+        text "Quiz successfully generated!":
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 60
+            color "#FFFFFF"
+            xalign 0.5
+            yalign 0.5
+
+    show screen success
+    pause 2.0
+    show halfblack
+    hide screen success
+    $ hide_s("preprocess_text_dull")
+    call screen save_quiz
 
 screen save_quiz:
     add "bg quiz main"
@@ -412,3 +423,17 @@ screen save_quiz:
         imagebutton auto "images/Button/edit_title_%s.png" action [Function(set_in_save, True), Jump("edit_title")]:
             xoffset 40
             yoffset 45
+
+    vbox:
+        xalign 0.5
+        yalign 0.5
+        hbox:
+            spacing 40
+            text "Questions": #specify with a number later
+                font "Copperplate Gothic Thirty-Three Regular.otf"
+                size 70
+                color "#FFFFFF"
+            text "Answers": #specify with a number later
+                font "Copperplate Gothic Thirty-Three Regular.otf"
+                size 70
+                color "#FFFFFF"
