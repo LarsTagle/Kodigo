@@ -110,6 +110,13 @@ init python:
         global in_save
         in_save = bool
 
+    def get_quiz():
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+        questions = quiz["questions"]
+        answers = quiz["answers"]
+        return questions, answers
+
 init 1:
     $ python_path = get_path("Python311/python.exe")
 
@@ -408,9 +415,15 @@ label genarating_quiz:
 screen save_quiz:
     add "bg quiz main"
 
+    $ questions, answers = get_quiz()
+
     imagebutton auto "images/Minigames Menu/exit_%s.png":
         xalign 0.86
         yalign 0.04
+
+    image "images/Minigames Menu/line.png":
+        xalign 0.364
+        yalign 0.55
 
     hbox:
         xalign 0.5
@@ -425,9 +438,14 @@ screen save_quiz:
             yoffset 45
 
     vbox:
-        xalign 0.5
-        yalign 0.5
+        xsize 750
+        ysize 550
+        xalign 0.30
+        yalign 0.55
+        spacing 40
         hbox:
+            xalign 0.5
+            yalign 0.5
             spacing 40
             text "Questions": #specify with a number later
                 font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -437,3 +455,38 @@ screen save_quiz:
                 font "Copperplate Gothic Thirty-Three Regular.otf"
                 size 70
                 color "#FFFFFF"
+
+        vpgrid:
+            cols 2
+            spacing 40
+            scrollbars "vertical"
+            mousewheel True
+
+            for i in range(len(questions)):
+                $ question = questions[i]
+                $ answer = answers[i]
+                $ group_name = str(i)
+
+                frame:
+                    xsize 397
+                    #ysize 150
+                    xfill True
+                    background "#D9D9D9"
+                    #xoffset 15
+
+                    text "[question]":
+                        font "KronaOne-Regular.ttf"
+                        size 24
+                        color "#303031"
+                frame:
+                    xsize 237
+                    #ysize 150
+                    xfill True
+                    yfill True
+                    background "#D9D9D9"
+                    #xoffset 10
+
+                    text "[answer]":
+                        font "KronaOne-Regular.ttf"
+                        size 24
+                        color "#303031"
