@@ -10,22 +10,28 @@ init python:
         global pronoun_referred
         global pronoun_belonging
         global pronoun_respect
+        global pronoun_object
         global friend_1
         global friend_2
+        global crush
 
         if persistent.gender == "male":
             pronoun_referred = "he"
             pronoun_belonging = "his"
+            pronoun_object = "him"
             pronoun_respect = "mister"
             friend_1 = "Carlos"
             friend_2 = "Justin"
+            crush = "Sophia"
 
         else:
             pronoun_referred = "she"
             pronoun_belonging = "her"
+            pronoun_object = "her"
             pronoun_respect = "miss"
             friend_1 = "Carla"
-            friend_2 = "Jasmine"            
+            friend_2 = "Jasmine"  
+            crush = "Matt"          
 
 screen gender_choose:
     image "bg mirror1"
@@ -415,14 +421,14 @@ label chapter1_1:
     show mc confused_uniform at right with dissolve
     mc "Then were doooommmeeeedddd!!!!!!"
     show friend_2 neutral_uniform with dissolve
-    "*another student approaches, a guy with glasses with casual shirt and braces approaches*"
-    show lurs neutral_uniform:
+    n "Another student approaches, a guy with glasses with casual shirt and braces."
+    show lurs neutral_casual:
         xoffset 2000
         ease 1.2 xoffset 650
     lurs "*bumps into [mcname]*"
-    show lurs shocked_uniform with dissolve
-    show mc shocked_uniform with dissolve
-    show friend_2 confused_uniform with dissolve
+    show lurs shocked_casual with dissolve
+    show mc shocked_casual with dissolve
+    show friend_2 confused_casual with dissolve
     "???" "Ohhh... Sorry about that [pronoun_respect] hehe, may I ask where the section is for Computer Science?"
 
     menu:
@@ -432,7 +438,7 @@ label chapter1_1:
             hide friend_2
             show mc happy_uniform:
                 xalign 0.1
-            show lurs happy_uniform:
+            show lurs happy_casual:
                 xalign 0.9
             lurs "Nice to meet you both! Yes, I am a freshman student of Computer Science! Thanks for having me. I'm Johnny, by the way."
             mc "Let's head to the section, shall we?"
@@ -443,7 +449,7 @@ label chapter1_1:
             scene bg building1 with fade
             show mc confused_uniform:
                 xalign 0.1
-            show lurs nervous_uniform:
+            show lurs nervous_casual:
                 xalign 0.9
             lurs "Uhmmm... I'm Johnny, nice to uhhh... meet you"
             mc "*tsk*"
@@ -453,7 +459,7 @@ label chapter1_1:
             $ points -= 1
             show mc angry_uniform:
                 xalign 0.1
-            show lurs nervous_uniform:
+            show lurs nervous_casual:
                 xalign 0.9
             lurs "I’m sorry! I’m sorry! I didn’t mean to bump into you!"
             mc "*tsk* How could you not even see me standing here."
@@ -462,11 +468,11 @@ label chapter1_1:
     scene bg comlab with fade
     hide mc
     hide lurs
-    "*They proceed to the computer science section*"
 
-    "*Orientation noise and mess*"
+    n "They proceed to the computer science section."
+    n "When they enter the room, it was a mixture of noise and disaster. The students were loud as if they already knew each other."
     scene bg building1 with pixellate
-    "*orientation ends*"
+    n "The orientation ends, and the class was out of the building."
     show joseyde happy at center
     j "Okay, now that the orientation has ended, I highly recommend that you get to know your blocmates first to bond and create memories. Thank you everyone and have a blessed afternoon."
     "*applauses*"
@@ -526,65 +532,111 @@ label chapter1_1:
 
     hide mc
     hide friend_2
-    scene bg dormday with pushup
+    scene bg dormaft with pushup
     "*[mcname] and [friend_2] arrives at Dormitory*"
     # this is where I left off CODE REVISION
     scene bg momcall with dissolve
+    scene bg momcall with Pause(4)
 
     menu:
         "*Answer Call*":    # CREATE A PHONE CALL BG. ROOM BEING BLURRED BG WITH PHONE CENTER AND MOM PIC INSIDE. VARIATION WITH MOM EMOTIONS
             $ points += 1
-            show mom happy at right
+            scene bg phone_neutral with fade
+            show mc neutral_casual with dissolve:
+                xalign 0.7
             mom "Hi dear, you haven’t called in a while so I had to call you just to check on you. How’s college been?"
             jump mom_convo
 
 
         "*No answer*":
             $ points -= 1
+            jump chapter1_2
 
 label mom_convo:
     menu:
         "So far it’s been good ma! Our class haven’t officially started but so far it’s been great!":
-            show mc happy_casual at left
-            show mom happy at right
-            mom "Oh that’s good to hear! Keep up the good work son/daughter and remember to not pressure yourself that much and just have fun alright?"
+            scene bg phone_happy with dissolve
+            show mc happy_casual:
+                xalign 0.7
+            mom "Oh that’s good to hear! Keep up the good work dear and remember to not pressure yourself that much and just have fun, alright?"
 
-        "It’s been absolute hell! All the people here always rubs me of the wrong way!":
-            show mc angry_casual at left
-            show mom sad at right
-            mom "I know that college is tough but don’t be like that now. There will always be something positive to look forward in tough  situations, alway remember if you ever need help we’ll be here. Take care now"
+        "It’s been absolute mess! All the people here always rubs me of the wrong way!":
+            scene bg phone_sad with dissolve
+            show mc angry_casual:
+                xalign 0.7
+            mom "I know that college is tough but don’t be like that now. There will always be something positive to look forward in tough situations. Always remember, if you ever need help, we’ll be here."
 
-    show mc happy_casual at left with fade
-    mc "Ok ma,  I better keep going now I still have to fix my things. Bye!"
-    show mom happy at right
-    mom " Bye *name*, mama always loves you mwa mwa"
+    show mc neutral_casual:
+        xalign 0.7
+    mc "Thanks, ma. Oh, I've also meet my classmates, and my roommate, and even one of my classmate which I didn't know was also the same class as mine!"
+    scene bg phone_happy
+    show mc neutral_casual:
+        xalign 0.7
+    mom "Well that's great! At least you have someone you can hangout and company you throughout this college journey."
+    mc "I know, ma. You'll love [pronoun_object]. [pronoun_referred!c]'s always cheerful and I really hope to be close with [pronoun_object]."
+    scene bg phone_neutral
+    show mc neutral_casual:
+        xalign 0.7
+    mom "Now you have someone to lean on. Just be sure who you are getting friends with. Your generation is a lot complicated to take in."
+    mom "Choose your friends wisely..."
+    "[mcname] and Mom" "and make sure they don't hold you down."
+    mc "Yes yes, I know. Just trust me, I'll be alright here."
+    scene bg phone_sad
+    show mc neutral_casual:
+        xalign 0.7
+    mom "I trust you. It's just... I care and this is your first time living on your own."
+    mc "It's for the better and also for my future, ma."
+    scene bg phone_neutral
+    show mc neutral_casual:
+        xalign 0.7
+    mc "By the way, I better keep going now I still have to fix my things. Bye!"
+    scene bg phone_neutral
+    show mc neutral_casual:
+        xalign 0.7
+    mom "Bye [mcname], mama always loves you mwaaah"
+    scene bg livaft with fade
+    show mc neutral_casual at center
     "*sound of phone stops*"
-    scene bg dormday
-    show mc happy_casual at center
-    mc "I need to go fetch my uniform now since tomorrow our lectures will officially begin"
 
-    "*Character travels to the tailor shop"
+label chapter1_2:
+    scene bg dormaft with dissolve
+    show mc neutral_casual
+    mc "I guess I could use this time to check on the uniform. Maybe she's a fast tailor."
+    
+    show mc neutral_casual:
+        ease 4 xoffset -4000
+    n "[mcname] travels to the tailor shop"
 
     scene bg tailorshop with pixellate
-    show mc happy_casual at left with dissolve
+    show mc happy_casual with dissolve:
+        xalign 0.1
     mc "{i}Magandang araw po! Kukuha po sana ako nung uniform kong pintahi ho nung nakaraan.{/i}"
-    show erin happy at right
-    aling "Well hello there iho! You’re uniform is already done, however there is one thing that is missing. I forgot to tell you that you should’ve bought your logo from the department since our store already run out of it. I sincerely apologise if I informed you way to late"
+    show erin happy with dissolve:
+        xalign 0.9
+    aling "Well, hello there [pronoun_respect]! You’re uniform is already done, however, there is one thing that is missing." 
+    show erin sad with dissolve
+    show mc neutral_casual with dissolve
+    aling "I forgot to tell you that you should’ve bought your logo from the department since our store already run out of it. I sincerely apologise if I informed you way to late."
     menu:
-        "No worries, Aling Erin! I’ll just buy from our department. Thank you aling! *gives money*":
+        "No worries, Aling Erin! ":
             $ points += 1
-            aling "I do apologise again young man for your inconvenience, I’ll just give you a discount for your troubles. Take care!"
+            mc "I’ll just buy from our department. Thank you aling! *gives money*"
+            aling "I do apologise again [pronoun_respect] for the inconvenience, I’ll just give you a discount for your troubles. Take care!"
 
-        "*Well you could’ve told me that earlier! Now I have to pay you full for not finishing my uniform, unfair but still thanks tsk tsk *gives money*":
+        "Well, you could’ve told me that earlier!":
             $ points -= 1
-            show mc angry_casual at left with dissolve
-            show erin sad at right with dissolve
-            aling "My apologies young man, please do not take it to hard since I'm old and have lots of customers to accommodate,I’ll just give you a discount for your troubles, i again apologize young man"
+            show mc angry_casual with dissolve
+            show erin sad with dissolve
+            mc "Now I have to pay you full for not finishing my uniform, unfair but still thanks tsk tsk *gives money*"
+            aling "My apologies [pronoun_respect], please do not take it top hard since I'm old and have lots of customers to accommodate." 
+            aling "I’ll just give you a discount for your troubles, I again apologize [pronoun_respect]."
 
-    "*character leaves  the sewing shop, while he waits for jeeps to pass by he sees his old crush Crush walking towards him without her noticing him*"
+    scene bg sidewalkaft with dissolve
+    n "[mcname] leaves the tailor shop."
+    n "While [pronoun_referred] waits for jeepneys to pass by, [pronoun_referred] sees [pronoun_belonging] old crush crush walking towards [pronoun_object] without [pronoun_object] noticing [pronoun_object]."
     scene bg frontday with dissolve
     show mc shocked_casual at center with ease
-    mc "Oh shizz, it's Sofia!! What do I do? What do I sayyyy??????"
+    mc "Oh gosh, it's [crush]!! What do I do? What do I say???"
     menu:
         "Hi Crush! Ho.. how… how’s… what’s up? Hehe *blushes* + Crush":
             $ points += 1
