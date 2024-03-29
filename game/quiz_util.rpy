@@ -249,7 +249,6 @@ screen preprocess_text_dull:
         ysize 600
         background "#D9D9D9"
 
-
         vpgrid:
             cols 1
             scrollbars "vertical"

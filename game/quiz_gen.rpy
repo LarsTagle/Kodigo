@@ -438,45 +438,55 @@ screen save_quiz:
         ysize 550
         xalign 0.30
         yalign 0.55
-        spacing 40
+        spacing 20
         hbox:
             xalign 0.5
             yalign 0.5
             spacing 40
-            text "Questions": #specify with a number later
+            text "Questions and Answers": #specify with a number later
                 font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 70
+                size 50
                 color "#FFFFFF"
-            text "Answers": #specify with a number later
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 70
-                color "#FFFFFF"
+        #fix this later
+        frame:
+            xsize 700
+            ysize 600
+            background "#D9D9D9"
+            vpgrid:
+                cols 1
+                spacing 20
+                scrollbars "vertical"
+                mousewheel True
+                vbox:
+                    spacing 5
+                    for i in range(len(questions)):
+                        $ question = questions[i]
+                        $ answer = answers[i]
+                        text "Question: [question]" style "q_and_a"
+                        text "Answer: [answer]" style "q_and_a"
+                        text "\n"
+        
+    #this is temporary!
+    #Mixed should be the default
+    vbox:
+        xalign 0.8
+        yalign 0.5
+        spacing 20
+        frame:
+            xsize 337
+            ysize 200
+            xalign 0.5
+            yalign 0.5
+            background "#D9D9D9"
+            textbutton "Mulitple Choices" style q_and_a
+            textbutton "Identification" style q_and_a
+            textbutton "Mixed"
 
-        vpgrid:
-            cols 1
-            spacing 40
-            scrollbars "vertical"
-            mousewheel True
+        imagebutton auto "images/Button/save_quiz_%s.png":
+            xalign 0.5
+            yalign 0.5
 
-            for i in range(len(questions)):
-                $ question = questions[i]
-                $ answer = answers[i]
-                hbox:
-                    xsize 720
-                    xalign 0.5
-                    yalign 0.5
-                    spacing 60
-                    frame:
-                        xsize 357
-                        ysize 150
-                        background "#D9D9D9"
-                        xoffset 15
-
-                        text "[question]"
-                    frame:
-                        xsize 277
-                        ysize 150
-                        background "#D9D9D9"
-                        xoffset 10
-
-                        text "[answer]"
+style q_and_a:
+    font "KronaOne-Regular.ttf"
+    size 24
+    color "#303031"

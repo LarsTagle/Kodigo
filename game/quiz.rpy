@@ -45,8 +45,8 @@ init python:
             if " " in a:
                 keys = a.split(" ")
                 for k in keys:
-                   if k not in keywords:
-                       keywords.append(k)
+                    if k not in keywords:
+                        keywords.append(k)
             elif a not in keywords:
                 keywords.append(a)
 
