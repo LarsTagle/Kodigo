@@ -2,18 +2,9 @@
 errors listed below, and try again.
 
 
-<<<<<<< HEAD
-File "game/script.rpy", line 613: expected 'comma or end of line' not found.
-    with Pause(5)
-    ^
+File "game/script.rpy", line 7: invalid syntax
+    global distance = 2000
+                     ^
 
 Ren'Py Version: Ren'Py 8.1.3.23091805
-Fri Mar 29 15:39:48 2024
-=======
-File "game/quiz_gen.rpy", line 189: Line is indented, but the preceding yoffset statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
-    vpgrid:
-    ^
-
-Ren'Py Version: Ren'Py 8.1.3.23091805
-Fri Mar 29 07:52:37 2024
->>>>>>> 61d36bae0d770b2ff35a4522b1517ada4048abac
+Fri Mar 29 18:39:14 2024
