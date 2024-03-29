@@ -4,8 +4,6 @@
 
 init python:
     in_story = False
-    global distance
-    distance = 2000
 
     def set_gender(selected_gender):
         persistent.gender = selected_gender
@@ -16,6 +14,11 @@ init python:
         global friend_1
         global friend_2
         global crush
+        global crush_referred
+        global crush_belonging
+        global crush_respect
+        global crush_object
+
 
         if persistent.gender == "male":
             pronoun_referred = "he"
@@ -25,6 +28,10 @@ init python:
             friend_1 = "Carlos"
             friend_2 = "Justin"
             crush = "Sophia"
+            crush_referred = "she"
+            crush_belonging = "her"
+            crush_object = "her"
+            crush_respect = "miss"
 
         else:
             pronoun_referred = "she"
@@ -34,6 +41,10 @@ init python:
             friend_1 = "Carla"
             friend_2 = "Jasmine"  
             crush = "Matt"
+            crush_referred = "he"
+            crush_belonging = "his"
+            crush_object = "him"
+            crush_respect = "mister"
 
 
 screen gender_choose:
@@ -540,7 +551,6 @@ label chapter1_1:
     friend_2 "Yeah, let's hope for the best. Shall we go back?"
     mc "Yep. Time to go."
 
-
     hide mc
     hide friend_2
     scene bg dormaft with pushup
@@ -643,147 +653,182 @@ label chapter1_2:
     scene bg sidewalkaft with dissolve
     show mc confused_casual:
         xoffset -500
-        ease 2 xalign 0.5 xoffset 0
+        ease 2 xalign 0.2 xoffset 0
     n "[mcname] leaves the tailor shop."
-    show crush neutral_casual:
-        xoffset 2000
-    show crush neutral_casual:
-        ease 1 xoffset distance - 100
-        pause 1.0
-        repeat
+
+    show crush neutral_uniform:
+        xoffset 1800
+        ease 5 xoffset 300
+    show mc confused_casual:
+        ease 4 xalign 0.7
 
     n "While [pronoun_referred] waits for jeepneys to pass by, [pronoun_referred] sees [pronoun_belonging] old crush crush walking towards [pronoun_object] without [pronoun_object] noticing [pronoun_object]."
-    scene bg frontday with dissolve
-    show mc shocked_casual at center with ease
-    mc "Oh gosh, it's [crush]!! What do I do? What do I say???"
+    show mc shocked_casual with dissolve
+    mc "*Oh gosh, it's [crush]! What do I do? What do I say?*"
     menu:
-        "Hi Crush! Ho.. how… how’s… what’s up? Hehe *blushes* + Crush":
+        "Hi, [crush]!":
             $ points += 1
-            show mc blushed_casual at left with fade
-            show sophia happy_uniform at right with dissolve
-            crush "Oh hey there character! It’s been summer since I last saw you huh, I would love to keep the chat going but I have a class to attend so I better be going. Bye! It was nice talking to you again!"
+            show mc blushed_casual with dissolve
+            show crush happy_uniform with dissolve
+            mc "Ho.. how… how’s… what’s up? Hehe"
+            crush "Oh hey there [mcname]! It’s been a long time since I last saw you huh. I would love to keep the chat going but..."
+            show crush sad_uniform with dissolve
+            crush "I have a class to attend so I better be going. Bye! It was nice talking to you again!"
 
 
-        "*Whit whew* hey there beautiful, hehe just kidding. Sup Crush? ":
+        "*Whistles*":
             $ points -= 1
-            show mc neutral_casual at left with dissolve
-            show sophia awkward_uniform at right with dissolve
-            crush "Oh hehe…. character  uhhh. I still have a class to go to so I better keep going. Bye *said in an awkward manner*"
+            show mc neutral_casual with dissolve
+            show crush awkward_uniform with dissolve
+            if persistent.gender == "male":
+                mc "Hey there beautiful, hehe just kidding. Sup [crush]?"
+            else:
+                mc "Hey, cutie. Where are you going? Want to me to company you?"
+            crush "Oh hehe…. [mcname] uhhh. I still have a class to go to so I better keep going. Bye"
+            show mc sad_casual
+            mc "Oh, uhhm. Okay."
 
+    show crush neutral_uniform:
+        ease 2.5 xoffset -700
     mc "Byee! See ya around!"
-    hide sophia with fade
-    "*Crush walks away hurridley since she has class to attend, meanwhile character is blushed and all*"
-    scene bg frontday with dissolve
-    show mc blushed_casual at center with fade
-    mc "UGGGHHHHHHH!!! SHE’S AS CUTE AS EVER!!! *poker face bigla* ok calm down I still have to buy some logos for my uniforms."
-    "*jeepney stops, character goes inside*"
+    hide crush
+    show mc blushed_casual:
+        ease 4 xoffset 1800
+    n "*[crush] walks away hurridley since she has class to attend, meanwhile [mcname] is blushed and all*"
+    scene bg frontaft with dissolve
+    show mc blushed_casual:
+        xoffset -700
+        ease 4 xalign 0.5 xoffset 0
+    mc "UGGGHHHHHHH!!! [crush_referred!u] AS CUTE AS EVER!!!"
+    show mc neutral_casual
+    mc "Okay, calm down I still have to buy some logos for my uniforms."
+    n "A jeepney stops in front of [mcname], and [pronoun_referred] ride the jeepney to buy [pronoun_belonging] logo."
 
     scene bg jeep with irisin
-    show mc happy_casual at left with fade
-    mc "{i}Kuya bayad po{/i}"
-    show mark neutral at right with fade
-    mark "{i}Sa may san toh{/i}"
-    mc "{i}Sa may CM lang ho{/i}"
-    "The to the fare that character gave is given back"
-    scene jeep with ease
+    show mc neutral_casual with dissolve:
+        xalign 0.1
+    show mark neutral with dissolve:
+        xalign 0.9
+    mc "{i}Kuya bayad po.{/i}"
+    mark "{i}Sa may san ito?{/i}"
+    mc "{i}Sa may BU Main lang ho.{/i}"
+    n "And [mcname] was given [pronoun_belonging] change. Yet the change was not enough."
     menu:
-        "{i}Kuya kulang ho ang skuli, estudyante ho ako {/i}":
+        "{i}Manong kulang ho ang sukli, estudyante ho ako.{/i}":
             $ points += 1
-            show mc confused_casual at left with dissolve
-            show mark happy at right with dissolve
+            show mc confused_casual with dissolve
+            show mark confused with dissolve
             mark "{i}Ayy ganon ba iho? Eto pasenya ka na ah, matanda na ang mamang hehe{/i}"
+            show mc neutral_casual
+            mc "{i}Okay lang po, salamat.{/i}"
 
 
-        "Kuya ba’t eto lang sukli?! Ang lapit lapit nga lang ng patahian sa BU tapos sobra ka pa maningil. Estudyante pa ako kaya dapat di ganto singil niyo!":
+        "{i}Manong ba’t eto lang sukli?!{/i}":
             $ points -= 1
             show mc angry_casual at left with dissolve
             show mark sad at right with dissolve
-            mark "{i}Hay nako nagkamali lang siguro ako panukli, ang bibig ng kabataan ngayon talagang antatalas ng mga dila{/i}"
+            mc "{i}Ang lapit lapit nga lang ng patahian sa BU tapos sobra ka pa maningil. Estudyante pa ako kaya dapat di ganto singil niyo!{/i}"
+            mark "{i}Hay nako nagkamali lang siguro ako panukli, ang bibig ng kabataan ngayon talagang antatalas ng mga dila.{/i}"
 
-    hide mark
-    hide mc
+    scene bg frontaft with fade
+    n "As [mcname] arrives at the university, [pronoun_referred] went straight to the CSC office."
 
-    "*character arrives at BU, and goes straight to the CSC office*"
-
-    scene bg csc with fade
-    show mc happy_casual at left with fade
-    mc "Good afternoon po! Are there still available logos for our uniform?"
-    show mike happy_uniform at right with fade
+    scene bg cscoffice_1 with fade
+    show mc neutral_casual with dissolve:
+        xalign 0.1
+    mc "Good afternoon! Are there still available logos for our uniform?"
+    show mike happy_uniform with dissolve:
+        xalign 0.9
     mike "Hello! Yes there are still some, come in and have a sit."
-    hide mike
-    "*character waits for a bit*"
-    scene bg csc with dissolve
-    show mc happy_casual at left with dissolve
-    show mike happy_uniform at right with dissolve
-    mike "sorry for the wait, here are your logos"
-    hide mike
-    show mike confused_uniform at right with dissolve
-    mike "You look so familiar......."
-    mike "Feels like I've seen you somewhere hmm"
-    show mc neutral_casual at left with dissolve
-    mc "Really? I've only been here for a few days"
-    mike "Say weren't you in the freshmen orientation a few days ago?"
-    hide mc
-    show mc happy_casual at left with dissolve
-    mc " Yes I am, you don’t happen to be a Computer Science student as well are you?"
-    hide mike
-    show mike happy_uniform at right with dissolve
-    mike "What a coincidence I actually am! I am a third year student and it looks like you’d be calling me “senpai” eyy! Just kidding "
+    show mike:
+        ease 2 xoffset 1000
+    n "[mcname] waited for them to get the logo"
+    scene bg cscoffice_2 with fade
+    show mc neutral_casual with dissolve:
+        xalign 0.1
+    show mike happy_uniform with dissolve:
+        xalign 0.9
+    mike "Sorry for the wait, here are your logos." # ANIMATION GIVING SEALS AND PLATES
+    show BUseal1 with dissolve:
+        xalign 0.75 yalign 0.7
+    show BUplate1 with dissolve:
+        xalign 0.78 yalign 0.7
+
+    show BUseal1 with Pause(2):
+        ease 2 xalign 0.2
+    show BUplate1 with Pause(2):
+        ease 2 xalign 0.23
+
+    hide BUseal1 with dissolve
+    hide BUplate1 with dissolve
+
+    show mike confused_uniform with dissolve
+    mike "By the way, you look so familiar..."
+    mike "Feels like I've seen you somewhere hmm."
+    show mc confused_casual with dissolve
+    mc "Really? I've only been here for a few days."
+    mike "Say, weren't you in the freshmen orientation a few days ago?"
+    show mc happy_casual with dissolve
+    mc " Yes I am, you don’t happen to be a Computer Science student as well, are you?"
+    show mike happy_uniform with dissolve
+    mike "What a coincidence I actually am! I am a third year student and it looks like you’d be calling me {i}“senpai”{/i} eyy! Just kidding."
     menu:
-        "Nice to meet you “senpai”! I look forward to working with you in the future, I better":
+        "Nice to meet you {i}“senpai”{/i}! I look forward to working with you in the future, I better":
             $ points += 1
-            show mc happy_casual at left with dissolve
-            show mike happy_uniform at right with dissolve
-            mike "I see! Take care my *kohai*"
+            show mc happy_casual with dissolve
+            show mike happy_uniform with dissolve
+            mike "I see! Take care my {i}\"kohai\"{/i}"
 
-        "Sheesh no need to be stingy about it hey hey hey! Anyways take care when you get home!":
+        "Ha! As if I'd call someone {i}\"senpai\".":
             $ points -= 1
-            show mc angry_casual at left with dissolve
-            show mike sad_uniform at right with dissolve
-            mark "Sheesh no need to be stingy about it hey hey hey! Anyways take care when you get home!"
+            show mc angry_casual with dissolve
+            show mike sad_uniform with dissolve
+            mark "Sheesh, no need to be harsh about it hey hey hey!"
+            show mc:
+                ease 3 xoffset -800
+            show mike neutral_uniform with dissolve
+            mark "Anyways, take care when you get home!"
 
-    hide mc
-    hide mike
+    scene bg dormaft with fade
+    n "After obtaining the logos, [mcname] goes to the dorm."
 
-    "*After obtaining the logos, character goes to the dorm*"
-
-    scene bg dormaft with blinds
-    show emil neutral at right with dissolve
-    emil "You look kinda tired kiddo, college’s been making things tough for ya huh?"
-    show mc sad_casual at left with dissolve
-    mc "Tell me about it, we haven’t even started official lecture classes but it already feels like I’ve had lots of things done"
-    emil "Well don’t sweat, you’ll get the hang of it soon. Wish you luck kiddo"
+    show emil neutral with dissolve:
+        xalign 0.9
+    show mc sad_casual with dissolve:
+        xalign 0.1
+    emil "You look kinda tired kiddo, college’s been making things tough for ya, huh?"
+    mc "Tell me about it, we haven’t even started official lecture classes but it already feels like I’ve had lots of things done."
+    emil "Well don’t sweat, you’ll get the hang of it soon. Wish you luck kiddo."
 
     menu:
-        "Thanks kuya Emil! Gon need it!":
+        "Thanks kuya Emil! Gonna need it!":
             $ points += 1
-            show mc happy_casual at left with dissolve
-            show emil happy at right with dissolve
-            emil "Sure kiddo, best of luck"
+            show mc happy_casual with dissolve
+            show emil happy with dissolve
+            emil "Sure kiddo, best of luck."
 
-        "I don’t need your goodluck ":
+        "I don’t need your goodluck.":
             $ points -= 1
-            show mc angry_casual at left with dissolve
-            show emil angry at right with dissolve
-            emil "Cocky as usual"
-
-    "*Character proceeds to his room*"
+            show mc angry_casual with dissolve
+            show emil angry with dissolve
+            emil "Cocky as usual. *tsk*"
 
     scene bg roomaft with move
-    "*Internally, the character talks to himself*"
-    show mc sad_casual at center with dissolve
-    mc "{b} Hays, is it really necessary that I still put a logo on this uniform? It’s not like the guard will notice me not having this already. Oh well, guess better keep doing this now{/b}"
+    n "After that, [mcname] proceeds to [pronoun_belonging] room."
 
-    "*MINI GAME (IF APPLICABLE), THERE WILL BE UNIQUE DIALOGUES IF MAKAGAWA MINI GAME, IF HINDI KAYA PROCEED LANG.*"
+    n "*Internally, the character talks to [pronoun_object]self*"
+    show mc sad_casual with dissolve
+    mc "{b}Hays, is it really necessary that I still put a logo on this uniform? It’s not like the guard will notice me not having this already. Oh well, guess better keep doing this now.{/b}"
 
-    hide mc
+    # "*MINI GAME (IF APPLICABLE), THERE WILL BE UNIQUE DIALOGUES IF MAKAGAWA MINI GAME, IF HINDI KAYA PROCEED LANG.*"
+
     show mc neutral_casual at center with dissolve
-    mc " Now that I’ve sewn these uniforms, I now need to iron the clothes so they may look presentable when going to class"
+    mc "Now that I’ve sewn these uniforms, I now need to iron the clothes so they may look presentable when going to class"
 
     hide mc
-    "*MIGHT MINI GAME NOT SURE"
+    # "*MIGHT MINI GAME NOT SURE"
     show mc happy_casual at center with dissolve
-    mc " Finally done with the chores, now I have to prepare for my classes tomorrow"
+    mc "Finally done with the chores, now I have to prepare for my classes tomorrow"
 
     "*INTERACTABLE PHOTOS (CAN USE IMAGE MAP feature)*"
 

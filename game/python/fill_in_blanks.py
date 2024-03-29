@@ -46,7 +46,7 @@ for i in range(len(sentences)):
                     item.append(word)
             sentences[i] = ' '.join(item) + '.'
 
-quiz["question"] = sentences
+quiz["questions"] = sentences
 
 #save the updated data back to json
 with open(fp, 'w') as file:
