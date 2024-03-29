@@ -1,3 +1,4 @@
+#fix editting to dissallow empty text field
 define title = VariableInputValue(variable = "quiz_title", returnable = True)
 define keys = VariableInputValue(variable = "keywords", returnable = True)
 
@@ -188,8 +189,10 @@ screen input_keys:
                     mousewheel True
 
                     vbox:
+                        xsize 370
+                        ysize 390
                         input value keys length 6262 allow "abcdefghijklmnopqrstuvwxyz, " multiline True:
-                            font "Copperplate Gothic Thirty-Three Regular.otf"
+                            font "KronaOne-Regular.ttf"
                             size 24
                             color "#303031"
 
@@ -198,7 +201,7 @@ label edit_keywords:
     $ in_edit_keywords = True
     $ show_s("preprocess_text_dull")
     call screen input_keys
-    "wait"
+    $ in_edit_keywords = False
     call screen preprocess_text
 
 screen save_quiz_dull:
@@ -246,21 +249,20 @@ screen preprocess_text_dull:
         ysize 600
         background "#D9D9D9"
 
-        if notes:
-            vpgrid:
-                cols 1
-                scrollbars "vertical"
-                spacing 5
-                mousewheel True
 
-                vbox:
+        vpgrid:
+            cols 1
+            scrollbars "vertical"
+            spacing 5
+            mousewheel True
+
+            vbox:
+                xsize 570
+                ysize 590
+                if notes:
                     text notes style "notes_style"
-        else:
-            ypadding 40
-            xpadding 40
-            text "Texts from the document will appear here." style "notes_style":
-                xalign 0.5
-                yalign 0.5
+                else:
+                    text "Texts from the document will appear here." style "notes_style"
 
     if notes:
         imagebutton auto "images/Button/summarize_%s.png":
@@ -292,25 +294,22 @@ screen preprocess_text_dull:
                 background "#D9D9D9"
                 yoffset 30
 
-                if keywords:
-                    vpgrid:
-                        cols 1
-                        scrollbars "vertical"
-                        spacing 5
-                        mousewheel True
+                vpgrid:
+                    cols 1
+                    scrollbars "vertical"
+                    spacing 5
+                    mousewheel True
 
-                        vbox:
+                    vbox:
+                        xsize 370
+                        ysize 390
+                        if keywords:
                             text keywords:
                                 font "KronaOne-Regular.ttf"
                                 size 24
                                 color "#303031"
-                else:
-                    ypadding 40
-                    xpadding 40
-                    text "Keywords from the text will appear here." style "notes_style":
-                        xalign 0.5
-                        yalign 0.5
-
+                        else:
+                            text "Keywords from the text will appear here." style "notes_style"
     if not in_edit_title:
         hbox:
             xalign 0.690
