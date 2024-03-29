@@ -421,10 +421,6 @@ screen save_quiz:
         xalign 0.86
         yalign 0.04
 
-    image "images/Minigames Menu/line.png":
-        xalign 0.364
-        yalign 0.55
-
     hbox:
         xalign 0.5
         yalign 0.1
@@ -457,7 +453,7 @@ screen save_quiz:
                 color "#FFFFFF"
 
         vpgrid:
-            cols 2
+            cols 1
             spacing 40
             scrollbars "vertical"
             mousewheel True
@@ -465,28 +461,22 @@ screen save_quiz:
             for i in range(len(questions)):
                 $ question = questions[i]
                 $ answer = answers[i]
-                $ group_name = str(i)
+                hbox:
+                    xsize 720
+                    xalign 0.5
+                    yalign 0.5
+                    spacing 60
+                    frame:
+                        xsize 357
+                        ysize 150
+                        background "#D9D9D9"
+                        xoffset 15
 
-                frame:
-                    xsize 397
-                    #ysize 150
-                    xfill True
-                    background "#D9D9D9"
-                    #xoffset 15
+                        text "[question]"
+                    frame:
+                        xsize 277
+                        ysize 150
+                        background "#D9D9D9"
+                        xoffset 10
 
-                    text "[question]":
-                        font "KronaOne-Regular.ttf"
-                        size 24
-                        color "#303031"
-                frame:
-                    xsize 237
-                    #ysize 150
-                    xfill True
-                    yfill True
-                    background "#D9D9D9"
-                    #xoffset 10
-
-                    text "[answer]":
-                        font "KronaOne-Regular.ttf"
-                        size 24
-                        color "#303031"
+                        text "[answer]"
