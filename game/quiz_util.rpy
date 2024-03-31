@@ -1,6 +1,9 @@
 #fix editting to dissallow empty text field
-define title = VariableInputValue(variable = "quiz_title", returnable = True)
+define title = VariableInputValue(variable = "new_title", returnable = True)
 define keys = VariableInputValue(variable = "keywords", returnable = True)
+
+init:
+    $ new_title = quiz_title
 
 init python:
     global in_edit_title
@@ -61,16 +64,6 @@ label warning_2:
 
     #if player wants to exit
     if bool:
-        $ file_path = f"kodigo/game/python/docs/{quiz_title}.txt"
-        $ file_path_json = f"kodigo/game/python/docs/{quiz_title}.json"
-        $ file_path_keys = f"kodigo/game/python/docs/{quiz_title}_keys.json"
-
-        if os.path.exists(file_path):
-            $ os.remove(file_path) # remove notes
-        if os.path.exists(file_path_json):
-            $ os.remove(file_path_json)
-        if os.path.exists(file_path_keys):
-            $ os.remove(file_path_keys)
         call screen custom_quizzes with dissolve
     else:
         call screen preprocess_text
@@ -104,20 +97,21 @@ screen input_title:
 label edit_title:
     $ in_edit_title = True
 
-    if not in_save:
-        $ show_s("preprocess_text_dull")
-        hide screen preprocess_text
-    else:
+    if in_save:
         hide screen save_quiz
         $ show_s("save_quiz_dull")
-
-    $ old_fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
+    else:
+        hide screen preprocess_text
+        $ show_s("preprocess_text_dull")
     call screen input_title
 
 label edit_title_2:
-    $ new_fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
+    #like if the quiz is in custom
+    $ old_fp = get_path(f"kodigo/game/python/quizzes/custom/{quiz_title}.json")
+    $ new_fp = get_path(f"kodigo/game/python/quizzes/custom/{new_title}.json") #idrk
 
     screen duplicate:
+        add "halfblack"
         vbox:
             xalign 0.5
             yalign 0.5
@@ -127,35 +121,45 @@ label edit_title_2:
             text "Can't have multiple quizzes with the same name.":
                 font "Copperplate Gothic Thirty-Three Regular.otf"
                 size 60
-                color "#999999"
+                color "#FFFFFF"
                 xalign 0.5
                 yalign 0.5
             text "Try again.":
                 font "Copperplate Gothic Thirty-Three Regular.otf"
                 size 60
-                color "#999999"
+                color "#FFFFFF"
                 xalign 0.5
                 yalign 0.5
 
     #duplicate name
     if os.path.exists(new_fp) and old_fp != new_fp:
+        $ in_edit_title = False
+        $ temp = quiz_title
+        $ quiz_title = new_title
         show screen duplicate
         pause 2.0
         hide screen duplicate
-        $ hide_s("preprocess_text_dull")
-        call screen preprocess_text
-    elif os.path.exists(old_fp):
-        $ os.rename(old_fp, new_fp)
-        $ fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json") #reset
+        $ quiz_title = temp
+        $ new_title = quiz_title
+        if in_save:
+            $ hide_s("save_quiz_dull")
+            call screen save_quiz
+        else:
+            $ hide_s("preprocess_text_dull")
+            call screen preprocess_text
+    elif os.path.exists(fp):
+        $ os.rename(fp, get_path(f"kodigo/game/python/temp/{new_title}.json"))
+        $ quiz_title = new_title
+        $ fp = get_path(f"kodigo/game/python/temp/{quiz_title}.json") #reset
 
-    $ in_edit_title = False
+    $ in_edit_title = False 
 
-    if not in_save:
-        $ hide_s("preprocess_text_dull")
-        call screen preprocess_text
-    else:
+    if in_save:
         $ hide_s("save_quiz_dull")
         call screen save_quiz
+    else:
+        $ hide_s("preprocess_text_dull")
+        call screen preprocess_text
 
 screen input_keys:
     imagebutton auto "images/Button/edit_%s.png":
@@ -207,6 +211,8 @@ label edit_keywords:
 screen save_quiz_dull:
     add "bg quiz main"
 
+    $ questions, answers = get_quiz()
+
     imagebutton auto "images/Minigames Menu/exit_%s.png":
         xalign 0.86
         yalign 0.04
@@ -223,6 +229,62 @@ screen save_quiz_dull:
             imagebutton auto "images/Button/edit_title_%s.png":
                 xoffset 40
                 yoffset 45
+
+    vbox:
+        xsize 750
+        ysize 550
+        xalign 0.30
+        yalign 0.55
+        spacing 20
+        hbox:
+            xalign 0.5
+            yalign 0.5
+            spacing 40
+            text "Questions and Answers": #specify with a number later
+                font "Copperplate Gothic Thirty-Three Regular.otf"
+                size 50
+                color "#FFFFFF"
+        #fix this later
+        frame:
+            xsize 700
+            ysize 600
+            background "#D9D9D9"
+            vpgrid:
+                cols 1
+                spacing 20
+                scrollbars "vertical"
+                mousewheel True
+                vbox:
+                    spacing 5
+                    for i in range(len(questions)):
+                        $ question = questions[i]
+                        $ answer = answers[i]
+                        text "Question: [question]" style "q_and_a"
+                        text "Answer: [answer]" style "q_and_a"
+                        text "\n"
+        
+    #this is temporary!
+    #Mixed should be the default
+    vbox:
+        xalign 0.8
+        yalign 0.5
+        spacing 20
+        frame:
+            xsize 337
+            ysize 200
+            xalign 0.5
+            yalign 0.5
+            background "#D9D9D9"
+            vbox:
+                spacing 5
+                textbutton "Mulitple Choices" style "q_and_a"
+                textbutton "Identification" style "q_and_a" 
+                textbutton "Mixed" style "q_and_a"
+
+        imagebutton auto "images/Button/save_quiz_%s.png":
+            xalign 0.5
+            yalign 0.5
+
 
 screen preprocess_text_dull:
     add "bg quiz main"

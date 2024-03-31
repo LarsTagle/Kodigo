@@ -8,9 +8,6 @@ things to fix:
     6. if possible, add mini text editor
 """
 
-#reset this after creation for less processing
-define persistent.quiz_def_num = 1 #changes if the player want to save "Quiz 1", "Quiz 2" etc
-
 #back to status quo, error in mapping sentence
 
 define persistent.learned = 0.1 #this needs to be added to the json file instead
@@ -39,6 +36,93 @@ init python:
     import random
     import os
 
+    def get_quiz_list():
+        global quiz_list
+        global list_path
+        list_path = get_path(f"kodigo/game/python/quizzes/Quiz_List.json")
+
+        if not os.path.exists(list_path):
+            init_quiz_list()
+
+        with open(list_path, 'r') as file:
+            quiz_list = json.load(file)
+
+    def init_quiz_list():
+        init_data = {
+            "standard": [], #this needs to be edited on the json itself
+            "custom": []
+        }
+
+        with open(list_path, 'w') as file:
+            json.dump(init_data, file)
+
+    def set_quiz(quiz, type):
+        global current_quiz
+        global quiz_loc
+        global fp
+        global quiz_data    
+        current_quiz = quiz
+        quiz_loc  = type
+
+        if quiz_loc == "standard_quizzes":
+            fp = get_path(f"kodigo/game/python/quizzes/standard/{current_quiz}.json") 
+        else:
+            fp = get_path(f"kodigo/game/python/quizzes/custom/{current_quiz}.json") 
+
+        with open(fp, 'r') as file:
+            quiz_data = json.load(file)
+
+        #get quiz
+        global questions
+        global answers
+        global letters
+        global options
+
+        letters = []
+        options = []
+
+        for i in range(len(quiz_data["questions"])):
+            options.append(None)
+            letters.append(None)
+        
+        questions = quiz_data["questions"].copy()
+        answers = quiz_data["answers"].copy()
+        q_and_a = list(zip(questions, answers))
+        random.shuffle(q_and_a)
+        questions, answers = zip(*q_and_a)
+
+        for i in range(len(questions)):
+            choices = random.sample(quiz_data["answers"], 3)
+            if answers[i] in choices:
+                choices.remove(answers[i])
+                while True:
+                    choice = random.sample(quiz_data["answers"], 1)
+                    if choice not in choices:
+                        choices.append(choice[0])
+                        break
+            choices.append(answers[i])
+            random.shuffle(choices)
+            options[i] = choices
+            index = choices.index(answers[i])
+            if index == 0:
+                letters[i] = 'A'
+            elif index == 1:
+                letters[i] = 'B'
+            elif index == 2:
+                letters[i] = 'C'
+            else:
+                letters[i] = 'D'
+
+        # get_notes and get_keys can be combined
+    def get_notes():
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+
+        if quiz["notes"]:
+            return quiz["notes"]
+
+        return None
+
     def get_words(answers):
         keywords = []
         for a in answers:
@@ -64,12 +148,6 @@ init python:
         global bool
         bool = b
 
-    def terminate(process):
-        process.terminate()
-
-    def is_subprocess_finished(process):
-        return process.poll() is not None
-
     def get_quiz_record():
         global quiz_record #for all for now
         quiz_record = {} #put this somewhere else
@@ -79,80 +157,11 @@ init python:
         with open(file_path, 'r') as file:
             quiz_record = json.load(file)
 
-    def set_quiz(quiz):
-        global current_quiz
-        current_quiz = quiz
-
-        #put this somwhere else
-        # Check if current_quiz is not already a key in the dictionary
-        if current_quiz not in quiz_record["standard"]:
-            # Add current_quiz as a key and initialize its value as an empty list
-            quiz_record["standard"][current_quiz] = {'records': [], 'mastery': []}
-            save_quiz_record()
-
-    def set_quiz_type(type):
-        global quiz_type
-        quiz_type  = type
-
     def notes(quiz_notes):
         file_path = get_path(f"kodigo/game/python/docs/{quiz_notes}.txt")
         with open(file_path, 'r') as file:
             notes = file.readlines()
         return notes
-
-    def get_quiz():
-        global questions
-        global options #already randomized and correct answer provided
-        global answers   #letters
-        global answers_word
-
-        file_path = get_path(f"kodigo/game/python/quizzes/OS Fundamentals.json")
-        with open(file_path, 'r') as file:
-            quiz = json.load(file)
-
-        questions = []
-        options = []
-        answers = []
-        answers_word = []
-
-        temp_questions = quiz["Questions"]
-        temp_options = quiz["Options"]
-        temp_answers = []
-        temp = quiz["Answers"]
-
-        for i in range(len(temp_questions)):
-            temp_answers.append(None)
-
-        for i in range(len(temp_questions)):
-            if temp_options[i] != None: #skip those for now
-                temp_options[i].append(temp[i])
-                random.shuffle(temp_options[i])
-
-                index = temp_options[i].index(temp[i])
-
-                if index == 0:
-                    temp_answers[i] = 'A'
-                elif index == 1:
-                    temp_answers[i] = 'B'
-                elif index == 2:
-                    temp_answers[i] = 'C'
-                else:
-                    temp_answers[i] = 'D'
-
-        max = 0
-        n = len(temp_questions)
-        n_list = []
-
-        while max != 15:
-            rand = random.randrange(0, n)
-            if rand not in n_list and temp_options[rand] != None:
-                n_list.append(rand)
-
-                answers.append(temp_answers[rand])
-                questions.append(temp_questions[rand])
-                options.append(temp_options[rand])
-                answers_word.append(temp[rand])
-                max += 1
 
     def save_quiz_record():
         file_path = get_path(f"kodigo/game/python/quizzes/q_records.json")
@@ -204,7 +213,7 @@ screen program_quiz_protocol():
     tag menu
     add "bg quiz main"
 
-    $ get_quiz_record()
+    $ get_quiz_list()
 
     add "quiz title":
         yalign 0.2
@@ -221,31 +230,58 @@ screen program_quiz_protocol():
         yalign 0.7
         xalign 0.5
 
-    #$ process = subprocess.Popen(["D:/renpy-8.1.3-sdk/kodigo/game/python/python.exe", "D:/renpy-8.1.3-sdk/kodigo/game/python/MCQ.py"]) #this works
-    #, creationflags=subprocess.CREATE_NO_WINDOW
-
-    # Check if the subprocess has finished
-    #while not is_subprocess_finished(process):
-    #    pause 0.1
-
 screen custom_quizzes:
     tag menu
     add "bg quiz main"
-
-    $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("custom_quizzes"), ShowMenu("program_quiz_protocol")]:
         xalign 0.86
         yalign 0.04
 
-    text "QU/ZZES":
+    text "CUSTOM QU/ZZES":
         font "Copperplate Gothic Thirty-Three Regular.otf"
-        size 92
+        size 50
         color "#FFFFFF"
-        xalign 0.5
-        yalign 0.15
+        xalign 0.192
+        yalign 0.0341
 
-    if len(quiz_record["custom"]) == 0:
+    #ui is temporary
+    if quiz_list["custom"]:
+        vpgrid:
+            cols 3
+            scrollbars "vertical"
+            mousewheel True
+            xalign 0.5
+            yalign 0.44
+            spacing 20
+            xsize 1449
+            ysize 740
+            yfill True
+            for quiz in quiz_list["custom"]:
+                #frame within a frame to add space away from the scrollbar
+                frame:
+                    xpadding 40
+                    ypadding 40
+                    xsize 420
+                    ysize 232
+                    background "#f7f2f200"
+                    frame:
+                        xalign 0.5
+                        yalign 0.5
+                        xpadding 40
+                        ypadding 40
+                        xsize 400
+                        ysize 212
+                        background "#D9D9D9"
+                        vbox:
+                            xalign 0.5
+                            yalign 0.5
+                            spacing 6
+                            text quiz style "title"
+                            imagebutton auto "images/Button/quiz_play_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz, "custom_quizzes"), Jump("init_quiz")]
+                            imagebutton auto "images/Button/status_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz, "custom_quizzes"), Show("quiz_status")]
+                            imagebutton auto "images/Button/notes_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz, "custom_quizzes"), Show("display_notes")]
+    else:
         text "No quiz available.":
             font "Copperplate Gothic Thirty-Three Regular.otf"
             size 60
@@ -254,9 +290,16 @@ screen custom_quizzes:
             yalign 0.3
 
     imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:
-        xalign 0.5
-        yalign 0.8
-        
+        xalign 0.95
+        yalign 0.984
+
+style title:
+    font "Copperplate Gothic Thirty-Three Regular.otf"
+    size 30
+    color "#000000"
+    xalign 0.5
+    yalign 0.5    
+
 screen standard_quizzes():
     $ hide_s("question_dull")
     tag menu
@@ -298,24 +341,25 @@ screen standard_quizzes():
             imagebutton auto "images/Button/notes_%s.png" action [ShowMenu("display_notes"), Function(set_quiz, "OS Fundamentals"), Function(set_quiz_type, "standard")]:
                 yoffset 40
 
+#probobaly better if we separate it by sentences via bullets
 screen display_notes():
     add "bg quiz main"
 
-    $ notes = notes(current_quiz)
+    $ notes = quiz_data["notes"]
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu("standard_quizzes")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu(quiz_loc)]:
         xalign 0.86
         yalign 0.04
 
     text current_quiz:
         font "Copperplate Gothic Bold Regular.ttf"
-        size 35
+        size 50
         color "#FFFFFF"
         xalign 0.5
         yalign 0.15
 
     frame:
-        xalign 0.5
+        xalign 0.523
         yalign 0.55
         xsize 1263
         ysize 626
@@ -328,31 +372,133 @@ screen display_notes():
             mousewheel True
 
             vbox:
-                for note in notes:
-                    text note style "notes_style"
+                text notes style "notes"
 
     imagebutton auto "images/Button/play_%s.png" action [Hide("display_notes"), Jump("init_quiz")]:
         xalign 0.98
         yalign 0.98
 
-style notes_style:
+style notes:
     font "KronaOne-Regular.ttf"
     justify True
     size 24
     color "#303031"
 
-label init_quiz:
-    $ hide_s("question_dull")
-    show bg quiz main
+#status of quiz etc
+screen quiz_status:
+    add "bg quiz main"
 
+    python:
+        if len(quiz_data["mastery"]) == 0:
+            mastery = 0
+        else:
+            mastery = quiz_data["mastery"][-1]
+
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("quiz_status"), ShowMenu(quiz_loc)]: #don't know yet
+        xalign 0.86
+        yalign 0.04
+
+    text current_quiz:
+        font "Copperplate Gothic Bold Regular.ttf"
+        size 50
+        color "#FFFFFF"
+        xalign 0.5
+        yalign 0.15
+
+    text "Mastery":
+        font "Copperplate Gothic Bold Regular.ttf"
+        size 40
+        color "#FFFFFF"
+        xalign 0.5
+        yalign 0.3
+
+    text "[mastery]%":
+        font "Copperplate Gothic Bold Regular.ttf"
+        size 30
+        color "#FFFFFF"
+        xalign 0.5
+        yalign 0.38
+
+    imagebutton auto "images/Button/retry_%s.png" action [Hide("quiz_status"), Call("init_quiz")]:
+        xalign 0.5
+        yalign 0.5
+
+    imagebutton auto "images/Button/pass_attempts_%s.png" action [Hide("quiz_status"), ShowMenu("scoreboard")]:
+        xalign 0.5
+        yalign 0.65
+
+screen scoreboard:
+    add "bg quiz main"
+
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu(quiz_loc)]: #don't know yet
+        xalign 0.86
+        yalign 0.04
+
+    text current_quiz:
+        font "Copperplate Gothic Bold Regular.ttf"
+        size 50
+        color "#FFFFFF"
+        xalign 0.5
+        yalign 0.15
+
+    text "Passed Attempts":
+        font "Copperplate Gothic Bold Regular.ttf"
+        size 40
+        color "#FFFFFF"
+        xalign 0.5
+        yalign 0.25
+
+    vpgrid:
+        cols 1
+        mousewheel True
+        scrollbars "vertical"
+        xalign 0.5
+        yalign 0.5
+        ysize 450
+
+        vbox:
+            spacing 10
+
+            if len(quiz_record['standard'][current_quiz]['records']) == 0:
+                text "No records found.":
+                    font "Copperplate Gothic Thirty-Three Regular.otf"
+                    size 40
+                    color "#FFFFFF"
+            else:
+                text "SCORE               MASTERY       " style "status"
+
+                for i in range(len(quiz_record['standard'][current_quiz]['records'])):
+                    $ score = quiz_record['standard'][current_quiz]['records'][i]
+                    $ mastery = quiz_record['standard'][current_quiz]['mastery'][i]
+                    text "      [score]                       [mastery]%        " style "status"
+
+    python:
+        if len(quiz_record['standard'][current_quiz]['mastery']) == 0:
+            mastery = 0
+        else:
+            mastery = quiz_record['standard'][current_quiz]['mastery'][-1]
+
+    text "[mastery]%" style "status":
+        xalign 0.5
+        yalign 0.8
+        yoffset 20
+
+    imagebutton auto "images/Button/play_%s.png" action [Hide("scoreboard"), Jump("init_quiz")]:
+        xalign 0.98
+        yalign 0.98
+
+style status:
+    font "Copperplate Gothic Bold Regular.ttf"
+    size 30
+    color "#FFFFFF"
+
+label init_quiz:
     $ time = 12
     $ question_num = 0
 
-    $ get_quiz()
-
-    screen ready:
-        modal True
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("standard_quizzes")]:
+    screen ready_set:
+        add "bg quiz main"
+        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu(quiz_loc)]:
             xalign 0.86
             yalign 0.04
 
@@ -364,6 +510,7 @@ label init_quiz:
         timer 1.0 action [Hide("ready"), Show("one")]
 
     screen one:
+        add "bg quiz main"
         imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu("standard_quizzes")]:
             xalign 0.86
             yalign 0.04
@@ -376,6 +523,7 @@ label init_quiz:
         timer 1.0 action [Hide("one"), Show("two")]
 
     screen two:
+        add "bg quiz main"
         imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu("standard_quizzes")]:
             xalign 0.86
             yalign 0.04
@@ -388,6 +536,7 @@ label init_quiz:
         timer 1.0 action [Hide("two"), Show("three")]
 
     screen three:
+        add "bg quiz main"
         imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu("standard_quizzes")]:
             xalign 0.86
             yalign 0.04
@@ -400,6 +549,7 @@ label init_quiz:
         timer 1.0 action [Hide("three"), Show("go")]
 
     screen go:
+        add "bg quiz main"
         imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu("standard_quizzes")]:
             xalign 0.86
             yalign 0.04
@@ -409,16 +559,25 @@ label init_quiz:
             xalign 0.5
             yalign 0.48
 
-        timer 1.0 action [Hide("go"), Show("quiz_proper"), Show("countdown")]
+        timer 1.0 action [Hide("go"), Jump("init_question")]
 
-    call screen ready with dissolve
+    call screen ready_set with dissolve
 
 style init_quiz_font:
     font "Copperplate Gothic Thirty-Three Regular.otf"
     size 87
     color "#FFFFFF"
 
+label init_question:
+    $ hide_s("question_dull")
+    show screen countdown
+    call screen quiz_proper
+
 screen countdown():
+    add "bg quiz main"
+    $ timeout = 30 # Sets how long in seconds the user has to make a choice
+    $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
+
     if timeout_label is not None:
         bar:
             xalign 0.5
@@ -426,6 +585,7 @@ screen countdown():
             xsize 740
             value AnimatedValue(old_value=1.0, value=0.0, range=1.0, delay=timeout)
         timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Jump(timeout_label)]
+
 ## When this is true, menu captions will be spoken by the narrator. When false,
 ## menu captions will be displayed as empty buttons.
 define config.narrator_menu = True
@@ -437,10 +597,6 @@ screen countdown:
     """
 
 screen quiz_proper:
-    tag menu
-    add "bg quiz main"
-    $ timeout = time # Sets how long in seconds the user has to make a choice
-    $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
     imagebutton auto "images/Button/pause_quiz_%s.png" action [Hide("quiz_proper"), Hide("countdown"), Show("paused_menu")]: #action pending
         xalign 0.86
@@ -450,7 +606,7 @@ screen quiz_proper:
         xalign 0.5
         yalign 0.15
         xsize 1241
-        ysize 163
+        yminimum 163
         background "#D9D9D9"
 
         $ number = question_num + 1
@@ -460,9 +616,7 @@ screen quiz_proper:
             xalign 0.5
             yalign 0.5
 
-    style_prefix "mytext"
-
-    imagebutton auto "images/Button/choice_%s.png" action If(answers[question_num] == 'A', Jump("right"), Jump("wrong")):
+    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'A', Jump("right"), Jump("wrong")):
         yalign 0.39
         xalign 0.5
 
@@ -471,7 +625,7 @@ screen quiz_proper:
         yalign 0.4
         xalign 0.5
 
-    imagebutton auto "images/Button/choice_%s.png" action If(answers[question_num] == 'B', Jump("right"), Jump("wrong")):
+    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'B', Jump("right"), Jump("wrong")):
         yalign 0.5
         xalign 0.5
 
@@ -480,7 +634,7 @@ screen quiz_proper:
         yalign 0.5
         xalign 0.5
 
-    imagebutton auto "images/Button/choice_%s.png" action If(answers[question_num] == 'C', Jump("right"), Jump("wrong")):
+    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'C', Jump("right"), Jump("wrong")):
         yalign 0.612
         xalign 0.5
 
@@ -489,7 +643,7 @@ screen quiz_proper:
         yalign 0.6
         xalign 0.5
 
-    imagebutton auto "images/Button/choice_%s.png" action If(answers[question_num] == 'D', Jump("right"), Jump("wrong")):
+    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'D', Jump("right"), Jump("wrong")):
         yalign 0.712
         xalign 0.5
 
@@ -537,40 +691,36 @@ screen paused_menu():
                 yalign 0.5
                 yoffset 20
 
-label right:
+label right:  
     hide screen quiz_proper
-    $ show_s("question_dull")
     hide screen countdown
-    pause 0.5
+    $ show_s("question_dull")
     show halfblack
-    show mc happy_uniform at left
+    show mc_happy at left with dissolve
 
     $ score += 1
 
     "Your answer is {b}{color=#00008B}correct{/color}{/b}!"
 
-    hide mc
+    hide mc_happy
     hide halfblack
-    hide screen paused
     jump next_question
 
 label wrong:
     hide screen quiz_proper
-    $ show_s("question_dull")
     hide screen countdown
-    pause 0.5
+    $ show_s("question_dull")
     show halfblack
-    show mc sad_uniform at left
+    show mc_sad at left with dissolve
 
-    $ letter = answers[question_num]
-    $ answer = answers_word[question_num]
+    $ letter = letters[question_num]
+    $ answer = answers[question_num]
 
     "Your answer is {b}{color=#FF0000}wrong{/color}{/b}."
     "The correct answer is {b}{color=#FF0000}[letter]. [answer]{/color}{/b}."
 
-    hide mc
+    hide mc_sad
     hide halfblack
-    hide screen paused
     jump next_question
 
 label next_question:
@@ -585,8 +735,7 @@ label next_question:
         $ question_num = 0
         jump results
 
-    show screen countdown
-    call screen quiz_proper
+    jump init_question
 
 label results:
     hide screen countdown
@@ -617,116 +766,11 @@ label results:
 
         call screen quiz_status
 
-#status of quiz etc
-screen quiz_status:
-    add "bg quiz main"
-
-    python:
-        if len(quiz_record['standard'][current_quiz]['mastery']) == 0:
-            mastery = 0
-        else:
-            mastery = quiz_record['standard'][current_quiz]['mastery'][-1]
-
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("quiz_status"), ShowMenu("standard_quizzes")]: #don't know yet
-        xalign 0.86
-        yalign 0.04
-
-    text current_quiz:
-        font "Copperplate Gothic Bold Regular.ttf"
-        size 50
-        color "#FFFFFF"
-        xalign 0.5
-        yalign 0.15
-
-    text "Mastery":
-        font "Copperplate Gothic Bold Regular.ttf"
-        size 40
-        color "#FFFFFF"
-        xalign 0.5
-        yalign 0.3
-
-    text "[mastery]%":
-        font "Copperplate Gothic Bold Regular.ttf"
-        size 30
-        color "#FFFFFF"
-        xalign 0.5
-        yalign 0.38
-
-    imagebutton auto "images/Button/retry_%s.png" action [Hide("quiz_status"), Call("init_quiz")]:
-        xalign 0.5
-        yalign 0.5
-
-    imagebutton auto "images/Button/pass_attempts_%s.png" action [Hide("quiz_status"), ShowMenu("scoreboard")]:
-        xalign 0.5
-        yalign 0.65
-
-screen scoreboard:
-    add "bg quiz main"
-
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu("standard_quizzes")]: #don't know yet
-        xalign 0.86
-        yalign 0.04
-
-    text current_quiz:
-        font "Copperplate Gothic Bold Regular.ttf"
-        size 50
-        color "#FFFFFF"
-        xalign 0.5
-        yalign 0.15
-
-    text "Passed Attempts":
-        font "Copperplate Gothic Bold Regular.ttf"
-        size 40
-        color "#FFFFFF"
-        xalign 0.5
-        yalign 0.25
-
-    vpgrid:
-        cols 1
-        mousewheel True
-        scrollbars "vertical"
-        xalign 0.5
-        yalign 0.5
-        ysize 450
-
-        vbox:
-            spacing 10
-
-            if len(quiz_record['standard'][current_quiz]['records']) == 0:
-                text "No records found.":
-                    font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 40
-                    color "#FFFFFF"
-            else:
-                text "SCORE               MASTERY       " style "status_style"
-
-                for i in range(len(quiz_record['standard'][current_quiz]['records'])):
-                    $ score = quiz_record['standard'][current_quiz]['records'][i]
-                    $ mastery = quiz_record['standard'][current_quiz]['mastery'][i]
-                    text "      [score]                       [mastery]%        " style "status_style"
-
-    python:
-        if len(quiz_record['standard'][current_quiz]['mastery']) == 0:
-            mastery = 0
-        else:
-            mastery = quiz_record['standard'][current_quiz]['mastery'][-1]
-
-    text "[mastery]%" style "status_style":
-        xalign 0.5
-        yalign 0.8
-        yoffset 20
-
-    imagebutton auto "images/Button/play_%s.png" action [Hide("scoreboard"), Jump("init_quiz")]:
-        xalign 0.98
-        yalign 0.98
-
-style status_style:
-    font "Copperplate Gothic Bold Regular.ttf"
-    size 30
-    color "#FFFFFF"
-
 screen question_dull:
+    tag menu
     add "bg quiz main"
+    $ timeout = time # Sets how long in seconds the user has to make a choice
+    $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
     imagebutton auto "images/Button/pause_quiz_%s.png":
         xalign 0.86

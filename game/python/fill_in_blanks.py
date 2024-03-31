@@ -5,7 +5,7 @@ import os
 
 fn = sys.argv[1]
 base_path = os.getcwd()
-relative_path = f"kodigo\\game\\python\\docs\\{fn}.json"
+relative_path = f"kodigo\\game\\python\\temp\\{fn}.json"
 fp = os.path.join(base_path, relative_path)#r"D:\renpy-8.1.3-sdk\Kodigo\game\python\docs\Quiz 1.json"#
 
 #read the json file
@@ -13,7 +13,8 @@ with open(fp, 'r') as file:
     quiz = json.load(file)
 
 answers = quiz["answers"]
-sentences = quiz["sentences"]
+sentences = quiz["sentences"].copy()
+with_comma = False
 
 for i in range(len(sentences)):
     if len(answers[i].split(' ')) == 1: 
@@ -23,10 +24,20 @@ for i in range(len(sentences)):
         item = []
         found = False
         for word in sentence:
+            if word.endswith(','):
+                print(word)
+                word = word[:-1] 
+                with_comma = True
             if answers[i] == word.lower() and not found:
+                if with_comma:
+                    blank_space += ","
+                    with_comma = False
                 item.append(blank_space)
                 found = True
             else:
+                if with_comma:
+                    word += ","
+                    with_comma = False
                 item.append(word)
         sentences[i] = ' '.join(item) + '.'
     else:
@@ -39,14 +50,25 @@ for i in range(len(sentences)):
             item = []
             found = False
             for word in sentence:
+                if word.endswith(','):
+                    word = word[:-1] 
+                    with_comma = True
                 if w == word.lower() and not found:
+                    if with_comma and w == answer[-1]:
+                        blank_space += ","
+                        with_comma = False
                     item.append(blank_space)
                     found = True
                 else:
+                    if with_comma:
+                        word += ","
+                        with_comma = False
                     item.append(word)
             sentences[i] = ' '.join(item) + '.'
 
 quiz["questions"] = sentences
+for i in range(len(sentences)):
+    print(f"{sentences[i]}: {answers[i]}")
 
 #save the updated data back to json
 with open(fp, 'w') as file:

@@ -18,7 +18,11 @@ define points = 0
 define emil_decision = ""
 define madam_decision = ""
 define johnny_decision = ""
+
+#for quiz
 default persistent.gender = ""
+image mc_happy = "images/Characters/[persistent.gender] happy_uniform.png"
+image mc_sad = "images/Characters/[persistent.gender] sad_uniform.png"
 
 # NVL Characters are used for the phone texting
 define mc_nvl = Character("[mc]", kind=nvl, image="mc", callback=Phone_SendSound)
@@ -28,22 +32,22 @@ define config.adv_nvl_transition = None
 define config.nvl_adv_transition = Dissolve(0.3)
 
 #image definitions, we can minimize this to a for loop latur
-image mc angry_casual = "images/Characters/[persistent.gender] angry_casual.png"
-image mc blushed_casual = "images/Characters/[persistent.gender] blushed_casual.png"
-image mc confused_casual = "images/Characters/[persistent.gender] confused_casual.png"
-image mc happy_casual = "images/Characters/[persistent.gender] happy_casual.png"
-image mc neutral_casual = "images/Characters/[persistent.gender] neutral_casual.png"
-image mc sad_casual = "images/Characters/[persistent.gender] sad_casual.png"
-image mc shocked_casual = "images/Characters/[persistent.gender] shocked_casual.png"
-image mc sleepy_casual = "images/Characters/[persistent.gender] sleepy_casual.png"
-image mc angry_uniform = "images/Characters/[persistent.gender] angry_uniform.png"
-image mc blushed_uniform = "images/Characters/[persistent.gender] blushed_uniform.png"
-image mc confused_uniform = "images/Characters/[persistent.gender] confused_uniform.png"
-image mc happy_uniform = "images/Characters/[persistent.gender] happy_uniform.png"
-image mc neutral_uniform = "images/Characters/[persistent.gender] neutral_uniform.png"
-image mc sad_uniform = "images/Characters/[persistent.gender] sad_uniform.png"
-image mc shocked_uniform = "images/Characters/[persistent.gender] shocked_uniform.png"
-image mc sleepy_uniform = "images/Characters/[persistent.gender] sleepy_uniform.png"
+image mc angry_casual = "images/Characters/[current_gender] angry_casual.png"
+image mc blushed_casual = "images/Characters/[current_gender] blushed_casual.png"
+image mc confused_casual = "images/Characters/[current_gender] confused_casual.png"
+image mc happy_casual = "images/Characters/[current_gender] happy_casual.png"
+image mc neutral_casual = "images/Characters/[current_gender] neutral_casual.png"
+image mc sad_casual = "images/Characters/[current_gender] sad_casual.png"
+image mc shocked_casual = "images/Characters/[current_gender] shocked_casual.png"
+image mc sleepy_casual = "images/Characters/[current_gender] sleepy_casual.png"
+image mc angry_uniform = "images/Characters/[current_gender] angry_uniform.png"
+image mc blushed_uniform = "images/Characters/[current_gender] blushed_uniform.png"
+image mc confused_uniform = "images/Characters/[current_gender] confused_uniform.png"
+image mc happy_uniform = "images/Characters/[current_gender] happy_uniform.png"
+image mc neutral_uniform = "images/Characters/[current_gender] neutral_uniform.png"
+image mc sad_uniform = "images/Characters/[current_gender] sad_uniform.png"
+image mc shocked_uniform = "images/Characters/[current_gender] shocked_uniform.png"
+image mc sleepy_uniform = "images/Characters/[current_gender] sleepy_uniform.png"
 
 image friend_1 angry_casual = "images/Characters/[friend_1] angry_casual.png"
 image friend_1 blushed_casual = "images/Characters/[friend_1] blushed_casual.png"

@@ -6,7 +6,8 @@ init python:
     in_story = False
 
     def set_gender(selected_gender):
-        persistent.gender = selected_gender
+        persistent.gender = selected_gender #this is only for the quiz ui
+        global current_gender
         global pronoun_referred
         global pronoun_belonging
         global pronoun_respect
@@ -17,10 +18,10 @@ init python:
         global crush_referred
         global crush_belonging
         global crush_respect
-        global crush_object
+        global crush_object 
+        current_gender = selected_gender
 
-
-        if persistent.gender == "male":
+        if selected_gender == "male":
             pronoun_referred = "he"
             pronoun_belonging = "his"
             pronoun_object = "him"

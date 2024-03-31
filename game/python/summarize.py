@@ -41,7 +41,7 @@ fn = sys.argv[1]
 document_text = sys.argv[2]
 
 base_path = os.getcwd()
-relative_path = f"kodigo\\game\\python\\docs\\{fn}.json"
+relative_path = f"kodigo\\game\\python\\temp\\{fn}.json"
 fp = os.path.join(base_path, relative_path)#r"D:\renpy-8.1.3-sdk\Kodigo\game\python\docs\Quiz 1.json"#
 
 summarized_text, summarized_sents, ranked_sents = summarize(document_text)

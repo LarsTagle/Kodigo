@@ -1,7 +1,9 @@
-#summarization working
-#keywords extraction working
-#sentence mapping working
-#question generation working
+#to do next: show the saved quizzes in the ui
+#to add to the standard quizzes, just move the file from custom folder to standard
+#redo quiz codes for getting notes/quizzes based on the new format
+#if button is not clickable, say why
+#add information
+#treat users as if they're toddlers
 
 """ In order to minimize processing time:
     1. In the case that player chooses mixed type of quiz:
@@ -23,25 +25,32 @@
     4. etc
 
 """
-#there's an issue with sentence mapping
-#though you should probably work on thdcbvvvvvvvvvvvvv whatever do what you pls
+
+#reset this after creation for less processing
+define persistent.quiz_def_num = 1 #changes if the player want to save "Quiz 1", "Quiz 2" etc
+
 init:
-    $ base_path = ""
     $ quiz_title = f"Quiz {persistent.quiz_def_num}"
 
 init python:
     import json
     import subprocess
+    import shutil
 
     base_path = os.getcwd() #get working directory
-    global python_path
 
     def get_path(relative_path):
         return os.path.join(base_path, relative_path)
 
+    def terminate(process):
+        process.terminate()
+
+    def is_subprocess_finished(process):
+        return process.poll() is not None
+
     def init_json(): #file path
         global fp
-        fp = get_path(f"kodigo/game/python/docs/{quiz_title}.json")
+        fp = get_path(f"kodigo/game/python/temp/{quiz_title}.json")
 
         init_data = {
             "notes": "",
@@ -49,7 +58,10 @@ init python:
             "ranked_sentences": [],
             "keywords": [],
             "answers": [],
-            "questions": []
+            "questions": [],
+            "type": "",
+            "records": [],
+            "mastery": []
         }
 
         with open(fp, 'w') as file:
@@ -69,16 +81,6 @@ init python:
     def del_json():
         if os.path.exists(fp):
             os.remove(fp)
-
-    # get_notes and get_keys can be combined
-    def get_notes():
-        with open(fp, 'r') as file:
-            quiz = json.load(file)
-
-        if quiz["notes"]:
-            return quiz["notes"]
-
-        return None
 
     def get_keys():
         with open(fp, 'r') as file:
@@ -116,6 +118,37 @@ init python:
         questions = quiz["questions"]
         answers = quiz["answers"]
         return questions, answers
+    
+    def set_type(type):
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+        
+        quiz["type"] = type
+
+        with open(fp, 'w') as file:
+            json.dump(quiz, file)
+
+    def is_type_set():
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+
+        if quiz["type"]:
+            return True
+
+        return False
+
+    def save():
+        #add the quiz in the list
+        quiz_list["custom"].append(quiz_title)
+        with open(list_path, 'w') as file:
+            json.dump(quiz_list, file)
+        #move it to the right folder
+        destination = get_path("kodigo/game/python/quizzes/custom/")
+        shutil.copy(fp, destination)
+
+    def reset_quiz_title():
+        if f"Quiz {persistent.quiz_def_num}" == quiz_title:
+            persistent.quiz_def_num += 1
 
 init 1:
     $ python_path = get_path("Python311/python.exe")
@@ -131,12 +164,6 @@ screen preprocess_text:
     #get the notes and keywords if they exists
     $ notes = get_notes()
     $ keywords = get_str(get_keys())
-
-    $ file_path = get_path(f"kodigo/game/python/docs/{quiz_title}.txt")
-
-    $ file_path_keys = get_path(f"kodigo/game/python/docs/{quiz_title}_keys.json")
-
-    $ file_path_mapped = get_path(f"kodigo/game/python/docs/{quiz_title}_mapped.json")
 
     text "Notes":
         font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -413,6 +440,7 @@ label genarating_quiz:
     call screen save_quiz
 
 screen save_quiz:
+    tag menu
     add "bg quiz main"
 
     $ questions, answers = get_quiz()
@@ -478,13 +506,39 @@ screen save_quiz:
             xalign 0.5
             yalign 0.5
             background "#D9D9D9"
-            textbutton "Mulitple Choices" style q_and_a
-            textbutton "Identification" style q_and_a
-            textbutton "Mixed"
+            vbox:
+                spacing 5
+                textbutton "Mulitple Choices" style "q_and_a" action Function(set_type, "MCQ")
+                textbutton "Identification" style "q_and_a" action Function(set_type, "ID")
+                textbutton "Mixed" style "q_and_a" action Function(set_type, "Mixed")
 
-        imagebutton auto "images/Button/save_quiz_%s.png":
+        if is_type_set():
+            imagebutton auto "images/Button/save_quiz_%s.png" action [Function(reset_quiz_title), Function(save), Jump("confirm_save")]:
+                xalign 0.5
+                yalign 0.5
+        else:
+            imagebutton auto "images/Button/save_quiz_%s.png":
+                xalign 0.5
+                yalign 0.5
+
+label confirm_save:
+    hide screen save_quiz
+    $ show_s("save_quiz_dull")
+    show screen saved
+    screen saved:
+        add "halfblack"
+        text "Quiz save successfully!":
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 60
+            color "#FFFFFF"
             xalign 0.5
             yalign 0.5
+
+    pause 2.0
+    hide screen saved
+    $ hide_s("save_quiz_dull")
+    $ quiz_title = f"Quiz {persistent.quiz_def_num}" #reset
+    call screen custom_quizzes
 
 style q_and_a:
     font "KronaOne-Regular.ttf"
