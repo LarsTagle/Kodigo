@@ -10,8 +10,6 @@ things to fix:
 
 #back to status quo, error in mapping sentence
 
-define persistent.learned = 0.1 #this needs to be added to the json file instead
-
 init:
     $ question_num = 0
     $ score = 0
@@ -64,15 +62,14 @@ init python:
         global current_quiz
         global fp
         global quiz_data    
+        global learned
         current_quiz = quiz
 
-        if quiz_loc == "standard_quizzes":
-            fp = get_path(f"kodigo/game/python/quizzes/standard/{current_quiz}.json") 
-        else:
-            fp = get_path(f"kodigo/game/python/quizzes/custom/{current_quiz}.json") 
-
+        fp = get_path(f"kodigo/game/python/quizzes/{quiz_loc}/{current_quiz}.json") 
         with open(fp, 'r') as file:
             quiz_data = json.load(file)
+
+        learned = quiz_data["learned"] #probability that player learned something
 
         #get quiz
         global questions
@@ -164,11 +161,10 @@ init python:
         with open(file_path, 'r') as file:
             notes = file.readlines()
         return notes
-
+    
     def save_quiz_record():
-        file_path = get_path(f"kodigo/game/python/quizzes/q_records.json")
-        with open(file_path, "w") as json_file:
-            json.dump(quiz_record, json_file)
+        with open(fp, "w") as json_file:
+            json.dump(quiz_data, json_file)
 
     def exit_quiz():
         if quiz_type == "standard":
@@ -314,7 +310,7 @@ style title:
     yalign 0.5    
 
 #probobaly better if we separate it by sentences via bullets
-screen display_notes():
+screen display_notes:
     add "bg quiz main"
 
     $ notes = quiz_data["notes"]
@@ -431,7 +427,7 @@ screen scoreboard:
         vbox:
             spacing 10
 
-            if len(quiz_record['standard'][current_quiz]['records']) == 0:
+            if len(quiz_data['records']) == 0:
                 text "No records found.":
                     font "Copperplate Gothic Thirty-Three Regular.otf"
                     size 40
@@ -439,16 +435,16 @@ screen scoreboard:
             else:
                 text "SCORE               MASTERY       " style "status"
 
-                for i in range(len(quiz_record['standard'][current_quiz]['records'])):
-                    $ score = quiz_record['standard'][current_quiz]['records'][i]
-                    $ mastery = quiz_record['standard'][current_quiz]['mastery'][i]
+                for i in range(len(quiz_data['records'])):
+                    $ score = quiz_data['records'][i]
+                    $ mastery = quiz_data['mastery'][i]
                     text "      [score]                       [mastery]%        " style "status"
 
     python:
-        if len(quiz_record['standard'][current_quiz]['mastery']) == 0:
+        if len(quiz_data['mastery']) == 0:
             mastery = 0
         else:
-            mastery = quiz_record['standard'][current_quiz]['mastery'][-1]
+            mastery = quiz_data['mastery'][-1]
 
     text "[mastery]%" style "status":
         xalign 0.5
@@ -483,7 +479,7 @@ label init_quiz:
 
     screen one:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu("standard_quizzes")]:
+        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu("quiz_list_screen")]:
             xalign 0.86
             yalign 0.04
 
@@ -496,7 +492,7 @@ label init_quiz:
 
     screen two:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu("standard_quizzes")]:
+        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu("quiz_list_screen")]:
             xalign 0.86
             yalign 0.04
 
@@ -509,7 +505,7 @@ label init_quiz:
 
     screen three:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu("standard_quizzes")]:
+        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu("quiz_list_screen")]:
             xalign 0.86
             yalign 0.04
 
@@ -522,7 +518,7 @@ label init_quiz:
 
     screen go:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu("standard_quizzes")]:
+        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu("quiz_list_screen")]:
             xalign 0.86
             yalign 0.04
 
@@ -547,8 +543,6 @@ label init_question:
 
 screen countdown():
     add "bg quiz main"
-    $ timeout = 30 # Sets how long in seconds the user has to make a choice
-    $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
     if timeout_label is not None:
         bar:
@@ -569,8 +563,7 @@ screen countdown:
     """
 
 screen quiz_proper:
-
-    imagebutton auto "images/Button/pause_quiz_%s.png" action [Hide("quiz_proper"), Hide("countdown"), Show("paused_menu")]: #action pending
+    imagebutton auto "images/Button/pause_quiz_%s.png" action Jump("pause_quiz"):
         xalign 0.86
         yalign 0.04
 
@@ -624,50 +617,52 @@ screen quiz_proper:
         yalign 0.7
         xalign 0.5
 
-style mytext_button_text:
-    background None
-    insensitive_color "#000000"
-    color "#000000"
-    hover_color "#545454"
-    selected_color "#000000"
-    font "Copperplate Gothic Thirty-Three Regular.otf"  # Font size
-    left_margin 5
-    top_margin 10
-    size 23
-
-screen paused_menu():
-    modal True
-    $ paused_time = int(time)
+label pause_quiz:
+    hide screen quiz_proper
+    hide screen countdown
     $ show_s("question_dull")
-    image "images/Minigames Menu/timer/[paused_time].png" xalign 0.85 yalign 0.85
-    add "halfblack"
 
-    imagebutton auto "images/Button/pause_quiz_%s.png" action [Hide("paused_menu"), ShowMenu("quiz_proper")]:
-        xalign 0.86
-        yalign 0.04
-    frame:
-        xalign 0.82
-        yalign 0.136
-        xsize 489
-        ysize 421
-        background "#757274"
+    call screen paused_menu
 
-        vbox:
-            xalign 0.5
-            yalign 0.5
-            imagebutton auto "images/Button/continue_quiz_%s.png" action [Hide("paused_menu"), Hide("question_dull"), ShowMenu("quiz_proper"), Show("countdown")]:
+    screen paused_menu:
+        add "halfblack"
+
+        imagebutton auto "images/Button/pause_quiz_%s.png" action Jump("continue_quiz"):
+            xalign 0.86
+            yalign 0.04
+        frame:
+            xalign 0.82
+            yalign 0.136
+            xsize 489
+            ysize 421
+            background "#757274"
+
+            vbox:
                 xalign 0.5
                 yalign 0.5
-            imagebutton auto "images/Button/exit_quiz_%s.png" action [Hide("paused_menu"), Hide("question_dull"), ShowMenu("standard_quizzes")]:
-                xalign 0.5
-                yalign 0.5
-                yoffset 20
+                imagebutton auto "images/Button/continue_quiz_%s.png" action Jump("continue_quiz"):
+                    xalign 0.5
+                    yalign 0.5
+                imagebutton auto "images/Button/exit_quiz_%s.png" action Jump("exit_quiz"):
+                    xalign 0.5
+                    yalign 0.5
+                    yoffset 20
+
+label continue_quiz:
+    hide paused_menu
+    $ hide_s("question_dull")
+    jump init_question
+
+label exit_quiz:
+    hide paused_menu
+    $ hide_s("question_dull")
+    call screen quiz_list_screen
 
 label right:  
     hide screen quiz_proper
     hide screen countdown
     $ show_s("question_dull")
-    show halfblack
+    #show halfblack
     show mc_happy at left with dissolve
 
     $ score += 1
@@ -675,14 +670,14 @@ label right:
     "Your answer is {b}{color=#00008B}correct{/color}{/b}!"
 
     hide mc_happy
-    hide halfblack
+    #hide halfblack
     jump next_question
 
 label wrong:
     hide screen quiz_proper
     hide screen countdown
     $ show_s("question_dull")
-    show halfblack
+    #show halfblack
     show mc_sad at left with dissolve
 
     $ letter = letters[question_num]
@@ -692,7 +687,7 @@ label wrong:
     "The correct answer is {b}{color=#FF0000}[letter]. [answer]{/color}{/b}."
 
     hide mc_sad
-    hide halfblack
+    #hide halfblack
     jump next_question
 
 label next_question:
@@ -703,10 +698,14 @@ label next_question:
         $ hide_s("question_dull")
         jump cheat_quiz
 
-    if question_num == 15:
+    if question_num == len(questions):
         $ question_num = 0
         jump results
+    
+    $ timeout = 30 # Sets how long in seconds the user has to make a choice
+    $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
+    $ hide_s("question_dull")
     jump init_question
 
 label results:
@@ -714,32 +713,35 @@ label results:
     $ hide_s("question_dull")
     "Your score is {b} [score] {/b}!"
 
+    python:
+        L = learned
+        if score/15 >= 0.7:
+            A = (L*(1-S)) / (L*(1-S) + (1-L)*G)
+            L = A + (1-A)*T
+        else:
+            A = (L*S) / ((L*S) + (1-L)*(1-G))
+            L = A + (1-A)*T
+
+    if in_story:
+        $ global quiz_loc
+        $ quiz_loc = "standard"
+
+    $ quiz_data['records'].append(score)
+    $ score = 0
+    $ mastery = round(L * 100, 2)
+    $ learned = L
+    $ quiz_data['mastery'].append(mastery)
+    $ quiz_data['learned'] = learned
+    $ save_quiz_record()
+
+    #this need's to be put in quiz_status instead
     if in_story:
         $ in_story = False
         jump chapter_2
-    else:
-        $ L = persistent.learned
-        python:
-            if score/15 >= 0.7:
-                A = (L*(1-S)) / (L*(1-S) + (1-L)*G)
-                L = A + (1-A)*T
-            else:
-                A = (L*S) / ((L*S) + (1-L)*(1-G))
-                L = A + (1-A)*T
 
-        $ quiz_record['standard'][current_quiz]['records'].append(score)
-        #reset
-        $ score = 0
-        $ mastery = round(L * 100, 2)
-        $ persistent.learned = L
-        $ quiz_record['standard'][current_quiz]['mastery'].append(mastery)
-
-        $ save_quiz_record()
-
-        call screen quiz_status
+    call screen quiz_status
 
 screen question_dull:
-    tag menu
     add "bg quiz main"
     $ timeout = time # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice

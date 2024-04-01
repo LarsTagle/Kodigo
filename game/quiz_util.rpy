@@ -321,9 +321,9 @@ screen preprocess_text_dull:
                 xsize 570
                 ysize 590
                 if notes:
-                    text notes style "notes_style"
+                    text notes style "notes"
                 else:
-                    text "Texts from the document will appear here." style "notes_style"
+                    text "Texts from the document will appear here." style "notes"
 
     if notes:
         imagebutton auto "images/Button/summarize_%s.png":
@@ -370,7 +370,7 @@ screen preprocess_text_dull:
                                 size 24
                                 color "#303031"
                         else:
-                            text "Keywords from the text will appear here." style "notes_style"
+                            text "Keywords from the text will appear here." style "notes"
     if not in_edit_title:
         hbox:
             xalign 0.690

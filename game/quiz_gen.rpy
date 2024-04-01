@@ -52,6 +52,16 @@ init python:
         global fp
         fp = get_path(f"kodigo/game/python/temp/{quiz_title}.json")
 
+        #delete all the uncreated quizzes files in temp
+        folder_path = get_path("kodigo/game/python/temp/")
+        # Get a list of all files in the folder
+        files = os.listdir(folder_path)
+        # Iterate through the list of files and delete each one
+        for file_name in files:
+            file_path = os.path.join(folder_path, file_name)
+            os.remove(file_path)
+
+        #start again
         init_data = {
             "notes": "",
             "sentences": [],
@@ -61,7 +71,8 @@ init python:
             "questions": [],
             "type": "",
             "records": [],
-            "mastery": []
+            "mastery": [],
+            "learned": 0.1
         }
 
         with open(fp, 'w') as file:
@@ -189,9 +200,9 @@ screen preprocess_text:
                 xsize 570
                 ysize 590
                 if notes:
-                    text notes style "notes_style"
+                    text notes style "notes"
                 else:
-                    text "Texts from the document will appear here." style "notes_style"
+                    text "Texts from the document will appear here." style "notes"
 
     if notes:
         imagebutton auto "images/Button/summarize_%s.png" action Jump("summarize"):
@@ -236,7 +247,7 @@ screen preprocess_text:
                             size 24
                             color "#303031"
                     else:
-                        text "Keywords from the text will appear here." style "notes_style"
+                        text "Keywords from the text will appear here." style "notes"
     hbox:
         xalign 0.690
         yalign 0.15
