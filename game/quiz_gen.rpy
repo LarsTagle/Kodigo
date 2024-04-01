@@ -538,7 +538,7 @@ label confirm_save:
     hide screen saved
     $ hide_s("save_quiz_dull")
     $ quiz_title = f"Quiz {persistent.quiz_def_num}" #reset
-    call screen custom_quizzes
+    call screen quiz_list_screen
 
 style q_and_a:
     font "KronaOne-Regular.ttf"

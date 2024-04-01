@@ -56,13 +56,15 @@ init python:
         with open(list_path, 'w') as file:
             json.dump(init_data, file)
 
-    def set_quiz(quiz, type):
-        global current_quiz
+    def set_quiz_loc(type):
         global quiz_loc
+        quiz_loc  = type
+
+    def set_quiz(quiz):
+        global current_quiz
         global fp
         global quiz_data    
         current_quiz = quiz
-        quiz_loc  = type
 
         if quiz_loc == "standard_quizzes":
             fp = get_path(f"kodigo/game/python/quizzes/standard/{current_quiz}.json") 
@@ -223,14 +225,14 @@ screen program_quiz_protocol():
         xalign 0.86
         yalign 0.04
 
-    imagebutton auto "images/Button/standard_quiz_%s.png" action ShowMenu("standard_quizzes"):
+    imagebutton auto "images/Button/standard_quiz_%s.png" action [Function(set_quiz_loc, "standard"), ShowMenu("quiz_list_screen")]:
         yalign 0.55
         xalign 0.5
-    imagebutton auto "images/Button/custom_quiz_%s.png"action ShowMenu("custom_quizzes"):
+    imagebutton auto "images/Button/custom_quiz_%s.png"action [Function(set_quiz_loc, "custom"), ShowMenu("quiz_list_screen")]:
         yalign 0.7
         xalign 0.5
 
-screen custom_quizzes:
+screen quiz_list_screen:
     tag menu
     add "bg quiz main"
 
@@ -238,15 +240,22 @@ screen custom_quizzes:
         xalign 0.86
         yalign 0.04
 
-    text "CUSTOM QU/ZZES":
+    if quiz_loc == "standard":
+        $ screen_title = "STANDARD QU/ZZES"
+        $ empty_list = "No quiz available. The story mode quizzes updates here once it gets played."
+    else:
+        $ screen_title = "CUSTOM QU/ZZES"
+        $ empty_list = "No quiz available. Try creating a quiz."
+
+    text screen_title:
         font "Copperplate Gothic Thirty-Three Regular.otf"
         size 50
         color "#FFFFFF"
-        xalign 0.192
+        xalign 0.199
         yalign 0.0341
 
     #ui is temporary
-    if quiz_list["custom"]:
+    if quiz_list[quiz_loc]:
         vpgrid:
             cols 3
             scrollbars "vertical"
@@ -257,7 +266,7 @@ screen custom_quizzes:
             xsize 1449
             ysize 740
             yfill True
-            for quiz in quiz_list["custom"]:
+            for quiz in quiz_list[quiz_loc]:
                 #frame within a frame to add space away from the scrollbar
                 frame:
                     xpadding 40
@@ -278,20 +287,24 @@ screen custom_quizzes:
                             yalign 0.5
                             spacing 6
                             text quiz style "title"
-                            imagebutton auto "images/Button/quiz_play_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz, "custom_quizzes"), Jump("init_quiz")]
-                            imagebutton auto "images/Button/status_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz, "custom_quizzes"), Show("quiz_status")]
-                            imagebutton auto "images/Button/notes_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz, "custom_quizzes"), Show("display_notes")]
+                            imagebutton auto "images/Button/quiz_play_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Jump("init_quiz")]
+                            imagebutton auto "images/Button/status_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Show("quiz_status")]
+                            imagebutton auto "images/Button/notes_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Show("display_notes")]
     else:
-        text "No quiz available.":
-            font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 60
-            color "#FFFFFF"
-            xalign 0.25
-            yalign 0.3
+        frame:
+            xsize 1449
+            ysize 740
+            align (0.64, 0.5)
+            background "#d9d9d900"
+            text empty_list:
+                font "Copperplate Gothic Thirty-Three Regular.otf"
+                size 60
+                color "#FFFFFF"
 
-    imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:
-        xalign 0.95
-        yalign 0.984
+    if quiz_loc == "custom":
+        imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:
+            xalign 0.95
+            yalign 0.984
 
 style title:
     font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -300,54 +313,13 @@ style title:
     xalign 0.5
     yalign 0.5    
 
-screen standard_quizzes():
-    $ hide_s("question_dull")
-    tag menu
-    add "bg quiz main"
-
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("standard_quizzes"), ShowMenu("program_quiz_protocol")]:
-        xalign 0.86
-        yalign 0.04
-
-    text "QU/ZZES":
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        size 92
-        color "#FFFFFF"
-        xalign 0.5
-        yalign 0.15
-
-    frame:
-        xalign 0.25
-        yalign 0.36
-        xpadding 40
-        ypadding 40
-        xsize 435
-        ysize 240
-        background "#D9D9D9"
-
-        vbox:
-            xalign 0.5
-            yalign 0.5
-            text "#1 OS Fundamentals":
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 23
-                color "#000000"
-                xalign 0.5
-                yalign 0.5
-            imagebutton auto "images/Button/quiz_play_%s.png" action [Function(set_quiz, "OS Fundamentals"), Jump("init_quiz"), Function(set_quiz_type, "standard")]:
-                yoffset 20
-            imagebutton auto "images/Button/status_%s.png" action [Function(set_quiz, "OS Fundamentals"), ShowMenu("quiz_status"), Function(set_quiz_type, "standard")]:
-                yoffset 30
-            imagebutton auto "images/Button/notes_%s.png" action [ShowMenu("display_notes"), Function(set_quiz, "OS Fundamentals"), Function(set_quiz_type, "standard")]:
-                yoffset 40
-
 #probobaly better if we separate it by sentences via bullets
 screen display_notes():
     add "bg quiz main"
 
     $ notes = quiz_data["notes"]
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu(quiz_loc)]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu("quiz_list_screen")]:
         xalign 0.86
         yalign 0.04
 
@@ -394,7 +366,7 @@ screen quiz_status:
         else:
             mastery = quiz_data["mastery"][-1]
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("quiz_status"), ShowMenu(quiz_loc)]: #don't know yet
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("quiz_status"), ShowMenu("quiz_list_screen")]: #don't know yet
         xalign 0.86
         yalign 0.04
 
@@ -430,7 +402,7 @@ screen quiz_status:
 screen scoreboard:
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu(quiz_loc)]: #don't know yet
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu("quiz_list_screen")]: #don't know yet
         xalign 0.86
         yalign 0.04
 
@@ -498,7 +470,7 @@ label init_quiz:
 
     screen ready_set:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu(quiz_loc)]:
+        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")]:
             xalign 0.86
             yalign 0.04
 

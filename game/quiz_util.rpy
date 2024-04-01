@@ -21,7 +21,7 @@ label quit_warning:
     else:
         $ del_json()
         $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
-        call screen custom_quizzes
+        call screen quiz_list_screen
 
     screen warning:
         frame:
@@ -64,7 +64,7 @@ label warning_2:
 
     #if player wants to exit
     if bool:
-        call screen custom_quizzes with dissolve
+        call screen quiz_list_screen with dissolve
     else:
         call screen preprocess_text
 
