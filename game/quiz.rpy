@@ -16,7 +16,6 @@ init:
     $ timer_range = 0
     $ timer_jump = 0
     $ paused_time = 0
-    $ time = 12
 
     $ timeout = 12 # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong'
@@ -29,10 +28,39 @@ init:
     $ mastery_threshold = 0.8
 
 image halfblack = "#00000088"
+image clock:
+    'images/Minigames Menu/timer/12.png'
+    pause 1.0
+    'images/Minigames Menu/timer/11.png'
+    pause 1.0
+    'images/Minigames Menu/timer/10.png'
+    pause 1.0
+    'images/Minigames Menu/timer/9.png'
+    pause 1.0
+    'images/Minigames Menu/timer/8.png'
+    pause 1.0
+    'images/Minigames Menu/timer/7.png'
+    pause 1.0
+    'images/Minigames Menu/timer/6.png'
+    pause 1.0
+    'images/Minigames Menu/timer/5.png'
+    pause 1.0
+    'images/Minigames Menu/timer/4.png'
+    pause 1.0
+    'images/Minigames Menu/timer/3.png'
+    pause 1.0
+    'images/Minigames Menu/timer/2.png'
+    pause 1.0
+    'images/Minigames Menu/timer/1.png'
+    pause 1.0
+    'images/Minigames Menu/timer/0.png'
 
 init python:
     import random
     import os
+
+    global time
+    time = 12
 
     def get_quiz_list():
         global quiz_list
@@ -169,6 +197,8 @@ init python:
     def exit_quiz():
         if quiz_type == "standard":
             renpy.show_screen("standard_quizzes")
+
+    #def timer_function():
 
 screen quiz_instructions:
     tag menu
@@ -537,19 +567,15 @@ style init_quiz_font:
     color "#FFFFFF"
 
 label init_question:
-    $ hide_s("question_dull")
-    show screen countdown
-    call screen quiz_proper
+    $ show_s("countdown")
+    #show screen countdown with None
+    call screen quiz_proper with dissolve
 
 screen countdown():
     add "bg quiz main"
-
+    
     if timeout_label is not None:
-        bar:
-            xalign 0.5
-            yalign 0.85
-            xsize 740
-            value AnimatedValue(old_value=1.0, value=0.0, range=1.0, delay=timeout)
+        add "clock" xalign 0.85 yalign 0.85
         timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Jump(timeout_label)]
 
 ## When this is true, menu captions will be spoken by the narrator. When false,
@@ -561,6 +587,14 @@ screen countdown:
     $ current_time = int(time)
     image "images/Minigames Menu/timer/[current_time].png" xalign 0.85 yalign 0.85
     """
+"""
+python:
+    while time >= 0:
+        process = subprocess.Popen([python_path, py_path, str(time)], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
+        stdout_data, _ = process.communicate()
+        t = int(stdout_data.decode())
+        time -= 1
+"""
 
 screen quiz_proper:
     imagebutton auto "images/Button/pause_quiz_%s.png" action Jump("pause_quiz"):
@@ -619,7 +653,8 @@ screen quiz_proper:
 
 label pause_quiz:
     hide screen quiz_proper
-    hide screen countdown
+    #hide screen countdown
+    $ hide_s("countdown")
     $ show_s("question_dull")
 
     call screen paused_menu
@@ -658,37 +693,84 @@ label exit_quiz:
     $ hide_s("question_dull")
     call screen quiz_list_screen
 
-label right:  
-    hide screen quiz_proper
-    hide screen countdown
-    $ show_s("question_dull")
-    #show halfblack
-    show mc_happy at left with dissolve
+screen show_correction(is_correct):
+    if is_correct:
+        $ mc_reac = "mc_happy"
+        $ answer_is = "Your answer is {b}{color=#00008B}correct{/color}{/b}!"
 
-    $ score += 1
+        button:
+            xysize(1920,1080)
+            action Jump("next_question")#[Hide("show_correction"), Jump("next_question")]
+    else:
+        $ mc_reac = "mc_sad"
+        $ answer_is = "Your answer is {b}{color=#FF0000}wrong{/color}{/b}."
 
-    "Your answer is {b}{color=#00008B}correct{/color}{/b}!"
+        button:
+            xysize(1920,1080)
+            action [Hide("show_correction"), Show("show_answer")]
 
-    hide mc_happy
-    #hide halfblack
-    jump next_question
+    add "halfblack"
+    add mc_reac
 
-label wrong:
-    hide screen quiz_proper
-    hide screen countdown
-    $ show_s("question_dull")
-    #show halfblack
-    show mc_sad at left with dissolve
+    frame:
+        xsize 1920
+        ysize 90
+        xalign 0.5
+        yalign 0.8
+        background "gui/nvl.png"
+        text answer_is style "correct"
+
+screen show_answer:
+    add "halfblack"
+    add "mc_sad"
+
+    button:
+        xysize(1920,1080)
+        action [Hide("show_answer"), Jump("next_question")]
 
     $ letter = letters[question_num]
     $ answer = answers[question_num]
 
-    "Your answer is {b}{color=#FF0000}wrong{/color}{/b}."
-    "The correct answer is {b}{color=#FF0000}[letter]. [answer]{/color}{/b}."
+    frame:
+        xsize 1920
+        ysize 90
+        xalign 0.5
+        yalign 0.8
+        background "gui/nvl.png" 
+        vbox:
+            xalign 0.5
+            yalign 0.5
+            spacing 5
+            text "The correct answer is " style "correct"
+            text "{b}{color=#FF0000}[letter]. [answer]{/color}{/b}." style "correct"
 
-    hide mc_sad
-    #hide halfblack
+style correct:
+    font "KronaOne-Regular.ttf"
+    color "#303031"
+    size 30
+    xalign 0.5
+    yalign 0.5
+
+label right:  
+    hide screen quiz_proper
+    #hide screen countdown
+    $ hide_s("countdown")
+    $ show_s("question_dull")
+
+    $ score += 1
+
+    call screen show_correction (True) with dissolve
     jump next_question
+
+label wrong:
+    hide screen quiz_proper
+    #hide screen countdown
+    $ hide_s("countdown")
+    $ show_s("question_dull")
+
+    call screen show_correction (False) with dissolve
+    jump next_question
+
 
 label next_question:
     $ question_num += 1
@@ -702,11 +784,11 @@ label next_question:
         $ question_num = 0
         jump results
     
-    $ timeout = 30 # Sets how long in seconds the user has to make a choice
+    $ timeout = 12 # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
     $ hide_s("question_dull")
-    jump init_question
+    jump init_question 
 
 label results:
     hide screen countdown
@@ -743,7 +825,7 @@ label results:
 
 screen question_dull:
     add "bg quiz main"
-    $ timeout = time # Sets how long in seconds the user has to make a choice
+    $ timeout = 12 # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
     imagebutton auto "images/Button/pause_quiz_%s.png":

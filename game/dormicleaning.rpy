@@ -350,7 +350,7 @@ screen HiddenFolks():
 
                 # if hover selection is enabled
                 if  not hf_hover is  None :
-                     # if there is an image for the selected object, then display it
+                    # if there is an image for the selected object, then display it
                     if has_image(item +  " hover" ):
                         hover item +  "hover"
                     # otherwise highlight with the transform specified in the settings
