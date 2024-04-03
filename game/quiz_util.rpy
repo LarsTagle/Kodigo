@@ -70,16 +70,24 @@ label warning_2:
 
 screen input_title:
     if not in_save:
-        hbox:
-            xalign 0.690
-            yalign 0.15
+        frame: 
+            xalign 0.73  
+            yalign 0.144
+            xsize 600
+            ysize 60  
+            background "#ffffff00"
 
-            input value title length 18 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
+            input value title length 15 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
                 font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 70
+                size 57
                 color "#FFFFFF"
-            imagebutton auto "images/Button/edit_title_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
-                xoffset 40
+                xalign 1.0
+                yalign 0.15
+
+        imagebutton auto "images/Button/pen_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
+            xalign 0.85
+            yalign 0.134
+
     else:
         hbox:
             xalign 0.5
@@ -110,43 +118,16 @@ label edit_title_2:
     $ old_fp = get_path(f"kodigo/game/python/quizzes/custom/{quiz_title}.json")
     $ new_fp = get_path(f"kodigo/game/python/quizzes/custom/{new_title}.json") #idrk
 
-    screen duplicate:
-        add "halfblack"
-        vbox:
-            xalign 0.5
-            yalign 0.5
-            xsize 1000
-            ysize 100
-            spacing 5
-            text "Can't have multiple quizzes with the same name.":
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 60
-                color "#FFFFFF"
-                xalign 0.5
-                yalign 0.5
-            text "Try again.":
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 60
-                color "#FFFFFF"
-                xalign 0.5
-                yalign 0.5
-
-    #duplicate name
-    if os.path.exists(new_fp) and old_fp != new_fp:
+    if new_title == "":
         $ in_edit_title = False
         $ temp = quiz_title
         $ quiz_title = new_title
-        show screen duplicate
-        pause 2.0
-        hide screen duplicate
-        $ quiz_title = temp
-        $ new_title = quiz_title
-        if in_save:
-            $ hide_s("save_quiz_dull")
-            call screen save_quiz
-        else:
-            $ hide_s("preprocess_text_dull")
-            call screen preprocess_text
+        call screen empty (temp)
+    elif os.path.exists(new_fp) and old_fp != new_fp: #duplicate name
+        $ in_edit_title = False
+        $ temp = quiz_title
+        $ quiz_title = new_title
+        call screen duplicate (temp)
     elif os.path.exists(fp):
         $ os.rename(fp, get_path(f"kodigo/game/python/temp/{new_title}.json"))
         $ quiz_title = new_title
@@ -154,6 +135,68 @@ label edit_title_2:
 
     $ in_edit_title = False 
 
+    if in_save:
+        $ hide_s("save_quiz_dull")
+        call screen save_quiz
+    else:
+        $ hide_s("preprocess_text_dull")
+        call screen preprocess_text
+        
+screen empty(temp):
+    add "halfblack"
+
+    button:
+        xysize(1920,1080)
+        action [Hide("empty"), Call("exit_edit", temp)]
+
+    vbox:
+        xalign 0.5
+        yalign 0.5
+        xsize 1000
+        ysize 100
+        spacing 5
+        text "Name can't be empty.":
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 60
+            color "#FFFFFF"
+            xalign 0.5
+            yalign 0.5
+        text "Try again.":
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 60
+            color "#FFFFFF"
+            xalign 0.5
+            yalign 0.5
+
+screen duplicate(temp):
+    add "halfblack"
+    
+    button:
+        xysize(1920,1080)
+        action [Hide("duplicate"), Call("exit_edit", temp)]
+
+    vbox:
+        xalign 0.5
+        yalign 0.5
+        xsize 1000
+        ysize 100
+        spacing 5
+        text "Can't have multiple quizzes with the same name.":
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 60
+            color "#FFFFFF"
+            xalign 0.5
+            yalign 0.5
+        text "Try again.":
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 60
+            color "#FFFFFF"
+            xalign 0.5
+            yalign 0.5
+       
+label exit_edit(temp):
+    $ quiz_title = temp
+    $ new_title = quiz_title
     if in_save:
         $ hide_s("save_quiz_dull")
         call screen save_quiz
@@ -372,17 +415,23 @@ screen preprocess_text_dull:
                         else:
                             text "Keywords from the text will appear here." style "notes"
     if not in_edit_title:
-        hbox:
-            xalign 0.690
-            yalign 0.15
-
+        frame: 
+            xalign 0.73  
+            yalign 0.144
+            xsize 600
+            ysize 60  
+            background "#ffffff00"
+            
             text "[quiz_title]": #specify with a number later
                 font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 70
+                size 57
                 color "#FFFFFF"
+                xalign 1.0
+                yalign 0.15
 
-            imagebutton auto "images/Button/edit_title_%s.png":
-                xoffset 40
+        imagebutton auto "images/Button/pen_%s.png":
+            xalign 0.85
+            yalign 0.134
 
     if not notes:
         imagebutton auto "images/Button/upload_%s.png":

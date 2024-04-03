@@ -578,24 +578,6 @@ screen countdown():
         add "clock" xalign 0.85 yalign 0.85
         timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Jump(timeout_label)]
 
-## When this is true, menu captions will be spoken by the narrator. When false,
-## menu captions will be displayed as empty buttons.
-define config.narrator_menu = True
-"""
-screen countdown:
-    timer 0.01 repeat True action If(time > 0, true=SetVariable('time', time - 0.01), false=[Hide('countdown'), Jump(timer_jump)])
-    $ current_time = int(time)
-    image "images/Minigames Menu/timer/[current_time].png" xalign 0.85 yalign 0.85
-    """
-"""
-python:
-    while time >= 0:
-        process = subprocess.Popen([python_path, py_path, str(time)], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
-        stdout_data, _ = process.communicate()
-        t = int(stdout_data.decode())
-        time -= 1
-"""
-
 screen quiz_proper:
     imagebutton auto "images/Button/pause_quiz_%s.png" action Jump("pause_quiz"):
         xalign 0.86
