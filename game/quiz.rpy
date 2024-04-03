@@ -150,18 +150,31 @@ init python:
 
         return None
 
-    def get_words(answers):
-        keywords = []
-        for a in answers:
-            if " " in a:
-                keys = a.split(" ")
-                for k in keys:
-                    if k not in keywords:
-                        keywords.append(k)
-            elif a not in keywords:
-                keywords.append(a)
+    def get_boldened_notes():
+        with open(fp, 'r') as file:
+            quiz_data = json.load(file)
 
-        return keywords
+        sentences = quiz_data["sentences"]
+        answers = quiz_data["answers"]
+        boldened = []
+
+        for i in range(len(sentences)):
+            pattern = re.compile(answers[i], re.IGNORECASE)
+            match = pattern.search(sentences[i])
+            matched_word = sentences[i][match.start():match.end()]
+            sentence = pattern.sub('{b}{color=#007FFF}' + matched_word + '{/color}{/b}', sentences[i], count=1)
+            boldened.append(sentence)
+            
+        return boldened
+
+    def get_words():
+        with open(fp, 'r') as file:
+            quiz_data = json.load(file)
+
+        sentences = quiz_data["notes"]
+        words = re.findall(r"[\w']+|[.,!?;]", sentences)
+        
+        return words
 
     def get_text(quiz_notes):
         file_path = get_path(f"kodigo/game/python/docs/{quiz_notes}.txt")
@@ -343,7 +356,7 @@ style title:
 screen display_notes:
     add "bg quiz main"
 
-    $ notes = quiz_data["notes"]
+    $ notes = '\n\n'.join(get_boldened_notes()) #quiz_data["notes"]
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu("quiz_list_screen")]:
         xalign 0.86
@@ -378,7 +391,7 @@ screen display_notes:
 
 style notes:
     font "KronaOne-Regular.ttf"
-    justify True
+    #justify True
     size 24
     color "#303031"
 

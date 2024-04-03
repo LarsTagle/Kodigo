@@ -71,36 +71,43 @@ label warning_2:
 screen input_title:
     if not in_save:
         frame: 
-            xalign 0.73  
+            xalign 0.76
             yalign 0.144
-            xsize 600
-            ysize 60  
+            xsize 650
+            ysize 85  
             background "#ffffff00"
+            
+            hbox: 
+                xalign 0.5
+                yalign 0.5 
+                input value title length 15 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
+                    font "Copperplate Gothic Thirty-Three Regular.otf"
+                    size 57
+                    color "#FFFFFF"
+                    xalign 0.5
+                    yalign 0.5 
 
-            input value title length 15 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 57
-                color "#FFFFFF"
-                xalign 1.0
-                yalign 0.15
-
-        imagebutton auto "images/Button/pen_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
-            xalign 0.85
-            yalign 0.134
-
+                imagebutton auto "images/Button/pen_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
+                    yalign 0.1
     else:
-        hbox:
+        frame:
             xalign 0.5
             yalign 0.1
-            input value title length 18 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
+            xsize 1200
+            ysize 135
+            background "#ffffff00"
+
+            hbox:
                 xalign 0.5
-                yalign 0.1
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 150
-                color "#FFFFFF"
-            imagebutton auto "images/Button/edit_title_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
-                xoffset 40
-                yoffset 45
+                yalign 0.5
+                spacing 5
+                input value title length 15 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
+                    font "Copperplate Gothic Thirty-Three Regular.otf"
+                    size 100
+                    color "#FFFFFF"
+
+                imagebutton auto "images/Button/pen_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
+                    yoffset 5
 
 label edit_title:
     $ in_edit_title = True
@@ -261,17 +268,24 @@ screen save_quiz_dull:
         yalign 0.04
 
     if not in_edit_title:
-        hbox:
+        frame:
             xalign 0.5
             yalign 0.1
-            text "[quiz_title]": #specify with a number later
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 150
-                color "#FFFFFF"
+            xsize 1200
+            ysize 135
+            background "#ffffff00"
 
-            imagebutton auto "images/Button/edit_title_%s.png":
-                xoffset 40
-                yoffset 45
+            hbox:
+                xalign 0.5
+                yalign 0.5
+                spacing 5
+                text "[quiz_title]": #specify with a number later
+                    font "Copperplate Gothic Thirty-Three Regular.otf"
+                    size 100
+                    color "#FFFFFF"
+
+                imagebutton auto "images/Button/pen_%s.png":
+                    yoffset 5
 
     vbox:
         xsize 750
@@ -416,22 +430,24 @@ screen preprocess_text_dull:
                             text "Keywords from the text will appear here." style "notes"
     if not in_edit_title:
         frame: 
-            xalign 0.73  
+            xalign 0.76
             yalign 0.144
-            xsize 600
-            ysize 60  
+            xsize 650
+            ysize 85  
             background "#ffffff00"
             
-            text "[quiz_title]": #specify with a number later
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 57
-                color "#FFFFFF"
-                xalign 1.0
-                yalign 0.15
+            hbox: 
+                xalign 0.5
+                yalign 0.5 
+                text "[quiz_title]": #specify with a number later
+                    font "Copperplate Gothic Thirty-Three Regular.otf"
+                    size 57
+                    color "#FFFFFF"
+                    xalign 0.5
+                    yalign 0.5 
 
-        imagebutton auto "images/Button/pen_%s.png":
-            xalign 0.85
-            yalign 0.134
+                imagebutton auto "images/Button/pen_%s.png":
+                    yalign 0.1
 
     if not notes:
         imagebutton auto "images/Button/upload_%s.png":
