@@ -211,52 +211,193 @@ label exit_edit(temp):
         $ hide_s("preprocess_text_dull")
         call screen preprocess_text
 
-screen input_keys:
-    imagebutton auto "images/Button/edit_%s.png":
-        xalign 0.85
-        yalign 0.5
+screen input_keys(j):
+    $ answers = get_answers()
 
-    vbox:
-        xalign 0.737
-        yalign 0.4
+    if answers:
+        $ sentences = get_boldened_notes()
+    else:
+        $ sentences = get_sentences()
 
-        text "Keywords":
+    text "Notes":
+        font "Copperplate Gothic Thirty-Three Regular.otf"
+        size 48
+        color "#FFFFFF"
+        xalign 0.22
+        yalign 0.2
+
+    if sentences:
+        viewport:
+            scrollbars "vertical"
+            mousewheel True
+            xalign 0.5
+            yalign 0.6
+            xsize 1220
+            ysize 650
+
+            vbox:
+                spacing 30
+                for i in range(len(sentences)):
+                    frame:
+                        xpadding 10
+                        xsize 1220
+                        background "#f7f2f200"
+                        vbox:
+                            spacing 10
+                            frame:
+                                xalign 0.5
+                                yalign 0.5
+                                xpadding 40
+                                ypadding 40
+                                xsize 1150
+                                background "#D9D9D9"
+                                hbox:
+                                    xalign 0.5
+                                    yalign 0.5
+                                    xsize 1070
+                                    spacing 10
+                                    vbox: 
+                                        xsize 1000
+                                        text sentences[i] style "notes"
+                                    imagebutton auto "images/Button/edit_icon_%s.png": 
+                                        xalign 1.0 
+                                        yalign 0.5
+                            if i == j:
+                                frame:
+                                    xalign 0.5
+                                    yalign 0.5
+                                    xpadding 40
+                                    ypadding 40
+                                    xsize 1150
+                                    background "#D9D9D9"
+                                    text "try"
+
+
+label edit_keys(sentences, keywords, i):
+    $ in_edit_keywords = True
+    $ show_s("preprocess_text_dull")
+    call screen input_keys (i)
+    "[sentences]"
+    "[keywords]"
+
+screen preprocess_text_dull:
+    add "bg quiz main"
+
+    imagebutton auto "images/Minigames Menu/exit_%s.png":
+        xalign 0.86
+        yalign 0.04
+
+    frame:
+        xalign 0.5
+        yalign 0.1
+        xsize 1200
+        ysize 135
+        background "#ffffff00"
+
+        hbox:
+            xalign 0.5
+            yalign 0.5
+            spacing 5
+            text "[quiz_title]": #specify with a number later
+                font "Copperplate Gothic Thirty-Three Regular.otf"
+                size 100
+                color "#FFFFFF"
+
+            imagebutton auto "images/Button/pen_%s.png": 
+                yoffset 5
+
+    #get the notes and keywords if they exists
+    #$ notes = get_notes()
+    
+    $ answers = get_answers()
+
+    if answers:
+        $ sentences = get_boldened_notes()
+    else:
+        $ sentences = get_sentences()
+
+    if not in_edit_keywords:
+        text "Notes":
             font "Copperplate Gothic Thirty-Three Regular.otf"
             size 48
             color "#FFFFFF"
-            xalign 0.5
-            yalign 0.5
+            xalign 0.22
+            yalign 0.2
+    
+        if sentences:
+            viewport:
+                scrollbars "vertical"
+                mousewheel True
+                xalign 0.5
+                yalign 0.6
+                xsize 1220
+                ysize 650
 
-        frame:
-            xalign 0.25
-            yalign 0.5
-            xsize 400
-            ysize 400
-            background "#D9D9D9"
-            yoffset 30
+                vbox:
+                    spacing 30
+                    for i in range(len(sentences)):
+                        frame:
+                            xpadding 10
+                            xsize 1220
+                            background "#f7f2f200"
+                            frame:
+                                xalign 0.5
+                                yalign 0.5
+                                xpadding 40
+                                ypadding 40
+                                xsize 1150
+                                background "#D9D9D9"
+                                hbox:
+                                    xalign 0.5
+                                    yalign 0.5
+                                    xsize 1070
+                                    spacing 10
+                                    vbox: 
+                                        xsize 1000
+                                        text sentences[i] style "notes"
+                                    imagebutton auto "images/Button/edit_icon_%s.png": 
+                                        xalign 1.0 
+                                        yalign 0.5
+        else:
+            viewport:
+                scrollbars "vertical"
+                mousewheel True
+                xalign 0.5
+                yalign 0.6
+                xsize 1220
+                ysize 650
 
-            if keywords:
-                vpgrid:
-                    cols 1
-                    scrollbars "vertical"
-                    spacing 5
-                    mousewheel True
+                frame:
+                    xpadding 10
+                    xsize 1220
+                    background "#f7f2f200"
+                    frame:
+                        xalign 0.5
+                        yalign 0.5
+                        xpadding 40
+                        ypadding 40
+                        xsize 1150
+                        background "#D9D9D9"
+                        hbox:
+                            xalign 0.5
+                            yalign 0.5
+                            xsize 1070
+                            spacing 10
+                            vbox: 
+                                xsize 1000
+                                text "Sentences will appear {b}{color=#007FFF}here{/color}{/b}..." style "notes"
+                            imagebutton auto "images/Button/edit_icon_%s.png":
+                                xalign 1.0 
+                                yalign 0.5
 
-                    vbox:
-                        xsize 370
-                        ysize 390
-                        input value keys length 6262 allow "abcdefghijklmnopqrstuvwxyz, " multiline True:
-                            font "KronaOne-Regular.ttf"
-                            size 24
-                            color "#303031"
-
-label edit_keywords:
-    $ keywords = get_str(get_keys())
-    $ in_edit_keywords = True
-    $ show_s("preprocess_text_dull")
-    call screen input_keys
-    $ in_edit_keywords = False
-    call screen preprocess_text
+    if not answers:
+        imagebutton auto "images/Button/upload_%s.png":
+            xalign 0.95
+            yalign 0.984
+    else:
+        imagebutton auto "images/Button/create_quiz_%s.png": 
+            xalign 0.95
+            yalign 0.984
 
 screen save_quiz_dull:
     add "bg quiz main"
@@ -341,119 +482,3 @@ screen save_quiz_dull:
         imagebutton auto "images/Button/save_quiz_%s.png":
             xalign 0.5
             yalign 0.5
-
-
-screen preprocess_text_dull:
-    add "bg quiz main"
-
-    imagebutton auto "images/Minigames Menu/exit_%s.png":
-        xalign 0.86
-        yalign 0.04
-
-    #get the notes if it exists
-    $ notes = get_notes()
-    $ keywords = get_str(get_keys())
-
-    text "Notes":
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        size 48
-        color "#FFFFFF"
-        xalign 0.324
-        yalign 0.15
-
-    frame:
-        xalign 0.25
-        yalign 0.5
-        xsize 600
-        ysize 600
-        background "#D9D9D9"
-
-        vpgrid:
-            cols 1
-            scrollbars "vertical"
-            spacing 5
-            mousewheel True
-
-            vbox:
-                xsize 570
-                ysize 590
-                if notes:
-                    text notes style "notes"
-                else:
-                    text "Texts from the document will appear here." style "notes"
-
-    if notes:
-        imagebutton auto "images/Button/summarize_%s.png":
-            xalign 0.28
-            yalign 0.85
-
-    if not in_edit_keywords:
-        if keywords:
-            imagebutton auto "images/Button/edit_%s.png":
-                xalign 0.85
-                yalign 0.5
-
-        vbox:
-            xalign 0.737
-            yalign 0.4
-
-            text "Keywords":
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 48
-                color "#FFFFFF"
-                xalign 0.5
-                yalign 0.5
-
-            frame:
-                xalign 0.25
-                yalign 0.5
-                xsize 400
-                ysize 400
-                background "#D9D9D9"
-                yoffset 30
-
-                vpgrid:
-                    cols 1
-                    scrollbars "vertical"
-                    spacing 5
-                    mousewheel True
-
-                    vbox:
-                        xsize 370
-                        ysize 390
-                        if keywords:
-                            text keywords:
-                                font "KronaOne-Regular.ttf"
-                                size 24
-                                color "#303031"
-                        else:
-                            text "Keywords from the text will appear here." style "notes"
-    if not in_edit_title:
-        frame: 
-            xalign 0.76
-            yalign 0.144
-            xsize 650
-            ysize 85  
-            background "#ffffff00"
-            
-            hbox: 
-                xalign 0.5
-                yalign 0.5 
-                text "[quiz_title]": #specify with a number later
-                    font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 57
-                    color "#FFFFFF"
-                    xalign 0.5
-                    yalign 0.5 
-
-                imagebutton auto "images/Button/pen_%s.png":
-                    yalign 0.1
-
-    if not notes:
-        imagebutton auto "images/Button/upload_%s.png":
-            xalign 0.75
-            yalign 0.8
-    else:
-        imagebutton auto "images/Button/create_quiz_%s.png": #since we are skipping editting the keywords & texts, we proceed here next
-            xalign 0.75
-            yalign 0.8

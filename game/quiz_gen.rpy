@@ -59,6 +59,12 @@ init python:
             return True
 
         return False
+
+    def get_answers():
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+
+        return quiz["answers"]
     
     def get_sentences():
         with open(fp, 'r') as file:
@@ -172,7 +178,7 @@ screen preprocess_text:
     #get the notes and keywords if they exists
     #$ notes = get_notes()
     $ sentences = get_boldened_notes()
-    $ keywords = get_str(get_keys())
+    $ answers = get_answers()
 
     text "Notes":
         font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -192,7 +198,7 @@ screen preprocess_text:
 
             vbox:
                 spacing 30
-                for sentence in sentences:
+                for i in range(len(sentences)):
                     frame:
                         xpadding 10
                         xsize 1220
@@ -204,9 +210,50 @@ screen preprocess_text:
                             ypadding 40
                             xsize 1150
                             background "#D9D9D9"
-                            text sentence style "notes"
+                            hbox:
+                                xalign 0.5
+                                yalign 0.5
+                                xsize 1070
+                                spacing 10
+                                vbox: 
+                                    xsize 1000
+                                    text sentences[i] style "notes"
+                                imagebutton auto "images/Button/edit_icon_%s.png" action [Hide("preprocess_text"), Call("edit_keys", sentences, answers, i)]:
+                                    xalign 1.0 
+                                    yalign 0.5
+    else:
+        viewport:
+            scrollbars "vertical"
+            mousewheel True
+            xalign 0.5
+            yalign 0.6
+            xsize 1220
+            ysize 650
 
-    if not keywords:
+            frame:
+                xpadding 10
+                xsize 1220
+                background "#f7f2f200"
+                frame:
+                    xalign 0.5
+                    yalign 0.5
+                    xpadding 40
+                    ypadding 40
+                    xsize 1150
+                    background "#D9D9D9"
+                    hbox:
+                        xalign 0.5
+                        yalign 0.5
+                        xsize 1070
+                        spacing 10
+                        vbox: 
+                            xsize 1000
+                            text "Sentences will appear {b}{color=#007FFF}here{/color}{/b}..." style "notes"
+                        imagebutton auto "images/Button/edit_icon_%s.png":
+                            xalign 1.0 
+                            yalign 0.5
+
+    if not answers:
         imagebutton auto "images/Button/upload_%s.png" action Jump("upload_file"):
             xalign 0.95
             yalign 0.984
