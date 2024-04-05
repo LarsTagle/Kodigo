@@ -1,3 +1,6 @@
+#error found
+#handle when keywords failed to extract
+
 #reset this after creation for less processing
 define persistent.quiz_def_num = 1 #changes if the player want to save "Quiz 1", "Quiz 2" etc
 
@@ -218,7 +221,7 @@ screen preprocess_text:
                                 vbox: 
                                     xsize 1000
                                     text sentences[i] style "notes"
-                                imagebutton auto "images/Button/edit_icon_%s.png" action [Hide("preprocess_text"), Call("edit_keys", sentences, answers, i)]:
+                                imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]:
                                     xalign 1.0 
                                     yalign 0.5
     else:
@@ -249,7 +252,7 @@ screen preprocess_text:
                         vbox: 
                             xsize 1000
                             text "Sentences will appear {b}{color=#007FFF}here{/color}{/b}..." style "notes"
-                        imagebutton auto "images/Button/edit_icon_%s.png":
+                        imagebutton auto "images/Button/edit_icon_%s.png": 
                             xalign 1.0 
                             yalign 0.5
 

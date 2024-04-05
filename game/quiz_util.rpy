@@ -1,6 +1,6 @@
 #fix editting to dissallow empty text field
 define title = VariableInputValue(variable = "new_title", returnable = True)
-define keys = VariableInputValue(variable = "keywords", returnable = True)
+define key = VariableInputValue(variable = "change_key", returnable = True)
 
 init:
     $ new_title = quiz_title
@@ -11,6 +11,21 @@ init python:
     in_edit_title = False
     in_edit_keywords = False
     global keywords
+
+    def set_old_key(answers, i):
+        global change_key
+        global index 
+        change_key = answers[i]
+        index = i
+    
+    def reset_key():
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+
+        quiz["answers"][index] = change_key
+
+        with open(fp, 'w') as file:
+            json.dump(quiz, file)
 
 label quit_warning:
     #checks if questions are generated
@@ -211,74 +226,52 @@ label exit_edit(temp):
         $ hide_s("preprocess_text_dull")
         call screen preprocess_text
 
-screen input_keys(j):
-    $ answers = get_answers()
+#maybe a floating screen would be easier to do
+#yeah the frame would work for this
+screen input_keys(sentences, answers, i):
+    modal True
+    add "halfblack"
 
-    if answers:
-        $ sentences = get_boldened_notes()
-    else:
-        $ sentences = get_sentences()
+    $ old = answers[i]
 
-    text "Notes":
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        size 48
-        color "#FFFFFF"
-        xalign 0.22
-        yalign 0.2
+    frame:
+        xysize(500, 400)
+        align(0.5, 0.5)
+        vbox:
+            spacing 1
+            frame:
+                xfill True
+                ysize 50
+                background "#0b5fbed8"
+                imagebutton auto "images/Minigames Menu/exit_%s.png" action Hide("input_keys"):
+                    xalign 1.0
+            frame:
+                xfill True
+                ysize 150
+                vbox:
+                    xfill True
+                    spacing 40
+                    text "Original keyword:" style "notes"
+                    text "{b}[old]{/b}" style "notes" color "#007FFF":
+                        align(0.3, 0.5)
+            frame: 
+                xfill True
+                yfill True
+                vbox:
+                    xfill True
+                    spacing 40
+                    text "New keyword:" style "notes"
+                    input value key length 40 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- " style "notes" color "#007FFF":
+                        align(0.3, 0.5)
+                        default_focus True
+                        copypaste True
+                        bold True
+                    textbutton "ENTER" action Jump("reset_keywords") keysym ["K_RETURN", "K_KP_ENTER"]
 
-    if sentences:
-        viewport:
-            scrollbars "vertical"
-            mousewheel True
-            xalign 0.5
-            yalign 0.6
-            xsize 1220
-            ysize 650
-
-            vbox:
-                spacing 30
-                for i in range(len(sentences)):
-                    frame:
-                        xpadding 10
-                        xsize 1220
-                        background "#f7f2f200"
-                        vbox:
-                            spacing 10
-                            frame:
-                                xalign 0.5
-                                yalign 0.5
-                                xpadding 40
-                                ypadding 40
-                                xsize 1150
-                                background "#D9D9D9"
-                                hbox:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    xsize 1070
-                                    spacing 10
-                                    vbox: 
-                                        xsize 1000
-                                        text sentences[i] style "notes"
-                                    imagebutton auto "images/Button/edit_icon_%s.png": 
-                                        xalign 1.0 
-                                        yalign 0.5
-                            if i == j:
-                                frame:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    xpadding 40
-                                    ypadding 40
-                                    xsize 1150
-                                    background "#D9D9D9"
-                                    text "try"
-
-
-label edit_keys(sentences, keywords, i):
-    $ in_edit_keywords = True
-    $ show_s("preprocess_text_dull")
-    call screen input_keys (i)
-    "[sentences]"
-    "[keywords]"
+#this need to get fixed
+label reset_keywords:
+    $ reset_key()
+    call screen preprocess_text with dissolve
 
 screen preprocess_text_dull:
     add "bg quiz main"
@@ -316,79 +309,78 @@ screen preprocess_text_dull:
     else:
         $ sentences = get_sentences()
 
-    if not in_edit_keywords:
-        text "Notes":
+    text "Notes":
             font "Copperplate Gothic Thirty-Three Regular.otf"
             size 48
             color "#FFFFFF"
             xalign 0.22
             yalign 0.2
     
-        if sentences:
-            viewport:
-                scrollbars "vertical"
-                mousewheel True
-                xalign 0.5
-                yalign 0.6
-                xsize 1220
-                ysize 650
+    if sentences:
+        viewport:
+            scrollbars "vertical"
+            mousewheel True
+            xalign 0.5
+            yalign 0.6
+            xsize 1220
+            ysize 650
 
-                vbox:
-                    spacing 30
-                    for i in range(len(sentences)):
-                        frame:
-                            xpadding 10
-                            xsize 1220
-                            background "#f7f2f200"
-                            frame:
-                                xalign 0.5
-                                yalign 0.5
-                                xpadding 40
-                                ypadding 40
-                                xsize 1150
-                                background "#D9D9D9"
-                                hbox:
-                                    xalign 0.5
-                                    yalign 0.5
-                                    xsize 1070
-                                    spacing 10
-                                    vbox: 
-                                        xsize 1000
-                                        text sentences[i] style "notes"
-                                    imagebutton auto "images/Button/edit_icon_%s.png": 
-                                        xalign 1.0 
-                                        yalign 0.5
-        else:
-            viewport:
-                scrollbars "vertical"
-                mousewheel True
-                xalign 0.5
-                yalign 0.6
-                xsize 1220
-                ysize 650
-
-                frame:
-                    xpadding 10
-                    xsize 1220
-                    background "#f7f2f200"
+            vbox:
+                spacing 30
+                for i in range(len(sentences)):
                     frame:
-                        xalign 0.5
-                        yalign 0.5
-                        xpadding 40
-                        ypadding 40
-                        xsize 1150
-                        background "#D9D9D9"
-                        hbox:
+                        xpadding 10
+                        xsize 1220
+                        background "#f7f2f200"
+                        frame:
                             xalign 0.5
                             yalign 0.5
-                            xsize 1070
-                            spacing 10
-                            vbox: 
-                                xsize 1000
-                                text "Sentences will appear {b}{color=#007FFF}here{/color}{/b}..." style "notes"
-                            imagebutton auto "images/Button/edit_icon_%s.png":
-                                xalign 1.0 
+                            xpadding 40
+                            ypadding 40
+                            xsize 1150
+                            background "#D9D9D9"
+                            hbox:
+                                xalign 0.5
                                 yalign 0.5
+                                xsize 1070
+                                spacing 10
+                                vbox: 
+                                    xsize 1000
+                                    text sentences[i] style "notes"
+                                imagebutton auto "images/Button/edit_icon_%s.png": 
+                                    xalign 1.0 
+                                    yalign 0.5
+    else:
+        viewport:
+            scrollbars "vertical"
+            mousewheel True
+            xalign 0.5
+            yalign 0.6
+            xsize 1220
+            ysize 650
+
+            frame:
+                xpadding 10
+                xsize 1220
+                background "#f7f2f200"
+                frame:
+                    xalign 0.5
+                    yalign 0.5
+                    xpadding 40
+                    ypadding 40
+                    xsize 1150
+                    background "#D9D9D9"
+                    hbox:
+                        xalign 0.5
+                        yalign 0.5
+                        xsize 1070
+                        spacing 10
+                        vbox: 
+                            xsize 1000
+                            text "Sentences will appear {b}{color=#007FFF}here{/color}{/b}..." style "notes"
+                        imagebutton auto "images/Button/edit_icon_%s.png":
+                            xalign 1.0 
+                            yalign 0.5
 
     if not answers:
         imagebutton auto "images/Button/upload_%s.png":

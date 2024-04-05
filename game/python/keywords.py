@@ -43,8 +43,12 @@ fp = os.path.join(base_path, relative_path)#f"D:\\renpy-8.1.3-sdk\\kodigo\\game\
 #read the json file
 with open(fp, 'r') as file:
     quiz = json.load(file)
+
+if quiz["ranked_sentences"]:
+    text = quiz["ranked_sentences"]
+else:
+    text = quiz["notes"]
     
-text = quiz["ranked_sentences"]
 n = len(quiz["sentences"]) + 40
 keywords = keywords(text, n)
 
