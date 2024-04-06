@@ -1,8 +1,8 @@
-import pke
+import pke # type: ignore
 import string
-import nltk
+import nltk # type: ignore
 nltk.download('stopwords')
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords # type: ignore
 
 import sys
 import json

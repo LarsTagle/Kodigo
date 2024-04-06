@@ -50,6 +50,12 @@ init python:
             "learned": 0.1
         }
 
+        #set default type
+        global quiz_type
+        quiz_type = "Multiple Choices"
+        
+        init_data["type"] = quiz_type
+
         with open(fp, 'w') as file:
             json.dump(init_data, file)
     
@@ -118,6 +124,9 @@ init python:
         return questions, answers
     
     def set_type(type):
+        global quiz_type
+        quiz_type = type 
+
         with open(fp, 'r') as file:
             quiz = json.load(file)
         
@@ -125,6 +134,17 @@ init python:
 
         with open(fp, 'w') as file:
             json.dump(quiz, file)
+    
+    def type_choices():
+        choices = ["Multiple Choices", "Identification", "Mixed"]
+        ch = []
+        ch.append(quiz_type)
+
+        for choice in choices:
+            if choice not in ch:
+                ch.append(choice) 
+        
+        return ch
 
     def is_type_set():
         with open(fp, 'r') as file:
@@ -147,6 +167,10 @@ init python:
     def reset_quiz_title():
         if f"Quiz {persistent.quiz_def_num}" == quiz_title:
             persistent.quiz_def_num += 1
+    
+    def reset_title():
+        quiz_title = f"Quiz {persistent.quiz_def_num}" #reset
+        new_title = quiz_title
 
 init 1:
     $ python_path = get_path("Python311/python.exe")
@@ -155,7 +179,7 @@ screen preprocess_text:
     tag menu
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("preprocess_text"), Jump("quit_warning")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Function(set_in_save, False), Hide("preprocess_text"), Jump("quit_warning")]:
         xalign 0.86
         yalign 0.04
 
@@ -301,31 +325,57 @@ label ask_player:
     call screen ask
 
     screen ask:
-        frame:
-            xalign 0.5
-            yalign 0.5
-            xpadding 40
-            ypadding 40
-            xsize 600
-            ysize 450
-            background "#D9D9D9"
+        style_prefix "yes_or_no"
 
+        frame:
+            align (0.5, 0.5)
+            xysize(600, 350)
             vbox:
-                text "Would you like to summarize the text first before keywords extraction?":
-                    font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 50
+                spacing 50
+                frame:
+                    xfill True
+                    ysize 50
+                    background "#0b5fbed8"
+                    imagebutton auto "images/Button/info_icon_%s.png" action NullAction():
+                        tooltip "Summarizing improves keyword accuracy."
+                        align(1.0, 0.5)
+                text "Summarize text before extracting keywords?":
+                    size 30
                     color "#303031"
                     xalign 0.5
                     yalign 0.5
 
                 hbox:
-                    xalign 0.5
-                    yalign 0.5
-                    yoffset 60
+                    align(0.5, 0.5)
                     spacing 40
 
-                    imagebutton auto "images/Button/yes_%s.png" action [Hide("ask"), Jump("summarize")]
-                    imagebutton auto "images/Button/no_%s.png" action [Hide("ask"), Jump("get_keywords")]
+                    frame:
+                        background "#0b5fbed8"
+                        textbutton "YES" action [Hide("ask"), Jump("summarize")]
+
+                    frame:
+                        background "#D3D3D3"
+                        textbutton "NO" action [Hide("ask"), Jump("get_keywords")]
+        
+        $ tooltip = GetTooltip()
+
+        if tooltip:
+
+            nearrect:
+                focus "tooltip"
+                prefer_top True
+
+                frame:
+                    xalign 0.5
+                    text tooltip:
+                        size 20
+    
+style yes_or_no_button_text:
+    font "fonts/Inter-Bold.ttf"
+    color "#ffffff"
+    hover_color "#ccc9c9"
+    selected_color "#d3d0cf"
+    size 25
 
 #should ask question first before proceeding
 label get_sentences:
@@ -422,7 +472,6 @@ label summarize:
 
 label genarating_quiz:
     $ show_s("preprocess_text_dull")
-    show halfblack
     hide screen preprocess_text
 
     $ py_path = get_path(f"kodigo/game/python/fill_in_blanks.py")
@@ -433,6 +482,12 @@ label genarating_quiz:
         pause 0.1
 
     screen success:
+        add "halfblack"
+
+        button:
+            xysize(1920,1080)
+            action [Hide("success"), Function(hide_s, "preprocess_text_dull"), Show("save_quiz", transition=dissolve)]
+
         text "Quiz successfully generated!":
             font "Copperplate Gothic Thirty-Three Regular.otf"
             size 60
@@ -440,20 +495,15 @@ label genarating_quiz:
             xalign 0.5
             yalign 0.5
 
-    show screen success
-    pause 2.0
-    show halfblack
-    hide screen success
-    $ hide_s("preprocess_text_dull")
-    call screen save_quiz
+    call screen success
 
-screen save_quiz:
+screen save_quiz():
     tag menu
     add "bg quiz main"
 
     $ questions, answers = get_quiz()
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png":
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Function(set_in_save, True), Hide("preprocess_text"), Jump("quit_warning")]:
         xalign 0.86
         yalign 0.04
 
@@ -509,51 +559,102 @@ screen save_quiz:
                         text "Answer: [answer]" style "q_and_a"
                         text "\n"
         
-    #this is temporary!
-    #Mixed should be the default
     vbox:
-        xalign 0.8
-        yalign 0.5
+        align (0.8, 0.5)
         spacing 20
+
+        text "Quiz Type": #specify with a number later
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 50
+            color "#FFFFFF"
+            align (0.5, 0.5)
+
         frame:
-            xsize 337
-            ysize 200
-            xalign 0.5
-            yalign 0.5
-            background "#D9D9D9"
-            vbox:
-                spacing 5
-                textbutton "Mulitple Choices" style "q_and_a" action Function(set_type, "MCQ")
-                textbutton "Identification" style "q_and_a" action Function(set_type, "ID")
-                textbutton "Mixed" style "q_and_a" action Function(set_type, "Mixed")
+            xysize (380, 70)
+            align (0.5, 0.5)
+            background Frame("images/Minigames Menu/round_frame.png")
+            
+            hbox:
+                align (0.5, 0.5)
+                spacing 10
+                text quiz_type:
+                    font "KronaOne-Regular.ttf"
+                    bold True
+                    size 24
+                    color "#303031"
+                    align (0.5, 0.5)
+
+                imagebutton auto "images/Button/down_%s.png" action Show("choose_type"):
+                    align (0.5, 0.5)
 
         if is_type_set():
             imagebutton auto "images/Button/save_quiz_%s.png" action [Function(reset_quiz_title), Function(save), Jump("confirm_save")]:
                 xalign 0.5
                 yalign 0.5
+                yoffset 200
         else:
             imagebutton auto "images/Button/save_quiz_%s.png":
                 xalign 0.5
                 yalign 0.5
+                yoffset 200
+
+screen choose_type:
+    modal True
+
+    $ choices = type_choices()
+
+    style_prefix "quiz_type"
+
+    frame:
+        xysize (380, 150)
+        xpadding 14
+        ypadding 11
+        xalign 0.786
+        yalign 0.52
+        background Frame("images/Minigames Menu/round_frame.png")
+
+        vbox:
+            xalign 0.0
+            spacing 1
+            hbox:
+                align (0.5, 0.5)
+                spacing 5
+                textbutton quiz_type action [Function(set_type, choices[0]), Hide("choose_type")]:
+                    align (0.5, 0.5)
+
+                imagebutton auto "images/Button/down_%s.png" action Hide("choose_type"):
+                    align (0.5, 0.5)
+
+            textbutton f"{choices[1]}" action [Function(set_type, choices[1]), Hide("choose_type")]
+            textbutton f"{choices[2]}" action [Function(set_type, choices[2]), Hide("choose_type")]
+            
+style quiz_type_button_text:
+    font "KronaOne-Regular.ttf"
+    bold True
+    size 24
+    color "#303031"
+    hover_color "#606064"
+    selected_color "#585655"
 
 label confirm_save:
     hide screen save_quiz
     $ show_s("save_quiz_dull")
-    show screen saved
+
+    call screen saved
+
     screen saved:
         add "halfblack"
+
+        button:
+            xysize(1920,1080)
+            action [Hide("saved"), Function(hide_s, "save_quiz_dull"), Function(reset_title), Show("quiz_list_screen", transition=dissolve)]
+
         text "Quiz save successfully!":
             font "Copperplate Gothic Thirty-Three Regular.otf"
             size 60
             color "#FFFFFF"
             xalign 0.5
             yalign 0.5
-
-    pause 2.0
-    hide screen saved
-    $ hide_s("save_quiz_dull")
-    $ quiz_title = f"Quiz {persistent.quiz_def_num}" #reset
-    call screen quiz_list_screen
 
 style q_and_a:
     font "KronaOne-Regular.ttf"

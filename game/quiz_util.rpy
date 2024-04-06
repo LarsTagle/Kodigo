@@ -30,8 +30,11 @@ init python:
 label quit_warning:
     #checks if questions are generated
     if is_notes():
-        $ show_s("preprocess_text_dull")
-        show halfblack
+        if not in_save:
+            $ show_s("preprocess_text_dull")
+        else: 
+            $ show_s("save_quiz_dull")
+        
         call screen warning
     else:
         $ del_json()
@@ -39,71 +42,80 @@ label quit_warning:
         call screen quiz_list_screen
 
     screen warning:
+        add "halfblack"
+        style_prefix "yes_or_no"
+
+        if not in_save:
+            $ verb = "creating"
+        else:
+            $ verb = "saving"
+
         frame:
-            xalign 0.5
-            yalign 0.5
-            xpadding 40
-            ypadding 40
-            xsize 450
-            ysize 420
-            background "#D9D9D9"
+            align (0.5, 0.5)
+            xysize(450, 390)
 
             vbox:
-                xalign 0.5
-                yalign 0.5
+                spacing 50
+                frame:
+                    xfill True
+                    ysize 50
+                    background "#0b5fbed8"
+                    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")]:
+                        xalign 1.0
 
-                text f"'{quiz_title}' is not yet created.":
-                    font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 50
-                    color "#303031"
-                    xalign 0.5
-                    yalign 0.5
-                text "Would you like to exit?":
-                    font "Copperplate Gothic Thirty-Three Regular.otf"
+                text f"Are you sure you want to exit before [verb] '{quiz_title}'?":
                     size 30
                     color "#303031"
-                    yoffset 10
-
-                hbox:
                     xalign 0.5
                     yalign 0.5
-                    yoffset 50
+
+                hbox:
+                    align(0.5, 0.5)
                     spacing 40
 
-                    imagebutton auto "images/Button/yes_%s.png" action [Hide("warning"), Function(set_bool, True), Jump("warning_2")] #Function(set_bool, True) apparently was not necessary tangina
-                    imagebutton auto "images/Button/no_%s.png" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")]
+                    frame:
+                        background "#0b5fbed8"
+                        textbutton "YES" action [Hide("warning"), Function(set_bool, True), Jump("warning_2")]
+
+                    frame:
+                        background "#D3D3D3"
+                        textbutton "NO" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")]
 
 label warning_2:
-    $ hide_s("preprocess_text_dull")
-    hide halfblack
-
-    #if player wants to exit
-    if bool:
-        call screen quiz_list_screen with dissolve
+    if not in_save:
+        $ hide_s("preprocess_text_dull")
+        #if player wants to exit
+        if bool:
+            call screen quiz_list_screen with dissolve
+        else:
+            call screen preprocess_text
     else:
-        call screen preprocess_text
+        $ hide_s("save_quiz_dull")
+        if bool:
+            call screen preprocess_text
+        else:
+            call screen save_quiz
 
 screen input_title:
     if not in_save:
-        frame: 
-            xalign 0.76
-            yalign 0.144
-            xsize 650
-            ysize 85  
+        frame:
+            xalign 0.5
+            yalign 0.1
+            xsize 1200
+            ysize 135
             background "#ffffff00"
-            
-            hbox: 
+
+            hbox:
                 xalign 0.5
-                yalign 0.5 
+                yalign 0.5
+                spacing 5
                 input value title length 15 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
                     font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 57
+                    size 100
                     color "#FFFFFF"
-                    xalign 0.5
-                    yalign 0.5 
 
                 imagebutton auto "images/Button/pen_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
-                    yalign 0.1
+                    yoffset 5
     else:
         frame:
             xalign 0.5
@@ -280,24 +292,26 @@ screen preprocess_text_dull:
         xalign 0.86
         yalign 0.04
 
-    frame:
-        xalign 0.5
-        yalign 0.1
-        xsize 1200
-        ysize 135
-        background "#ffffff00"
-
-        hbox:
+    if not in_edit_title:
+        frame:
             xalign 0.5
-            yalign 0.5
-            spacing 5
-            text "[quiz_title]": #specify with a number later
-                font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 100
-                color "#FFFFFF"
+            yalign 0.1
+            xsize 1200
+            ysize 135
+            background "#ffffff00"
 
-            imagebutton auto "images/Button/pen_%s.png": 
-                yoffset 5
+            hbox:
+                xalign 0.5
+                yalign 0.5
+                spacing 5
+                text "[quiz_title]": #specify with a number later
+                    font "Copperplate Gothic Thirty-Three Regular.otf"
+                    size 100
+                    color "#FFFFFF"
+
+                imagebutton auto "images/Button/pen_%s.png" action [Function(set_in_save, False), Jump("edit_title")]:
+                    yoffset 5
+
 
     #get the notes and keywords if they exists
     #$ notes = get_notes()
@@ -453,24 +467,35 @@ screen save_quiz_dull:
                         text "Answer: [answer]" style "q_and_a"
                         text "\n"
         
-    #this is temporary!
-    #Mixed should be the default
     vbox:
-        xalign 0.8
-        yalign 0.5
+        align (0.8, 0.5)
         spacing 20
+
+        text "Quiz Type": #specify with a number later
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 50
+            color "#FFFFFF"
+            align (0.5, 0.5)
+
         frame:
-            xsize 337
-            ysize 200
-            xalign 0.5
-            yalign 0.5
-            background "#D9D9D9"
-            vbox:
-                spacing 5
-                textbutton "Mulitple Choices" style "q_and_a"
-                textbutton "Identification" style "q_and_a" 
-                textbutton "Mixed" style "q_and_a"
+            xysize (380, 70)
+            align (0.5, 0.5)
+            background Frame("images/Minigames Menu/round_frame.png")
+            
+            hbox:
+                align (0.5, 0.5)
+                spacing 10
+                text quiz_type:
+                    font "KronaOne-Regular.ttf"
+                    bold True
+                    size 24
+                    color "#303031"
+                    align (0.5, 0.5)
+
+                imagebutton auto "images/Button/down_%s.png":
+                    align (0.5, 0.5)
 
         imagebutton auto "images/Button/save_quiz_%s.png":
             xalign 0.5
             yalign 0.5
+            yoffset 200

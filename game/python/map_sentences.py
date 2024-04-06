@@ -1,4 +1,4 @@
-from flashtext import KeywordProcessor
+from flashtext import KeywordProcessor # type: ignore
 import os
 import sys
 import json
