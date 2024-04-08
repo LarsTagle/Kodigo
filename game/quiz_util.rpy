@@ -1,9 +1,11 @@
 #fix editting to dissallow empty text field
 define title = VariableInputValue(variable = "new_title", returnable = True)
 define key = VariableInputValue(variable = "change_key", returnable = True)
+define new_text = VariableInputValue(variable = "current_text", returnable = True)
 
 init:
     $ new_title = quiz_title
+    $ current_text = ""
 
 init python:
     global in_edit_title
@@ -238,8 +240,6 @@ label exit_edit(temp):
         $ hide_s("preprocess_text_dull")
         call screen preprocess_text
 
-#maybe a floating screen would be easier to do
-#yeah the frame would work for this
 screen input_keys(sentences, answers, i):
     modal True
     add "halfblack"
@@ -278,12 +278,58 @@ screen input_keys(sentences, answers, i):
                         default_focus True
                         copypaste True
                         bold True
-                    textbutton "ENTER" action Jump("reset_keywords") keysym ["K_RETURN", "K_KP_ENTER"]
+                    textbutton "ENTER" action [Function(reset_key), Hide("input_keys")] keysym ["K_RETURN", "K_KP_ENTER"]
 
-#this need to get fixed
-label reset_keywords:
-    $ reset_key()
-    call screen preprocess_text with dissolve
+screen input_text:
+    modal True
+    add "halfblack"
+    
+    frame:
+        xysize(800, 400)
+        align(0.5, 0.5)
+        vbox:
+            spacing 1
+            frame:
+                xfill True
+                ysize 50
+                background "#0b5fbed8"
+                imagebutton auto "images/Minigames Menu/exit_%s.png" action Hide("input_text"):
+                    xalign 1.0
+                imagebutton auto "images/Button/info_icon_%s.png" action NullAction():
+                    tooltip "One sentence will do."
+                    align(0.0, 0.5)
+            frame: 
+                xfill True
+                yfill True
+                ypadding 20
+                xpadding 20
+                vbox:
+                    xfill True
+                    yfill True
+                    align (0.5, 0.5)
+                    spacing 40
+                    input value new_text length 300:
+                        size 30
+                        color "#303031"
+                        align(0.0, 0.1)
+                        pixel_width 765
+                        default_focus True
+                        caret_blink True
+                        copypaste True
+                        multiline True
+                    textbutton "ENTER" action NullAction() keysym ["K_RETURN", "K_KP_ENTER"]:
+                        align(1.0, 1.0)
+    
+    $ tooltip = GetTooltip()
+
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+            prefer_top True
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 20
 
 screen preprocess_text_dull:
     add "bg quiz main"

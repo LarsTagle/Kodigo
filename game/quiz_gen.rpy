@@ -1,3 +1,6 @@
+#to do next:
+#try another preprocessing method for pdf texts, else just remove that all together.
+
 #error found
 #handle when keywords failed to extract
 
@@ -245,9 +248,13 @@ screen preprocess_text:
                                 vbox: 
                                     xsize 1000
                                     text sentences[i] style "notes"
-                                imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]:
+                                vbox:
                                     xalign 1.0 
                                     yalign 0.5
+                                    spacing 5
+                                    imagebutton auto "images/Button/edit_text_%s.png" action NullAction()
+                                    imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]
+                                        
     else:
         viewport:
             scrollbars "vertical"
@@ -276,9 +283,12 @@ screen preprocess_text:
                         vbox: 
                             xsize 1000
                             text "Sentences will appear {b}{color=#007FFF}here{/color}{/b}..." style "notes"
-                        imagebutton auto "images/Button/edit_icon_%s.png": 
+                        vbox:
                             xalign 1.0 
                             yalign 0.5
+                            spacing 5
+                            imagebutton auto "images/Button/edit_text_%s.png" action Show("input_text")
+                            imagebutton auto "images/Button/edit_icon_%s.png"
 
     if not answers:
         imagebutton auto "images/Button/upload_%s.png" action Jump("upload_file"):
@@ -318,6 +328,29 @@ label upload_file:
             yalign 0.5
 
     hide screen uploading
+
+    screen not_supported:
+        frame:
+            align (0.5, 0.5)
+            xysize(450, 300)
+            vbox:
+                spacing 80
+                frame:
+                    xfill True
+                    ysize 50
+                    background "#0b5fbed8"
+                    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("not_supported"), Show("preprocess_text")]:
+                        xalign 1.0
+                
+                text "File type not supported.":
+                    size 30
+                    color "#303031"
+                    xalign 0.5
+                    yalign 0.5
+
+    if not is_notes():
+        call screen not_supported
+
     jump get_sentences
 
 #asks the player if they want to summarize first or have user input for keywords

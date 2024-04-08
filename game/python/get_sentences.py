@@ -1,3 +1,4 @@
+import spacy
 import json
 import sys
 import os
@@ -5,13 +6,16 @@ import os
 fn = sys.argv[1]
 text = sys.argv[2]
 
-sentences = text.split(".")
+nlp = spacy.load("en_core_web_sm")
+doc = nlp(text)
 
-sentences = [sentence.strip() + "." for sentence in sentences if sentence.strip()]
-
+sentences = []
+for sent in list(doc.sents):
+    sentences.append(sent.text)
+    
 base_path = os.getcwd()
 relative_path = f"kodigo\\game\\python\\temp\\{fn}.json"
-fp = os.path.join(base_path, relative_path) 
+fp = os.path.join(base_path, relative_path)
     
 #read the json file
 with open(fp, 'r') as file:
@@ -23,3 +27,4 @@ quiz["sentences"] = sentences
 with open(fp, 'w') as file:
     json.dump(quiz, file)
     
+print("done")
