@@ -194,7 +194,7 @@ label chapter1:
             show mc sleepy_casual with dissolve
             emil "(*silence*)"
 
-        "Pff! Couldn’t you be any nicer to the new guys?!":
+        "Pff! Couldn’t you be any nicer to the new comers?!":
             $ emil_decision = "bad"
             $ points -= 1
             show mc angry_casual with dissolve
@@ -774,7 +774,7 @@ label chapter1_2:
             $ points -= 1
             show mc neutral_casual with dissolve
             show crush awkward_uniform with dissolve
-            if selected_gender == "male":
+            if current_gender == "male":
                 mc "Hey there beautiful, hehe just kidding. Sup [crush]?"
             else:
                 mc "Hey, cutie. Where are you going? Want to me to company you?"
@@ -910,12 +910,20 @@ label chapter1_2:
     scene bg roomaft with move
     n "After that, [mcname] proceeds to [pronoun_belonging] room."
 
-    n "*Internally, the character talks to [pronoun_object]self*"
+    n "*Internally, [mcname] talks to [pronoun_object]self*"
     show mc sad_casual with dissolve
     mc "{b}Hays, is it really necessary that I still put a logo on this uniform? It’s not like the guard will notice me not having this already. Oh well, guess better keep doing this now.{/b}"
 
+    #dont know how to make mc slide right haha
+    "*[mcname] proceeds to walk to the desk.*"
+    hide mc
+    jump init_sewing
     # "*MINI GAME (IF APPLICABLE), THERE WILL BE UNIQUE DIALOGUES IF MAKAGAWA MINI GAME, IF HINDI KAYA PROCEED LANG.*"
 
+label chapter1_3:
+    hide bg
+    scene bg roomaft 
+    with fade
     show mc neutral_casual at center with dissolve
     mc "Now that I’ve sewn these uniforms, I now need to iron the clothes so they may look presentable when going to class"
 

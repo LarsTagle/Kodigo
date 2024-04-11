@@ -46,16 +46,16 @@ label dormicleaning:
         ( "pillow" , 990 , 220 , _( "Pillow" )),
         ( "shoe" , 1100 , 890 , _( "Shoe" )),
         ( "backpack" , 200 , 760  , _( "Backpack" )),
-         # OPTIONAL PARAMETERS:
+        # OPTIONAL PARAMETERS:
         # enable cursor change when hovering
         mouse = True ,
-         # enable inventory and remove found items from it
+        # enable inventory and remove found items from it
         inventory = False ,
-         # disable hints
+        # disable hints
         hint = True ,
-         # turn on item illumination when hovering
+        # turn on item illumination when hovering
         hover = brightness( 0.05),
-         # reduce the size of inventory cells so that they do not interfere with collecting items
+        # reduce the size of inventory cells so that they do not interfere with collecting items
         w = 200 ,
         h = 200
     )
@@ -100,16 +100,16 @@ init 1 :
         ( "pillow" , 700 , 615 , _( "Pillow" )),
         ( "shoe" , 1813 , 161 , _( "Shoe" )),
         ( "backpack" , 355 , 240 , _( "Backpack" )),
-         # OPTIONAL PARAMETERS:
+        # OPTIONAL PARAMETERS:
         # enable cursor change when hovering
         mouse = True ,
-         # enable inventory and remove found items from it
+        # enable inventory and remove found items from it
         inventory = False ,
-         # disable hints
+        # disable hints
         hint = False ,
-         # turn on item illumination when hovering
+        # turn on item illumination when hovering
         hover = brightness( 0.05),
-         # reduce the size of inventory cells so that they do not interfere with collecting items
+        # reduce the size of inventory cells so that they do not interfere with collecting items
         w = 200 ,
         h = 200
     )
@@ -126,9 +126,9 @@ init 1 :
 
     # style for the hint
     style hint_style is frame:
-         # the yellow background is stretched to fit the text
+        # the yellow background is stretched to fit the text
         background Frame( "#fe9" , 0 , 0 )
-         # padding from the edges to the text
+        # padding from the edges to the text
         xpadding 20
         ypadding 15
 
@@ -146,16 +146,21 @@ init -2 python:
 init python:
     # automatic declaration of sprites (including webp)
     images_auto()
-
     # cursors
     config . mouse = {
-         "hand" : [( "images/c/hand1.png" , 2 , 10 ),
-        ( "images/c/hand1.png" , 2 , 10 ), ( "images/c/hand1.png" , 2 , 10 ),
-        ( "images/c/hand1.png" , 2 , 10 ), ( "images/c/hand2.png" , 2 , 10 ),
-        ( "images/c/hand2.png" , 2 , 10 ), ( "images/c/hand3.png" , 2 , 10 ),
-        ( "images/c/hand3.png" , 2 , 10 ), ( "images/c/hand2.png" , 2 , 10 ),
-        ( "images/c/hand2.png" , 2 , 10 )],
-        "finger" : [( "images/c/finger.png" , 2 , 10 )]}
+        "hand" : [( "images/mouse/hand1.png" , 2 , 10 ),
+                ( "images/mouse/hand1.png" , 2 , 10 ), 
+                ( "images/mouse/hand1.png" , 2 , 10 ),
+                ( "images/mouse/hand1.png" , 2 , 10 ), 
+                ( "images/mouse/hand2.png" , 2 , 10 ),
+                ( "images/mouse/hand2.png" , 2 , 10 ), 
+                ( "images/mouse/hand3.png" , 2 , 10 ),
+                ( "images/mouse/hand3.png" , 2 , 10 ), 
+                ( "images/mouse/hand2.png" , 2 , 10 ),
+                ( "images/mouse/hand2.png" , 2 , 10 )],
+        "finger" : [( "images/mouse/finger.png" , 2 , 10 )],
+        "needle" : [("images/mouse/needle.png", 0, 194 )]}
+
 
     # mouse coordinates
     def  hf_hint_at_f (trans, st, at):
@@ -240,7 +245,7 @@ init python:
         for item, x, y, h in args:
             hf_needed . append((item, x, y, h))
         hf_max_count =  len (hf_needed)
-         # apply optional game parameters
+        # apply optional game parameters
         # essentially change the values ​​of similar variables,
         # but they must start with hf_
         for k, v in kwargs . items():
@@ -295,7 +300,7 @@ init python:
 
     # get a sprite for inventory
     def  hf_isprite (item):
-         # if there is the desired item in the inventory folder,
+        # if there is the desired item in the inventory folder,
         # then take it, otherwise - what is on the screen
         i = hf_dir +  " inventory "  + item
         if has_image(i):
@@ -393,26 +398,26 @@ screen HiddenFolks():
 
         # inventory
         if  not hf_inventory is  None :
-             # inventory frame
+            # inventory frame
             frame:
                 style "empty"
                 xysize (hf_max_count * hf_w + hf_xpadding *  2 , hf_h + hf_ypadding *  2 )
-                 # inventory position
+                # inventory position
                 align(hf_xalign, hf_yalign)
                 background Frame( "framei" , 48 , 48 )
-                 # container for items
+                # container for items
                 hbox:
                     align( 0.5 , 0.5 )
-                     # display collected items
+                    # display collected items
                     if hf_inventory:
-                         for item, x, y, h in hf_picked:
-                             # xysize(hf_w, hf_h)
+                        for item, x, y, h in hf_picked:
+                            # xysize(hf_w, hf_h)
                             imagebutton idle hf_isprite(item) align( 0.5 , 0.5 ):
-                                 # hover per pixel
+                                # hover per pixel
                                 focus_mask True
                                 action NullAction()
                                 if hf_game_mode:
-                                     # change the cursor if necessary
+                                    # change the cursor if necessary
                                     if hf_mouse:
                                         mouse "hand"
                                     # change the tooltip text when hovering the cursor
@@ -420,13 +425,13 @@ screen HiddenFolks():
                                     unhovered SetHint()
                     # or display the items that remain to be collected
                     else :
-                         for item, x, y, h in hf_needed:
+                        for item, x, y, h in hf_needed:
                             imagebutton idle hf_isprite(item) align( 0.5 , 0.5 ):
-                                 # pixel targeting
+                                # pixel targeting
                                 focus_mask True
                                 action NullAction()
                                 if hf_game_mode:
-                                     # change the cursor if necessary
+                                    # change the cursor if necessary
                                     if hf_mouse:
                                         mouse "hand"
                                     # change the tooltip text when hovering the cursor
