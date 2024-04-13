@@ -914,17 +914,14 @@ label chapter1_2:
     show mc sad_casual with dissolve
     mc "{b}Hays, is it really necessary that I still put a logo on this uniform? It’s not like the guard will notice me not having this already. Oh well, guess better keep doing this now.{/b}"
 
-    #dont know how to make mc slide right haha
-    "*[mcname] proceeds to walk to the desk.*"
     hide mc
     jump init_sewing
     # "*MINI GAME (IF APPLICABLE), THERE WILL BE UNIQUE DIALOGUES IF MAKAGAWA MINI GAME, IF HINDI KAYA PROCEED LANG.*"
 
 label chapter1_3:
-    hide bg
-    scene bg roomaft 
-    with fade
-    show mc neutral_casual at center with dissolve
+    scene bg roomaft
+    show mc neutral_casual at center
+    with dissolve
     mc "Now that I’ve sewn these uniforms, I now need to iron the clothes so they may look presentable when going to class"
 
     hide mc
