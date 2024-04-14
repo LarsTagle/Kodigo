@@ -159,7 +159,26 @@ init python:
                 ( "images/mouse/hand2.png" , 2 , 10 ),
                 ( "images/mouse/hand2.png" , 2 , 10 )],
         "finger" : [( "images/mouse/finger.png" , 2 , 10 )],
-        "needle" : [("images/mouse/needle.png", 0, 194 )]}
+        "needle" : [("images/mouse/needle_1.png", 0, 194),
+                ("images/mouse/needle_1.png", 0, 194), 
+                ("images/mouse/needle_1.png", 0, 194),
+                ("images/mouse/needle_1.png", 0, 194),
+                ("images/mouse/needle_2.png", 0, 194),
+                ("images/mouse/needle_2.png", 0, 194),
+                ("images/mouse/needle_3.png", 0, 194),
+                ("images/mouse/needle_3.png", 0, 194),
+                ("images/mouse/needle_2.png", 0, 194),
+                ("images/mouse/needle_2.png", 0, 194)],
+        "needle_opposite" : [("images/mouse/needle_opposite_1.png", 107, 0),
+                ("images/mouse/needle_opposite_1.png", 107, 0), 
+                ("images/mouse/needle_opposite_1.png", 107, 0),
+                ("images/mouse/needle_opposite_1.png", 107, 0), 
+                ("images/mouse/needle_opposite_2.png", 107, 0),
+                ("images/mouse/needle_opposite_2.png", 107, 0), 
+                ("images/mouse/needle_opposite_3.png", 107, 0),
+                ("images/mouse/needle_opposite_3.png", 107, 0), 
+                ("images/mouse/needle_opposite_2.png", 107, 0),
+                ("images/mouse/needle_opposite_2.png", 107, 0)]}
 
 
     # mouse coordinates

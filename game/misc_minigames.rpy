@@ -1,5 +1,4 @@
 init python:
-    global start_sew
     dot_pos = [[996, 228], [1055, 261], [1115, 304], [1181, 321], [1232, 354], [1247, 406], [1232, 464], [1232, 523],
                 [1247, 583], [1247, 643], [1196, 676], [1130, 693], [1070, 740], [1011, 786], [952, 757], [894, 724],
                 [829, 691], [764, 660], [749, 583], [764, 506], [749, 439], [749, 374], [799, 337], [864, 304], [930, 261]]
@@ -9,11 +8,14 @@ init python:
                 [783, 679], [759, 604], [762, 524], [759, 448], [756, 383], [772, 343], [839, 309], [897, 273], [963, 242]]
 
     def init_sewing_vars():
-        global sew_direction, pos_clicked, hint_time, start_sew, dot_idle, sewn_dots, sewing_time, sewing_bar, sewing_warning
+        global sew_direction, pos_clicked, hint_time, start_sew, dot_idle, sewn_dots, sewing_time, sewing_bar, sewing_warning, sew_visible, last_sew
         pos_clicked = []
+        sew_visible = []
+        last_sew = None
 
         for i in range(len(dot_pos)):
             pos_clicked.append(None)
+            sew_visible.append(None)
 
         start_sew = True
         sew_direction = None
@@ -26,11 +28,17 @@ init python:
 
     def dot_clicked(i):
         pos_clicked[i] = True
+    
+    def set_visible(i):
+        if (sew_direction == "clockwise" and sew_visible[i-1]) or (sew_direction == "counter_clockwise" and sew_visible[(i+1) % len(dot_pos)]):
+            sew_visible[i] = False
+        else:
+            sew_visible[i] = True
 
 label init_sewing:
     $ init_sewing_vars()
 
-    $ show_s("sewing_game")
+    $ show_s("seal_sewing_1")
     show halfblack
 
     screen init_sewing_screen:
@@ -38,7 +46,7 @@ label init_sewing:
 
         button:
             xysize(1920,1080)
-            action [Hide("init_sewing_screen"), Function(hide_s, "sewing_game"), Show("sewing_game"), Show("sewing_timer")]
+            action [Hide("init_sewing_screen"), Function(hide_s, "seal_sewing_1"), Show("seal_sewing_1"), Show("sewing_timer")]
         
         text "Click each dots to sew it!" style "game_instruction"
 
@@ -72,7 +80,67 @@ screen sewing_timer:
         if sewn_dots == len(dot_pos):
             timer 0.01 repeat True action [SPlay( "gamewin" ), Return("sewing_result")]
 
-screen sewing_game:
+screen seal_sewing_1:
+    add "bg sewing"
+    image "images/minigame/BUseal.png" align (0.55, 0.5)
+
+    timer 3.0 action SetVariable("dot_idle", "hint_dot")
+    
+    for i in range(len(dot_pos)):
+        $ j, k = dot_pos[i]
+        $ j_sewn, k_sewn = sew_pos[i]
+            
+        imagebutton:
+            if pos_clicked[i]:
+                xpos j ypos k
+
+                if not start_sew and sew_visible[i] and i != last_sew:
+                    if sew_direction == "clockwise":
+                        if pos_clicked[(i+1) % len(dot_pos)]:
+                            xpos j_sewn ypos k_sewn
+                            idle f"minigame/sew/{i}.png"
+                    elif sew_direction == "counter_clockwise":
+                        if pos_clicked[i-1]:
+                            xpos sew_pos[i-1][0] ypos sew_pos[i-1][1]
+                            if i-1 == -1:
+                                idle f"minigame/sew/{24}.png"
+                            else:
+                                idle f"minigame/sew/{i-1}.png"
+                
+                idle At("minigame/dot.png", transparent)
+            else:
+                xpos j ypos k
+                idle "minigame/dot.png"
+            
+            if ((sew_direction == "clockwise" or sew_direction == None) and sew_visible[i-1]) or ((sew_direction == "counter_clockwise" or sew_direction == None) and sew_visible[(i+1) % len(dot_pos)]):
+                mouse "needle"
+            else:
+                mouse "needle_opposite"
+                    
+            hover "dot_hover"
+            activate_sound "audio/click.ogg"
+            
+
+            #if game just starting
+            if start_sew:
+                idle dot_idle
+                action [SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Function(set_visible, i), SetVariable("start_sew", False), Show("reset_hint_timer")]
+            #if sew_direction is not yet set
+            elif sew_direction == None:
+                #if previous dot already clicked, and current dot is not clicked
+                if pos_clicked[i-1] and pos_clicked[i] == None:
+                    idle dot_idle
+                    action [SetVariable("last_sew", i), SetVariable("sew_direction", "clockwise"), SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Function(set_visible, i), Show("reset_hint_timer")]
+                #if the next dot won't cause index out of range and is already clicked, and current dot is not clicked
+                elif pos_clicked[(i+1) % len(dot_pos)] and pos_clicked[i] == None: 
+                    idle dot_idle
+                    action [SetVariable("last_sew", i), SetVariable("sew_direction", "counter_clockwise"), SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Function(set_visible, i), Show("reset_hint_timer")]
+            #if clockwise and previous dot is already clicked and current is not yet clicked
+            elif pos_clicked[i] == None and ((sew_direction == "clockwise" and pos_clicked[i-1]) or (sew_direction == "counter_clockwise" and pos_clicked[(i+1) % len(dot_pos)])):
+                idle dot_idle
+                action [SetVariable("last_sew", i), SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Function(set_visible, i), Show("reset_hint_timer")]
+            
+screen seal_sewing_2:
     add "bg sewing"
     image "images/minigame/BUseal.png" align (0.55, 0.5)
 
@@ -82,69 +150,37 @@ screen sewing_game:
         $ j, k = dot_pos[i]
         $ j_sewn, k_sewn = sew_pos[i]
 
+        if sew_visible[i] and i != last_sew:
+            image f"minigame/sew/{i}.png":
+                xpos j_sewn ypos k_sewn
+ 
         imagebutton:
-            if pos_clicked[i]:
-                xpos j ypos k
-                if sew_direction == "clockwise":
-                    if i+1 < len(dot_pos) and pos_clicked[i+1]:
-                        xpos j_sewn ypos k_sewn
-                        idle f"minigame/sew/{i}.png"
-                    elif i == len(dot_pos)-1  and pos_clicked[0]:
-                        xpos j_sewn ypos k_sewn
-                        idle f"minigame/sew/{i}.png"
-                elif sew_direction == "counter_clockwise" and pos_clicked[i-1]:
-                    xpos j_sewn ypos k_sewn
-                    idle f"minigame/sew/{i}.png"
-                idle At("minigame/dot.png", transparent)
-            else:
-                xpos j ypos k
-                idle "minigame/dot.png"
-
+            xpos j ypos k
+            idle "minigame/dot.png"
             hover "dot_hover"
             mouse "needle"
             activate_sound "audio/click.ogg"
-            
 
-            #if game just starting
-            if start_sew:
-                idle dot_idle
-                action [SetVariable("start_sew", False), SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Show("reset_hint_timer")]
-            #if sew_direction is not yet set
-            elif sew_direction == None:
-                #if previous dot already clicked, and current dot is not clicked
-                if pos_clicked[i-1] and pos_clicked[i] == None:
-                    idle dot_idle
-                    action [SetVariable("sew_direction", "clockwise"), SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Show("reset_hint_timer")]
-                #if the next dot won't cause index out of range and is already clicked, and current dot is not clicked
-                elif i+1 < len(dot_pos) and pos_clicked[i+1] and pos_clicked[i] == None:
-                    idle dot_idle
-                    action [SetVariable("sew_direction", "counter_clockwise"), SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Show("reset_hint_timer")]
-                #if dot is the last index, and first that is already clicked, and current dot is not yet clicked
-                elif i == len(dot_pos)-1 and pos_clicked[0] and pos_clicked[i] == None:
-                    idle dot_idle
-                    action [SetVariable("sew_direction", "counter_clockwise"), SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Show("reset_hint_timer")]
-            #if clockwise and previous dot is already clicked and current is not yet clicked
-            elif sew_direction == "clockwise" and pos_clicked[i-1] and pos_clicked[i] == None:
-                idle dot_idle
-                action [SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Show("reset_hint_timer")]
-            #if next dot won't cause any index out of range and is already clicked, and current is not yet clicked
-            elif i+1 < len(dot_pos) and sew_direction == "counter_clockwise" and pos_clicked[i+1] and pos_clicked[i] == None:
-                idle dot_idle
-                action [SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Show("reset_hint_timer")]
-            elif sew_direction == "counter_clockwise" and i == len(dot_pos)-1 and pos_clicked[0] and pos_clicked[i] == None:
-                idle dot_idle
-                action [SetVariable("sewn_dots", sewn_dots+1), SetVariable("dot_idle", "minigame/dot.png"), Function(dot_clicked, i), Show("reset_hint_timer")]
-                
+            if (start_sew and sew_direction == "clockwise") and (i+1 < len(dot_pos) and i == last_sew+1) or (last_sew == len(dot_pos)-1 and i == 0):
+                action NullAction()
+            elif (start_sew and sew_direction == "counter_clockwise" and i == last_sew-1) or (start_sew and sew_direction == "counter_clockwise" and last_sew-1 == len(dot_pos)-1 and i == last_sew-1):
+                action NullAction()
+
 label sewing_result:
     hide screen reset_hint_timer
     hide screen sewing_timer
+
+    #$ start_sew = True
+
+    #hide screen seal_sewing_1
+    #call screen seal_sewing_2
 
     if sewn_dots == len(dot_pos):
         $ sewing_result = "Sewing completed!"
     else:
         $ sewing_result = "Sewing failed!"
 
-    screen win_show:
+    screen sewing_result_show:
         modal True
         
         add "halfblack"
@@ -152,15 +188,15 @@ label sewing_result:
         button:
             xysize(1920,1080)
             if sewing_result == "Sewing completed!":
-                action [Hide("sewing_game"), Jump("chapter1_3")]
+                action [Hide("seal_sewing_1"), Jump("chapter1_3")]
             else:
-                action [Hide("sewing_game"), Jump("sewing_retry")]
+                action [Hide("seal_sewing_1"), Jump("retry_sewing")]
         
         text "[sewing_result]" style "game_instruction"
     
-    call screen win_show
+    call screen sewing_result_show
 
-label sewing_retry:
+label retry_sewing:
     with dissolve
 
     menu:
