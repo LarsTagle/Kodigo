@@ -610,41 +610,35 @@ screen quiz_proper:
             xalign 0.5
             yalign 0.5
 
-    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'A', Jump("right"), Jump("wrong")):
-        yalign 0.39
-        xalign 0.5
+    $ x = 0
+    style_prefix "options"
 
-    text "A. " + options[question_num][0]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.4
-        xalign 0.5
+    vbox:
+        align (0.5, 0.5)
+        spacing 20
 
-    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'B', Jump("right"), Jump("wrong")):
-        yalign 0.5
-        xalign 0.5
+        for option in options[question_num]:
+            if x == 0:
+                $ letter = "A"
+            elif x == 1:
+                $ letter = "B"
+            elif x == 2:
+                $ letter = "C"
+            elif x == 3:
+                $ letter = "D"
 
-    text "B. " + options[question_num][1]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.5
-        xalign 0.5
+            textbutton "[letter]. " + option:
+                action If(letters[question_num] == letter, Jump("right"), Jump("wrong"))
+                    
+            $ x += 1
 
-    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'C', Jump("right"), Jump("wrong")):
-        yalign 0.612
-        xalign 0.5
-
-    text "C. " + options[question_num][2]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.6
-        xalign 0.5
-
-    imagebutton auto "images/Button/choice_%s.png" action If(letters[question_num] == 'D', Jump("right"), Jump("wrong")):
-        yalign 0.712
-        xalign 0.5
-
-    text "D. " + options[question_num][3]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.7
-        xalign 0.5
+style options_button_text:
+    font "Copperplate Gothic Thirty-Three Regular.otf"
+    align (0.5, 0.5)
+    size 50
+    color "#ffffff"
+    hover_color "#b1e7f5"
+    selected_color "#7ceafd"
 
 label pause_quiz:
     hide screen quiz_proper
@@ -788,35 +782,48 @@ label next_question:
 label results:
     hide screen countdown
     $ hide_s("question_dull")
-    "Your score is {b} [score] {/b}!"
+
+    $ total = len(quiz_data['questions'])
 
     python:
         L = learned
-        if score/15 >= 0.7:
+        if score/total >= 0.7:
+            mc_reac = "mc_happy"
             A = (L*(1-S)) / (L*(1-S) + (1-L)*G)
             L = A + (1-A)*T
         else:
+            mc_reac = "mc_sad"
             A = (L*S) / ((L*S) + (1-L)*(1-G))
             L = A + (1-A)*T
-
+        
     if in_story:
         $ global quiz_loc
         $ quiz_loc = "standard"
 
     $ quiz_data['records'].append(score)
-    $ score = 0
     $ mastery = round(L * 100, 2)
     $ learned = L
     $ quiz_data['mastery'].append(mastery)
     $ quiz_data['learned'] = learned
     $ save_quiz_record()
 
-    #this need's to be put in quiz_status instead
-    if in_story:
-        $ in_story = False
-        jump chapter_2
+    screen show_score:
+        modal True
+        add "bg quiz main"
+        image mc_reac:
+            xalign 0.5
 
-    call screen quiz_status
+        button:
+            xysize(1920,1080)
+
+            if in_story:
+                action [Hide("show_score"), SetVariable("in_story", False), SetVariable("score", 0), Jump("chapter_2")] keysym ["K_SPACE"]
+            else:
+                action [Hide("show_score"), SetVariable("score", 0), Show("quiz_status")] keysym ["K_SPACE"]
+        
+        text "Your score is {b} [score] {/b}!" style "game_instruction"
+
+    call screen show_score with dissolve
 
 screen question_dull:
     add "bg quiz main"
@@ -841,40 +848,25 @@ screen question_dull:
             xalign 0.5
             yalign 0.5
 
-    style_prefix "mytext"
+    $ x = 0
+    
+    style_prefix "options"
 
-    imagebutton auto "images/Button/choice_%s.png":
-        yalign 0.39
-        xalign 0.5
+    vbox:
+        align (0.5, 0.5)
+        spacing 20
 
-    text "A. " + options[question_num][0]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.4
-        xalign 0.5
+        for option in options[question_num]:
+            if x == 0:
+                $ letter = "A"
+            elif x == 1:
+                $ letter = "B"
+            elif x == 2:
+                $ letter = "C"
+            elif x == 3:
+                $ letter = "D"
 
-    imagebutton auto "images/Button/choice_%s.png":
-        yalign 0.5
-        xalign 0.5
-
-    text "B. " + options[question_num][1]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.5
-        xalign 0.5
-
-    imagebutton auto "images/Button/choice_%s.png":
-        yalign 0.612
-        xalign 0.5
-
-    text "C. " + options[question_num][2]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.6
-        xalign 0.5
-
-    imagebutton auto "images/Button/choice_%s.png":
-        yalign 0.712
-        xalign 0.5
-
-    text "D. " + options[question_num][3]:
-        font "Copperplate Gothic Thirty-Three Regular.otf"
-        yalign 0.7
-        xalign 0.5
+            textbutton "[letter]. " + option:
+                action If(letters[question_num] == letter, Jump("right"), Jump("wrong"))
+                    
+            $ x += 1
