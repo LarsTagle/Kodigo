@@ -67,7 +67,9 @@ init python:
         with open(fp, 'r') as file:
             quiz = json.load(file)
 
-        if quiz["notes"]:
+        if quiz["notes"] == "not supported":
+            return "not supported"
+        elif quiz["notes"]:
             return True
 
         return False
@@ -253,8 +255,7 @@ screen preprocess_text:
                                     yalign 0.5
                                     spacing 5
                                     imagebutton auto "images/Button/edit_text_%s.png" action NullAction()
-                                    imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]
-                                        
+                                    imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]                                  
     else:
         viewport:
             scrollbars "vertical"
@@ -301,7 +302,6 @@ screen preprocess_text:
 
 label upload_file:
     $ show_s("preprocess_text_dull")
-    show halfblack
     hide screen preprocess_text
 
     $ py_path = get_path(f"kodigo/game/python/upload_file.py")
@@ -320,6 +320,7 @@ label upload_file:
         pause 0.1
 
     screen uploading:
+        add "halfblack"
         text "Uploading document...":
             font "Copperplate Gothic Thirty-Three Regular.otf"
             size 60
@@ -330,6 +331,7 @@ label upload_file:
     hide screen uploading
 
     screen not_supported:
+        add "halfblack"
         frame:
             align (0.5, 0.5)
             xysize(450, 300)
@@ -349,6 +351,8 @@ label upload_file:
                     yalign 0.5
 
     if not is_notes():
+        call screen preprocess_text
+    elif is_notes() == "not supported":
         call screen not_supported
 
     jump get_sentences
@@ -358,6 +362,7 @@ label ask_player:
     call screen ask
 
     screen ask:
+        add "halfblack"
         style_prefix "yes_or_no"
 
         frame:
@@ -425,6 +430,7 @@ label get_sentences:
             pause 0.1
 
         screen extract_sent:
+            add "halfblack"
             text "Extracting sentences...":
                 font "Copperplate Gothic Thirty-Three Regular.otf"
                 size 60
@@ -451,6 +457,7 @@ label get_keywords:
         pause 0.1
 
     screen extracting_keys:
+        add "halfblack"
         text "Extracting keywords...":
             font "Copperplate Gothic Thirty-Three Regular.otf"
             size 60
@@ -481,7 +488,6 @@ label summarize:
         call screen preprocess_text
     else:
         $ show_s("preprocess_text_dull")
-        show halfblack
         hide screen preprocess_text
 
         $ notes = get_notes()
@@ -494,6 +500,7 @@ label summarize:
             pause 0.1
 
         screen summarizing:
+            add "halfblack"
             text "Summarizing...":
                 font "Copperplate Gothic Thirty-Three Regular.otf"
                 size 60
@@ -507,7 +514,8 @@ label genarating_quiz:
     $ show_s("preprocess_text_dull")
     hide screen preprocess_text
 
-    $ py_path = get_path(f"kodigo/game/python/fill_in_blanks.py")
+    #$ py_path = get_path(f"kodigo/game/python/fill_in_blanks.py")
+    $ py_path = get_path(f"kodigo/game/python/gen_questions.py")
     $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
 
     #Check if the subprocess has finished

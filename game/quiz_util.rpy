@@ -5,7 +5,7 @@ define new_text = VariableInputValue(variable = "current_text", returnable = Tru
 
 init:
     $ new_title = quiz_title
-    $ current_text = ""
+    $ current_text = "Paste a text here."
 
 init python:
     global in_edit_title
@@ -312,7 +312,6 @@ screen input_text:
                         size 30
                         color "#303031"
                         align(0.0, 0.1)
-                        pixel_width 765
                         default_focus True
                         caret_blink True
                         copypaste True
