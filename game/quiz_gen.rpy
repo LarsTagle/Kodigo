@@ -177,6 +177,25 @@ init python:
         quiz_title = f"Quiz {persistent.quiz_def_num}" #reset
         new_title = quiz_title
 
+    #for text input defs
+    def store_sentence(sent):
+        with open(fp, 'r') as file:
+            quiz = json.load(file)
+        
+        if edit_sentence:
+            quiz["sentences"][edit_sentence_index] = sent
+            with open(fp, 'w') as file:
+                json.dump(quiz, file)
+        else:
+            quiz["sentences"].append(sent)
+            quiz["answers"].append("")
+            with open(fp, 'w') as file:
+                json.dump(quiz, file)
+
+            #call a subprocess to get the answer
+            py_path = get_path(f"kodigo/game/python/keywords.py")
+            subprocess.Popen([python_path, py_path, quiz_title, "last"], creationflags=subprocess.CREATE_NO_WINDOW)
+
 init 1:
     $ python_path = get_path("Python311/python.exe")
 
@@ -209,8 +228,13 @@ screen preprocess_text:
 
     #get the notes and keywords if they exists
     #$ notes = get_notes()
-    $ sentences = get_boldened_notes()
     $ answers = get_answers()
+
+    if answers:
+        $ highlighted_sentences = get_boldened_notes()
+        $ sentences = get_sentences()
+    else:
+        $ sentences = get_sentences()
 
     text "Notes":
         font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -230,7 +254,7 @@ screen preprocess_text:
 
             vbox:
                 spacing 30
-                for i in range(len(sentences)):
+                for i in range(len(sentences)+1):
                     frame:
                         xpadding 10
                         xsize 1220
@@ -247,15 +271,34 @@ screen preprocess_text:
                                 yalign 0.5
                                 xsize 1070
                                 spacing 10
-                                vbox: 
-                                    xsize 1000
-                                    text sentences[i] style "notes"
-                                vbox:
-                                    xalign 1.0 
-                                    yalign 0.5
-                                    spacing 5
-                                    imagebutton auto "images/Button/edit_text_%s.png" action NullAction()
-                                    imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]                                  
+
+                                if i != len(sentences):
+                                    vbox: 
+                                        xsize 1000
+                                        if answers: 
+                                            text highlighted_sentences[i] style "notes"
+                                        else:
+                                            text sentences[i] style "notes"
+                                    vbox:
+                                        xalign 1.0 
+                                        yalign 0.5
+                                        spacing 5
+
+                                        if answers and answers[i]:
+                                            imagebutton auto "images/Button/edit_text_%s.png" action [SetVariable("current_text", sentences[i]), SetVariable("edit_sentence", True), SetVariable("edit_sentence_index", i), Show("input_text")]
+                                            imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]
+                                        else:
+                                            imagebutton auto "images/Button/edit_text_%s.png" action [SetVariable("current_text", sentences[i]), SetVariable("edit_sentence", True), SetVariable("edit_sentence_index", i), Show("input_text")]
+
+                                else:          
+                                    vbox: 
+                                        xsize 1000
+                                        text "Add another sentence..." style "notes"
+                                    vbox:
+                                        xalign 1.0 
+                                        yalign 0.5
+                                        spacing 5
+                                        imagebutton auto "images/Button/edit_text_%s.png" action Show("input_text")                        
     else:
         viewport:
             scrollbars "vertical"
@@ -289,16 +332,13 @@ screen preprocess_text:
                             yalign 0.5
                             spacing 5
                             imagebutton auto "images/Button/edit_text_%s.png" action Show("input_text")
-                            imagebutton auto "images/Button/edit_icon_%s.png"
 
-    if not answers:
-        imagebutton auto "images/Button/upload_%s.png" action Jump("upload_file"):
-            xalign 0.95
-            yalign 0.984
+    if answers and answers[-1] != "":
+        imagebutton auto "images/Button/create_quiz_%s.png" action [Hide("preprocess_text"), Jump("genarating_quiz")]: 
+            align (0.95, 0.984)
     else:
-        imagebutton auto "images/Button/create_quiz_%s.png" action [Hide("preprocess_text"), Jump("genarating_quiz")]: #since we are skipping editting the keywords & texts, we proceed here next
-            xalign 0.95
-            yalign 0.984
+        imagebutton auto "images/Button/upload_%s.png" action Jump("upload_file"):
+            align (0.95, 0.984)
 
 label upload_file:
     $ show_s("preprocess_text_dull")
@@ -449,7 +489,7 @@ label get_sentences:
 
 label get_keywords:
     $ py_path = get_path(f"kodigo/game/python/keywords.py")
-    $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
+    $ process = subprocess.Popen([python_path, py_path, quiz_title, "bulk"], creationflags=subprocess.CREATE_NO_WINDOW)
 
     #Check if the subprocess has finished
     while not is_subprocess_finished(process):
@@ -508,6 +548,7 @@ label summarize:
                 xalign 0.5
                 yalign 0.5
         hide screen summarizing
+
         jump get_keywords
 
 label genarating_quiz:
@@ -520,14 +561,26 @@ label genarating_quiz:
 
     #Check if the subprocess has finished
     while not is_subprocess_finished(process):
+        show screen generating
         pause 0.1
+    
+    screen generating:
+        add "halfblack"
+        text "Generating quiz...":
+            font "Copperplate Gothic Thirty-Three Regular.otf"
+            size 60
+            color "#FFFFFF"
+            xalign 0.5
+            yalign 0.5
+    
+    hide screen generating
 
     screen success:
         add "halfblack"
 
         button:
             xysize(1920,1080)
-            action [Hide("success"), Function(hide_s, "preprocess_text_dull"), Show("save_quiz", transition=dissolve)]
+            action [Hide("success"), Function(hide_s, "preprocess_text_dull"), Show("save_quiz", transition=dissolve)] keysym ["K_SPACE"]
 
         text "Quiz successfully generated!":
             font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -591,7 +644,10 @@ screen save_quiz():
                 spacing 20
                 scrollbars "vertical"
                 mousewheel True
+                xfill True
+                yfill True
                 vbox:
+                    xfill True
                     spacing 5
                     for i in range(len(questions)):
                         $ question = questions[i]

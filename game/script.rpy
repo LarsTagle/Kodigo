@@ -920,28 +920,30 @@ label chapter1_2:
     # "*MINI GAME (IF APPLICABLE), THERE WILL BE UNIQUE DIALOGUES IF MAKAGAWA MINI GAME, IF HINDI KAYA PROCEED LANG.*"
 
 label chapter1_3:
+    hide halfblack
     scene bg roomaft
     show mc neutral_casual at center
     with dissolve
-    mc "Now that I’ve sewn these uniforms, I now need to iron the clothes so they may look presentable when going to class"
+    mc "Now that I’ve sewn these uniforms, I now need to iron the clothes so they may look presentable when going to class."
 
     hide mc
     # "*MIGHT MINI GAME NOT SURE"
     show mc happy_casual at center with dissolve
-    mc "Finally done with the chores, now I have to prepare for my classes tomorrow"
+    mc "Finally done with the chores, now I have to prepare for my classes tomorrow."
 
     "*INTERACTABLE PHOTOS (CAN USE IMAGE MAP feature)*"
 
     hide mc
-    "*Next day arrives, alarm rings*"
+    "*Next day arrives, alarm rings.*"
     scene bg roomday with hpunch
     show mc sleepy_casual at center with dissolve
-    mc "Uggggghhhhhhh *with hagard jwu look*……………. It’s really here the first day of classes, I just hope that the profs are nice."
+    mc "Uggggghhhhhhh……………"
+    mc "It’s really here, THE first day of classes, I just hope that the profs are nice."
     hide mc
     show mc shocked_casual at left with dissolve
-    mc "Ohh [roommate] is almost awake, I must've been very noisy"
+    mc "Ohh [roommate] is almost awake, I must've been very noisy."
     show roommate sleepy_casual at right with dissolve
-    roommate "Uggghhhh……………. Good morning, want to go out for breakfast?"
+    roommate "Uggghhhh…………… Good morning, want to go out for breakfast?"
     menu:
         "I would love to! But I need to be early for the first day so I can’t . Let’s do it next time!":
             $ points += 1
@@ -949,87 +951,89 @@ label chapter1_3:
             show roommate happy_casual at right with dissolve
             roommate "It’s alright, let’s eat next time then"
             hide roommate
-            "*[roommate] leaves for breakfast*"
+            "*[roommate] leaves for breakfast.*"
 
-        "No thanks, I’m not interested":
+        "No thanks, I’m not interested.":
             $ points -= 1
             show mc angry_casual at left with dissolve
             show roommate sad_casual at right with dissolve
-            roommate "Oh…….. Ok"
+            roommate "Oh…… Ok."
             hide roommate
-            "*[roommate] leaves for breakfast*"
+            "*[roommate] leaves for breakfast.*"
 
     scene bg roomday with fade
     show mc happy_casual at center with dissolve
     mc "Ok now that I have finished preparing things, time to clean myself."
     hide mc
-    "*character proceeds to go to the CR*"
+    "*[mc] proceeds to go to the CR.*"
 
     scene bg crday with fade
-    "*Character and Dormmate bumps into each other*"
+    "*[mc] and [dormmate] bumps into each other.*"
     show dormmate happy_casual at right with dissolve
-    dormmate " Oh hey there character! What a coincidence you just woke up too?"
+    dormmate " Oh hey there [mc]! What a coincidence you just woke up too?"
     show mc neutral_casual at left with dissolve
-    mc "nah I just finished preparing my things for the first day of classes, you can never be too prepared"
+    mc "Nah, I just finished preparing my things for the first day of classes, you can never be too prepared."
     show dormmate happy_casual at right with dissolve
-    dormmate "You seem to be super excited rather than nervous in the first day huh"
+    dormmate "You seem to be super excited rather than nervous in the first day, huh?"
     show mc neutral_casual at left with dissolve
-    mc "of course! It’s exciting to get to know more people other than the orientation, plus i am somehow excited on how our professors look like and how they act"
+    mc "Of course! It’s exciting to get to know more people other than the orientation, plus I am somehow excited on how our professors look like and how they act."
     show dormmate happy_casual at right with dissolve
-    dormmate "Heh…. I wish I had your enthusiasm, anyways we better get going we might be late to class. Let’s go together gooing to class i am kinda nervous hehe."
+    dormmate "Heh…. I wish I had your enthusiasm, anyways we better get going we might be late to class. Let’s go together going to class I am kinda nervous, hehe."
     show mc neutral_casual at left with dissolve
-    mc "aight then I’ll be going now as well"
+    mc "Alright then. I’ll be going now as well!"
     hide mc
     hide dormmate
-    "*character goes to shower and finishes preparing, character goes to the lobby waiting for their friend*"
+    "*[mc] goes to shower and finishes preparing, [pronoun_referred] goes to the lobby waiting for [pronoun_belonging] friend.*"
     scene bg dormday with pushup
     show mc angry_uniform at center with dissolve
-    mc "where the hell is dormmate, were about to be late for the first day of class"
+    mc "where the hell is [dormmate], were about to be late for the first day of class!"
     menu:
-        "*Wait for dormmate, even if you get late*":
+        "*Wait for [dormmate], even if you get late.*":
             $ points += 1
             hide mc
             show mc neutral_uniform at center with dissolve
-            mc "I guess it wouldn’t wait to wait for a bit more"
-            hide mc "After a few minutes, dormmate arrives"
+            mc "I guess it wouldn’t hurt to wait for a bit longer."
+            hide mc "After a few minutes, [dormmate] arrives."
             show mc angry_casual at left with dissolve
             mc "What the hell have you been doing? We are almost late!"
             show dormmate sad_uniform at right with dissolve
-            dormmate "Sorry character *tired sighs* I had the urge to take a call of nature at the worst time, I’ve already had my clothes on but i had to take them of cause of the urge."
+            dormmate "Sorry [mc] *tired sighs* I had the urge to take a call of nature at the worst time, I’ve already had my clothes on but I had to take them of cause of the urge."
             hide mc
             show mc neutral_uniform at left with dissolve
-            mc "you really had to sugarcoat the term for taking a poop. Anyways we better get going or madam will get mad at us, we should go for a run at it."
+            mc "You really had to sugarcoat the term for taking a poop. Anyways we better get going or Ma'am will get mad at us, we should go for a run at it."
             hide mc
             hide dormmate
             "*runs to the room*"
             scene bg comlab with face
-            "*Character and [dormmate] both just barely made it in time"
+            "*[mc] and [dormmate] both just barely made it in time.*"
             show mc angry_uniform at left with dissolve
             mc "We barely made it in time! No thanks to you!"
             hide mc
             show mc happy_uniform at left with dissolve
             mc "Just kidding"
             show dormmate sad_uniform at right with dissolve
-            dormmate "You didn’t need to be so frank with it, lol. It’s what you call being clutch"
+            dormmate "You didn’t need to be so frank with it, lol. It’s what you call being clutch."
             show mc happy_uniform at left with dissolve
-            mc "Clutch your face, we better find ourselves a seat now since class is about to begin"
+            mc "Clutch your face, we better find ourselves a seat now since class is about to begin."
 
-        "Leave Dormmate":
+        "*Leave [dormmate].*":
             $ points -= 1
             hide mc
             show mc neutral_uniform
-            mc " I should just go now or I’ll be late, and maybe I’ll still arrive in time"
+            mc " I should just go now or I’ll be late, and maybe I’ll still arrive in time."
             hide mc
-            "*Character goes through the canteen knowing that [pronoun_referred] still has some time"
+            "*[mc] goes through the canteen knowing that [pronoun_referred] still has some time."
             scene bg canteenday with fade
             show mc neutral_uniform at center with dissolve
-            mc "mm…….. There’s still a few more minutes before time, maybe I can stop by for a little snack *nag snack sa canteen*, oh shit! It’s almost time! I might get late."
+            mc "mm…….. There’s still a few more minutes before time, maybe I can stop by for a little snack..."
+            "*{i}nag snack sa canteen{/i}*"
+            mc "Oh shit! It’s almost time! I might get late."
             hide mc
-            "*character runs to the room*"
+            "*[mc] runs to the room.*"
             scene bg comlab with fade
             show mc happy_uniform at center with dissolve
             mc "Just in time did I arrive. Now it's time to find myself a seat."
-            "*after a few moments, [dormmate] arrives"
+            "*After a few moments, [dormmate] arrives."
             show dormmate angry_uniform at right with dissolve
             dormmate "Dude! You literally left me tsk"
             hide mc
@@ -1037,14 +1041,14 @@ label chapter1_3:
             mc "You were taking too long! It was the first day I can’t afford to be late, I’m truly sorry"
             hide dormmate
             show dormmate happy_uniform at right with dissolve
-            dormmate " Nah I was just messing with ya, I took too long to prepare so that one’s on me"
+            dormmate "Nah I was just messing with ya, I took too long to prepare so that one’s on me"
             hide mc
             show mc neutral_uniform at left with dissolve
             mc "Ok then, go get yourself a seat already cause class will start"
 
     hide mc
     hide dormmate
-    "*After a while, madam Michelle arrived*"
+    "*After a while, ma'am Michelle arrived.*"
     show michelle neutral at center with dissolve
     mich " Hello class! My name is Michelle and I will be your teacher this semester for your Introduction to Computing subject, this class won’t be as easy as you guys think. That is why I expect your full cooperation so that we may be able to get along well."
     show michelle happy at center with dissolve
@@ -1059,7 +1063,7 @@ label chapter1_3:
         "Hello! My name is *character name*! I am from [loc] and I am pleased to meet you too madam Michelle!":
             $ points += 1
             show mc happy_casual at left with dissolve
-            show michelle happy at rght with dissolve
+            show michelle happy at right with dissolve
             mich "Nice to meet you too character! Am also looking forward that you enjoy and learn lots in this class! Ok next. "
 
         "Errr…….. Why did you choose to begin with me? Anyways the Name is  *character name*. Pleased to meet you ":
@@ -1093,7 +1097,7 @@ label chapter1_3:
     mc "Hello Johnny! Nice seeing you again and I see that your as lively as ever, the topics seem so hard don’t ya think?"
     hide dormmate
     show mc happy_uniform at left with dissolve
-    show lurs happy_uniform at rght with dissolve
+    show lurs happy_uniform at right with dissolve
     mich "I think that it isn’t really that hard since it’s still just the basic when it comes to computer science, I can help you when things get rough for you!"
     show mc happy_uniform at left with dissolve
     mc "I'll keep that in min. Thanks!"
@@ -1133,7 +1137,7 @@ label chapter1_3:
         "Koninchiwa Senpai! Were just here to ask if there really is a freshmen party upcoming":
             $ points += 1
             show mc happy_uniform at left with dissolve
-            show mike happy_uniform at rght with dissolve
+            show mike happy_uniform at right with dissolve
             mike "Oh yes there certainly is, it’s this upcoming week. There are lots of stuff coming up however the big one is an upcoming concert featuring bands from our college department!"
         "Again with this weird Japanese thing, anyways we wanna know if there really is an upcoming freshman party?":
             $ points -= 1
@@ -1307,7 +1311,7 @@ label chapter1_3:
             show dormmate sad_pe at right with dissolve
             show lurs sad_pe at center with dissolve
             lurs "Ohh huhuhuhu"
-            jus "Don't be like that character, don't mind him Johnny he can be real stingy sometimes"
+            dormmate "Don't be like that character, don't mind him Johnny he can be real stingy sometimes"
 
     hide dormmate
     hide mc
@@ -1336,30 +1340,33 @@ label chapter1_3:
     dormmate " Tell me about it. Oh I almost forgot that the freshman party is nearing the horizon, what do you plan to do?"
     hide mc
     show mc neutral_pe at left with dissolve
-    mc "nothing really much to be honest, there’s a quiz upcoming in our Intro to Computing class. So I need to review as much as I can"
-    dormmate "You’re right I almost forgot that! Anyways I must also study hard for the upcoming quiz, it surely won’t be easy0"
-    mc "Sure as hell won't be easy"
+    mc "Nothing really much to be honest, there’s a quiz upcoming in our Intro to Computing class. So I need to review as much as I can."
+    dormmate "You’re right, I almost forgot that! Anyways, I must also study hard for the upcoming quiz, it surely won’t be easy."
+    mc "Sure as hell won't be easy."
     hide mc
     hide dormmate
-    "*Fast forward to the quiz day"
+    "*Fast forward to the quiz day.*"
     scene bg dormday with fade
-    "*dormmate and character sees each other in the room"
+    "*[dormmate] and [mc] sees each other in the room."
     show mc happy_uniform at left with dissolve
-    mc "Are you ready for the quiz dormmate?"
+    mc "Are you ready for the quiz [dormmate]?"
     show dormmate happy_uniform at right with dissolve
-    dormmate "Sure as hell I am! Anyways we should get going we don’t want to be late again for this quiz"
-    mc "You are really an easy goig one huh, anyways let's go"
+    dormmate "Sure as hell I am! Anyways we should get going! We don’t want to be late again for this quiz."
+    mc "You really are an easy going one, huh? Anyways, let's go."
     scene bg comlab with fade
-    "*character and dormmate arrives*"
+    "*[mc] and [dormmate] arrives.*"
     show bg comlab with fade
     show michelle happy with dissolve
     mich "Alright class, is everyone here now?"
     "*play audible yes*"
-    mich " Good, now that you are all here please keep your phones, put your bags infornt, no cheating, and goodlcuk everyone!"
+    mich "Good, now that you are all here please keep your phones, put your bags in front, no cheating, and good luck everyone!"
     hide michelle
-    "*madam michelle hands out the tests"
+    "*Madam Michelle opens the test on the class LMS.*"
     show mc shocked_uniform with dissolve
-    mc " Holy guacamole! What is the hell I have no idea what these are!"
+    mc " Holy guacamole! What the hell, I have no idea what these are!"
+    show halfblack 
+    centered "{color=#ffffff}{size=+24}Answer each questions presented...{/color}"
+    centered "{color=#ffffff}{size=+24}You'll only have 12 seconds for each. Good luck!{/color}"
 
     hide mc
     $ in_story = True

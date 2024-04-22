@@ -5,11 +5,12 @@ define new_text = VariableInputValue(variable = "current_text", returnable = Tru
 
 init:
     $ new_title = quiz_title
-    $ current_text = "Paste a text here."
+    $ current_text = ""
+    $ edit_sentence = False
+    $ edit_sentence_index = None
 
 init python:
-    global in_edit_title
-    global in_edit_keywords
+    global in_edit_title, in_edit_keywords
     in_edit_title = False
     in_edit_keywords = False
     global keywords
@@ -20,11 +21,12 @@ init python:
         change_key = answers[i]
         index = i
     
-    def reset_key():
+    def reset_key(i):
         with open(fp, 'r') as file:
             quiz = json.load(file)
-
-        quiz["answers"][index] = change_key
+        
+        if change_key.lower() in quiz["sentences"][i].lower():
+            quiz["answers"][index] = change_key
 
         with open(fp, 'w') as file:
             json.dump(quiz, file)
@@ -245,6 +247,7 @@ screen input_keys(sentences, answers, i):
     add "halfblack"
 
     $ old = answers[i]
+    style_prefix "enter"
 
     frame:
         xysize(500, 400)
@@ -278,12 +281,13 @@ screen input_keys(sentences, answers, i):
                         default_focus True
                         copypaste True
                         bold True
-                    textbutton "ENTER" action [Function(reset_key), Hide("input_keys")] keysym ["K_RETURN", "K_KP_ENTER"]
+                textbutton "ENTER" action [Function(reset_key, i), Hide("input_keys")] keysym ["K_RETURN", "K_KP_ENTER"]:
+                    align (1.0, 1.0)
 
 screen input_text:
     modal True
     add "halfblack"
-    
+
     frame:
         xysize(800, 400)
         align(0.5, 0.5)
@@ -293,7 +297,7 @@ screen input_text:
                 xfill True
                 ysize 50
                 background "#0b5fbed8"
-                imagebutton auto "images/Minigames Menu/exit_%s.png" action Hide("input_text"):
+                imagebutton auto "images/Minigames Menu/exit_%s.png" action [SetVariable("current_text", ""), Hide("input_text")]:
                     xalign 1.0
                 imagebutton auto "images/Button/info_icon_%s.png" action NullAction():
                     tooltip "One sentence will do."
@@ -303,20 +307,31 @@ screen input_text:
                 yfill True
                 ypadding 20
                 xpadding 20
+
+                style_prefix "enter"
+                
+                if current_text == "":
+                    text "Paste a text here.":
+                        size 30
+                        color "#303031a1"
+                        align(0.0, 0.0)
                 vbox:
                     xfill True
                     yfill True
-                    align (0.5, 0.5)
                     spacing 40
-                    input value new_text length 300:
+                    input value new_text length 256:
                         size 30
                         color "#303031"
-                        align(0.0, 0.1)
+                        align(0.0, 0.0)
                         default_focus True
                         caret_blink True
                         copypaste True
                         multiline True
-                    textbutton "ENTER" action NullAction() keysym ["K_RETURN", "K_KP_ENTER"]:
+                if edit_sentence:
+                    textbutton "ENTER" action [Function(store_sentence, current_text), SetVariable("edit_sentence", False), SetVariable("current_text", ""), Hide("input_text")] keysym ["K_RETURN", "K_KP_ENTER"]:
+                        align(1.0, 1.0)
+                else:
+                    textbutton "ENTER" action [Function(store_sentence, current_text), SetVariable("current_text", ""), Hide("input_text")] keysym ["K_RETURN", "K_KP_ENTER"]:
                         align(1.0, 1.0)
     
     $ tooltip = GetTooltip()
@@ -329,6 +344,10 @@ screen input_text:
                 xalign 0.5
                 text tooltip:
                     size 20
+
+style enter_button_text:
+    font "Copperplate Gothic Thirty-Three Regular.otf"
+    size 40
 
 screen preprocess_text_dull:
     add "bg quiz main"

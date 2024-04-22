@@ -35,6 +35,7 @@ def keywords(text, n):
     return out
 
 fn = sys.argv[1]
+extract_type = sys.argv[2]
 
 base_path = os.getcwd()
 relative_path = f"kodigo\\game\\python\\temp\\{fn}.json"
@@ -44,15 +45,20 @@ fp = os.path.join(base_path, relative_path)#f"D:\\renpy-8.1.3-sdk\\kodigo\\game\
 with open(fp, 'r') as file:
     quiz = json.load(file)
 
-if quiz["ranked_sentences"]:
-    text = quiz["ranked_sentences"]
-else:
-    text = quiz["notes"]
+if extract_type == "bulk":
+    if quiz["ranked_sentences"]:
+        text = quiz["ranked_sentences"]
+    else:
+        text = quiz["notes"]
     
-n = len(quiz["sentences"]) + 40
-keywords = keywords(text, n)
+    n = len(quiz["sentences"]) + 40
+    keywords = keywords(text, n)
 
-quiz["keywords"] = keywords 
+    quiz["keywords"] = keywords 
+elif extract_type == "last":
+    sent = quiz["sentences"][-1]
+    answer = keywords(sent, 1)[0]
+    quiz["answers"][-1] = answer
 
 #save the updated data back to json
 with open(fp, 'w') as file:

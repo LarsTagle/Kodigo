@@ -52,7 +52,7 @@ for i in range(len(sentences)):
 
 #get fill in the blank questions
 
-blank_space = 5 * '_'
+blank_space = '___'
 
 for i in range(len(sentences)):
      if questions[i] == "":
