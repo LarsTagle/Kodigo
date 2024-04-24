@@ -64,5 +64,3 @@ quiz["questions"] = questions
 #save the updated data back to json
 with open(fp, 'w') as file:
     json.dump(quiz, file)
-
-print(questions)

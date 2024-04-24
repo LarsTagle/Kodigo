@@ -69,7 +69,7 @@ init python:
 
         if quiz["notes"] == "not supported":
             return "not supported"
-        elif quiz["notes"]:
+        elif quiz["notes"] or quiz["sentences"]:
             return True
 
         return False

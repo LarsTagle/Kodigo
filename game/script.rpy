@@ -1392,7 +1392,11 @@ label chapter1_3: # 4/24 start of editting again
     centered "{color=#ffffff}{size=+24}You'll only have 12 seconds for each. Good luck!{/color}"
 
     hide mc
+
     $ in_story = True
+    #set the quiz
+    $ set_quiz_loc("standard") 
+    $ set_quiz("Os Fundamentals")
     jump init_quiz
     "*MINI GAME QUIZ PLAYS*"
     "*CHAPTER 1 ends (after the choice)"
