@@ -509,9 +509,9 @@ label init_quiz:
 
     screen ready_set:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")]:
-            xalign 0.86
-            yalign 0.04
+
+        if not in_story:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
 
         text "READY...":
             style "init_quiz_font"
@@ -522,9 +522,9 @@ label init_quiz:
 
     screen one:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu("quiz_list_screen")]:
-            xalign 0.86
-            yalign 0.04
+        
+        if not in_story:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
 
         text "1...":
             style "init_quiz_font"
@@ -535,10 +535,10 @@ label init_quiz:
 
     screen two:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu("quiz_list_screen")]:
-            xalign 0.86
-            yalign 0.04
-
+        
+        if not in_story:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
+            
         text "2...":
             style "init_quiz_font"
             xalign 0.5
@@ -548,9 +548,9 @@ label init_quiz:
 
     screen three:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu("quiz_list_screen")]:
-            xalign 0.86
-            yalign 0.04
+        
+        if not in_story:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
 
         text "3...":
             style "init_quiz_font"
@@ -561,10 +561,10 @@ label init_quiz:
 
     screen go:
         add "bg quiz main"
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu("quiz_list_screen")]:
-            xalign 0.86
-            yalign 0.04
-
+        
+        if not in_story:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
+            
         text "GO!":
             style "init_quiz_font"
             xalign 0.5
