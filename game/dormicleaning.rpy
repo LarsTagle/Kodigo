@@ -64,16 +64,16 @@ label dormicleaning:
     $ hf_bg()
     with dissolve
 
-    centered "{size=+24}You need to collect all the items in 7 seconds.\nLet's begin!"
+    centered "{color=#ffffff}{size=+24}You need to collect all the items in 7 seconds.\nLet's begin!{/color}"
 
     $ hf_start()
 
     $ renpy.pause(1, hard=True)
 
     if hf_return == 0:
-        centered "{size=+24}Уay! All items have been collected!"
+        centered "{color=#ffffff}{size=+24}Yay! All items have been collected!{/color}"
     else:
-        centered "{size=+24}GAME OVER\nNo items left: [hf_return]."
+        centered "{color=#ffffff}{size=+24}GAME OVER\nNo items left: [hf_return].{/color}"
 
     menu:
         "Try Again":

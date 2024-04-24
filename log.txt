@@ -1,6 +1,2418 @@
-Fri Mar 29 19:46:04 2024
+Wed Apr 24 19:56:53 2024
 Windows-10-10.0.22631
 Ren'Py 8.1.3.23091805
  
 
-Bootstrap to the start of init.init. took 0.05s
+Bootstrap to the start of init.init. took 0.03s
+Early init. took 0.00s
+Loader init. took 0.13s
+Loading error handling. took 0.03s
+Loading script. took 1.21s
+Loading save slot metadata. took 0.22s
+Loading persistent. took 0.00s
+Running init code. took 0.16s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.07s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.07s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.04s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.29s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.01s
+Analyze screens took 0.03s
+Save screen analysis took 0.04s
+Prepare screens took 0.16s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.05s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.13s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 87.38s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.04s
+Loading script. took 0.24s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.05s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.14s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 133.41s
+Early init. took 0.00s
+Loader init. took 0.06s
+Loading error handling. took 0.02s
+Loading script. took 0.21s
+Loading save slot metadata. took 0.06s
+Loading persistent. took 0.00s
+Running init code. took 0.08s
+Loading analysis data. took 0.04s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.08s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 601.99s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.33s
+Loading save slot metadata. took 0.05s
+Loading persistent. took 0.00s
+Running init code. took 0.07s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.26s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 612.99s
+Early init. took 0.00s
+Loader init. took 0.06s
+Loading error handling. took 0.02s
+Loading script. took 0.25s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.07s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.07s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.06s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.09s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 668.27s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.22s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.02s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.05s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.23s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.04s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 812.07s
+Early init. took 0.00s
+Loader init. took 0.06s
+Loading error handling. took 0.02s
+Loading script. took 0.35s
+Loading save slot metadata. took 0.05s
+Loading persistent. took 0.00s
+Running init code. took 0.10s
+Loading analysis data. took 0.07s
+Analyze and compile ATL. took 0.02s
+Reloading save slot metadata. took 0.10s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.07s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.08s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.35s
+Cleaning stores took 0.00s
+Init translation took 0.07s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.03s
+Save screen analysis took 0.04s
+Prepare screens took 0.13s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/dormicleaning.rpy", line 74, in script
+    centered "{outlinecolor="#000f"}{color=#ffffff}{size=+24} Yay! All items have been collected!{/color}{/outlinecolor}"
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 930, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 1474, in say
+    who(what, *args, **kwargs)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1352, in __call__
+    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1003, in do_display
+    display_say(who,
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 674, in display_say
+    what_text.update()
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\text\text.py", line 1865, in update
+    tokens = self.tokenize(text)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\text\text.py", line 2345, in tokenize
+    tokens.extend(textsupport.tokenize(i))
+  File "textsupport.pyx", line 169, in renpy.text.textsupport.tokenize
+Exception: Open text tag at end of string '{outlinecolor='.
+
+While running game code:
+  File "game/dormicleaning.rpy", line 74, in script
+    centered "{outlinecolor="#000f"}{color=#ffffff}{size=+24} Yay! All items have been collected!{/color}{/outlinecolor}"
+Exception: Open text tag at end of string '{outlinecolor='.
+Resetting cache.
+Bootstrap to the start of init.init. took 827.62s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.01s
+Loading script. took 0.22s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+
+File "game/dormicleaning.rpy", line 74: end of line expected.
+    centered "{outlinecolor="000f"}{color=#ffffff}{size=+24} Yay! All items have been collected!{/color}{/outlinecolor}"
+                             ^
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start. took 0.38s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 833.84s
+Early init. took 0.00s
+Loader init. took 0.03s
+Loading error handling. took 0.01s
+Loading script. took 0.18s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+
+File "game/dormicleaning.rpy", line 74: end of line expected.
+    centered "{outlinecolor="000"}{color=#ffffff}{size=+24} Yay! All items have been collected!{/color}{/outlinecolor}"
+                             ^
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start. took 0.34s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 900.37s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.24s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.08s
+Loading analysis data. took 0.02s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.05s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.30s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/dormicleaning.rpy", line 74, in script
+    centered "{outlinecolor="#0001"}{color=#ffffff}{size=+24} Yay! All items have been collected!{/color}{/outlinecolor}"
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 930, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 1474, in say
+    who(what, *args, **kwargs)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1352, in __call__
+    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 1003, in do_display
+    display_say(who,
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\character.py", line 674, in display_say
+    what_text.update()
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\text\text.py", line 1865, in update
+    tokens = self.tokenize(text)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\text\text.py", line 2345, in tokenize
+    tokens.extend(textsupport.tokenize(i))
+  File "textsupport.pyx", line 169, in renpy.text.textsupport.tokenize
+Exception: Open text tag at end of string '{outlinecolor='.
+
+While running game code:
+  File "game/dormicleaning.rpy", line 74, in script
+    centered "{outlinecolor="#0001"}{color=#ffffff}{size=+24} Yay! All items have been collected!{/color}{/outlinecolor}"
+Exception: Open text tag at end of string '{outlinecolor='.
+Resetting cache.
+Bootstrap to the start of init.init. took 1012.92s
+Early init. took 0.00s
+Loader init. took 0.09s
+Loading error handling. took 0.02s
+Loading script. took 0.20s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+
+File "game/dormicleaning.rpy", line 74: end of line expected.
+    centered "{color=#ffffff}{size=+24} Yay! All items have been collected!{/color}":
+                                                                                    ^
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start. took 0.38s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 1876.59s
+Early init. took 0.00s
+Loader init. took 0.11s
+Loading error handling. took 0.04s
+Loading script. took 0.38s
+Loading save slot metadata. took 0.05s
+Loading persistent. took 0.00s
+Running init code. took 0.09s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.05s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.29s
+Cleaning stores took 0.00s
+Init translation took 0.07s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 1899.88s
+Early init. took 0.00s
+Loader init. took 0.06s
+Loading error handling. took 0.02s
+Loading script. took 0.29s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.04s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.07s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.08s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.04s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 2009.23s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.20s
+Loading save slot metadata. took 0.05s
+Loading persistent. took 0.00s
+Running init code. took 0.08s
+Loading analysis data. took 0.04s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.24s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.05s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 2188.36s
+Early init. took 0.00s
+Loader init. took 0.06s
+Loading error handling. took 0.02s
+Loading script. took 0.26s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.08s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.33s
+Cleaning stores took 0.00s
+Init translation took 0.08s
+Build styles took 0.01s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.04s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 2423.68s
+Early init. took 0.00s
+Loader init. took 0.23s
+Loading error handling. took 0.09s
+Loading script. took 1.68s
+Loading save slot metadata. took 0.14s
+Loading persistent. took 0.00s
+Running init code. took 0.21s
+Loading analysis data. took 0.09s
+Analyze and compile ATL. took 0.03s
+Reloading save slot metadata. took 0.11s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.20s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.17s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.98s
+Cleaning stores took 0.00s
+Init translation took 0.14s
+Build styles took 0.02s
+Load screen analysis took 0.00s
+Analyze screens took 0.09s
+Save screen analysis took 0.10s
+Prepare screens took 0.44s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.08s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 2475.52s
+Early init. took 0.01s
+Loader init. took 0.26s
+Loading error handling. took 0.09s
+Loading script. took 1.76s
+Loading save slot metadata. took 0.20s
+Loading persistent. took 0.00s
+Running init code. took 0.36s
+Loading analysis data. took 0.15s
+Analyze and compile ATL. took 0.05s
+Reloading save slot metadata. took 0.15s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.22s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.11s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.98s
+Cleaning stores took 0.00s
+Init translation took 0.13s
+Build styles took 0.01s
+Load screen analysis took 0.00s
+Analyze screens took 0.09s
+Save screen analysis took 0.09s
+Prepare screens took 0.50s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.07s
+Running _start took 0.01s
+Performance test:
+Interface start. took 0.18s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 2558.73s
+Early init. took 0.00s
+Loader init. took 0.19s
+Loading error handling. took 0.06s
+Loading script. took 3.02s
+Loading save slot metadata. took 0.46s
+Loading persistent. took 0.00s
+ - Init at renpy/common/00images.rpy:55 took 0.40675 s.
+ - Init at renpy/common/00obsolete.rpy:75 took 0.42325 s.
+Running init code. took 1.71s
+Loading analysis data. took 1.19s
+Analyze and compile ATL. took 0.59s
+Reloading save slot metadata. took 0.32s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 1.70s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 1.40s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 2.75s
+Cleaning stores took 0.00s
+Init translation took 0.27s
+Build styles took 0.02s
+Load screen analysis took 0.00s
+Analyze screens took 0.16s
+Save screen analysis took 0.34s
+Prepare screens took 1.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.13s
+Running _start took 0.01s
+Performance test:
+Interface start. took 0.43s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 2715.82s
+Early init. took 0.02s
+Loader init. took 0.33s
+Loading error handling. took 0.10s
+Loading script. took 2.63s
+Loading save slot metadata. took 0.17s
+Loading persistent. took 0.00s
+Running init code. took 0.30s
+Loading analysis data. took 0.13s
+Analyze and compile ATL. took 0.04s
+Reloading save slot metadata. took 0.19s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.46s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.26s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 1.23s
+Cleaning stores took 0.00s
+Init translation took 0.25s
+Build styles took 0.03s
+Load screen analysis took 0.00s
+Analyze screens took 0.14s
+Save screen analysis took 0.18s
+Prepare screens took 0.78s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.10s
+Running _start took 0.01s
+Performance test:
+Interface start. took 0.21s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 2737.77s
+Early init. took 0.00s
+Loader init. took 0.21s
+Loading error handling. took 0.11s
+Loading script. took 1.41s
+Loading save slot metadata. took 0.78s
+Loading persistent. took 0.01s
+Running init code. took 1.48s
+Loading analysis data. took 0.39s
+Analyze and compile ATL. took 0.32s
+Reloading save slot metadata. took 0.43s
+Index archives took 0.00s
+Dump and make backups. took 1.20s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.61s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 2.53s
+Cleaning stores took 0.00s
+Init translation took 0.20s
+Build styles took 0.02s
+Load screen analysis took 0.23s
+Analyze screens took 0.01s
+Save screen analysis took 0.00s
+Prepare screens took 0.91s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.27s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 3758.77s
+Early init. took 0.00s
+Loader init. took 0.11s
+Loading error handling. took 0.03s
+Loading script. took 0.57s
+Loading save slot metadata. took 0.05s
+Loading persistent. took 0.00s
+Running init code. took 0.08s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.30s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 3833.76s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.03s
+Loading script. took 0.40s
+Loading save slot metadata. took 0.12s
+Loading persistent. took 0.00s
+Running init code. took 0.10s
+Loading analysis data. took 0.04s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.08s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.08s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.28s
+Cleaning stores took 0.00s
+Init translation took 0.06s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 3909.95s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.01s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.05s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.23s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 3977.26s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.03s
+Loading script. took 0.42s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.26s
+Cleaning stores took 0.00s
+Init translation took 0.07s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4102.20s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.36s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+
+File "game/script.rpy", line 956: end of line expected.
+    roommate "It’s alright, let’s eat next time then":
+                                                     ^
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start. took 0.44s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4149.06s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.35s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+
+File "game/script.rpy", line 956: end of line expected.
+    roommate "It’s alright, let’s eat next time then":
+                                                     ^
+
+File "game/script.rpy", line 968: end of line expected.
+    roommate "Oh... Okay.":
+                          ^
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start. took 0.33s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4180.89s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.04s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.22s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.06s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 957, in script
+    show roommate:
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1428, in execute
+    show_imspec(self.imspec, atl=getattr(self, "atl", None))
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1391, in show_imspec
+    renpy.config.show(name,
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 759, in show
+    sls.add(layer, img, key, zorder, behind, at_list=at_list, name=name, atl=atl, default_transform=default_transform, transient=transient)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 1280, in add
+    thing.visit_all(lambda d : None)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 674, in visit_all
+    for d in self.visit():
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 636, in visit
+    block = self.compile()
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 543, in compile
+    block = self.atl.compile(self.context)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 745, in compile
+    statements = [ i.compile(ctx) for i in self.statements ]
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 745, in <listcomp>
+    statements = [ i.compile(ctx) for i in self.statements ]
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 1051, in compile
+    child = renpy.easy.displayable(child)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\easy.py", line 145, in displayable
+    raise Exception("Not a displayable: %r" % (d,))
+Exception: Not a displayable: <partial <class 'renpy.display.transition.NoTransition'> (2,) {}>
+
+Compiling ATL code at game/script.rpy:958
+  File "game/script.rpy", line 957, in script
+    show roommate:
+Exception: Not a displayable: <partial <class 'renpy.display.transition.NoTransition'> (2,) {}>
+Resetting cache.
+Bootstrap to the start of init.init. took 4231.35s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.40s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.05s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.11s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.26s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.06s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4251.44s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.40s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.25s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.06s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4263.91s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.05s
+Loading script. took 0.55s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.05s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.08s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.23s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4278.03s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.06s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.06s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4289.05s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.35s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.28s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.06s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4368.35s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.42s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.09s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4441.59s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4454.28s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.40s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.30s
+Cleaning stores took 0.00s
+Init translation took 0.06s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4486.51s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.43s
+Loading save slot metadata. took 0.06s
+Loading persistent. took 0.00s
+Running init code. took 0.07s
+Loading analysis data. took 0.04s
+Analyze and compile ATL. took 0.02s
+Reloading save slot metadata. took 0.08s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.15s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.12s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.46s
+Cleaning stores took 0.00s
+Init translation took 0.08s
+Build styles took 0.01s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4517.32s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.19s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Dump and make backups. took 0.05s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.23s
+Cleaning stores took 0.00s
+Init translation took 0.08s
+Build styles took 0.00s
+Load screen analysis took 0.09s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.18s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4527.17s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.04s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.24s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4542.81s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.37s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.23s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4549.22s
+Early init. took 0.00s
+Loader init. took 0.06s
+Loading error handling. took 0.02s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.23s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.04s
+Prepare screens took 0.13s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4617.98s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.37s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.04s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.07s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.26s
+Cleaning stores took 0.00s
+Init translation took 0.06s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4627.52s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.45s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4906.82s
+Early init. took 0.00s
+Loader init. took 0.09s
+Loading error handling. took 0.02s
+Loading script. took 0.29s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+
+File "game/script.rpy", line 993: expected 'simple_expression' not found.
+    ease 3 xoffset 0 xalign
+                           ^
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start. took 0.37s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4914.64s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.38s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.08s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.25s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4933.27s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.42s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.06s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.29s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.10s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4970.12s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.38s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.05s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.08s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.04s
+Save screen analysis took 0.04s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 4988.72s
+Early init. took 0.00s
+Loader init. took 0.05s
+Loading error handling. took 0.02s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.09s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.28s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.03s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 5014.88s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.01s
+Loading script. took 0.42s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.25s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.04s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 5062.45s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.45s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.08s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.27s
+Cleaning stores took 0.00s
+Init translation took 0.09s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.03s
+Save screen analysis took 0.05s
+Prepare screens took 0.12s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.14s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 5322.54s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.43s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.26s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 5342.61s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.46s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.26s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.11s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.07s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 5384.03s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.38s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.05s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.28s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 5417.78s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.38s
+Loading save slot metadata. took 0.03s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.06s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.06s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.25s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.04s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.08s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Resetting cache.
+Bootstrap to the start of init.init. took 5466.80s
+Early init. took 0.00s
+Loader init. took 0.04s
+Loading error handling. took 0.02s
+Loading script. took 0.39s
+Loading save slot metadata. took 0.04s
+Loading persistent. took 0.00s
+Running init code. took 0.05s
+Loading analysis data. took 0.03s
+Analyze and compile ATL. took 0.01s
+Reloading save slot metadata. took 0.03s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\tagle\\AppData\\Roaming/RenPy/backups\\Kodigo':
+Dump and make backups. took 0.05s
+Cleaning cache. took 0.00s
+Making clean stores. took 0.00s
+Initial gc. took 0.07s
+DPI scale factor: 1.250000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object. took 0.22s
+Cleaning stores took 0.00s
+Init translation took 0.05s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.03s
+Prepare screens took 0.10s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Performance test:
+Interface start. took 0.09s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce MX330/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 546.09'
+Display Info: None
+Screen sizes: virtual=(1920, 1080) physical=(1724, 970) drawable=(1724, 970)
+Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.00s
+Build styles took 0.01s
+Load screen analysis took 0.09s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s

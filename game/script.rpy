@@ -652,7 +652,7 @@ label chapter1_1:
         yoffset 1500 xalign 0.5
         ease 2 yoffset 200
     play sound "phonering.mp3" loop
-    with Pause(4) # THIS IS AGAAAAIIIIN WHERE I END
+    with Pause(4) 
     menu:
         "*Answer Call*": 
             $ points += 1
@@ -799,7 +799,7 @@ label chapter1_2:
     mc "Okay, calm down I still have to buy some logos for my uniforms."
     n "A jeepney stops in front of [mcname], and [pronoun_referred] ride the jeepney to buy [pronoun_belonging] logo."
 
-    scene bg jeep with irisin
+    scene bg caraft with irisin
     show mc neutral_casual with dissolve:
         xalign 0.1
     show mark neutral with dissolve:
@@ -820,8 +820,8 @@ label chapter1_2:
 
         "{i}Manong ba’t eto lang sukli?!{/i}":
             $ points -= 1
-            show mc angry_casual at left with dissolve
-            show mark sad at right with dissolve
+            show mc angry_casual with dissolve
+            show mark sad with dissolve
             mc "{i}Ang lapit lapit nga lang ng patahian sa BU tapos sobra ka pa maningil. Estudyante pa ako kaya dapat di ganto singil niyo!{/i}"
             mark "{i}Hay nako nagkamali lang siguro ako panukli, ang bibig ng kabataan ngayon talagang antatalas ng mga dila.{/i}"
 
@@ -864,15 +864,15 @@ label chapter1_2:
     mc "Really? I've only been here for a few days."
     mike "Say, weren't you in the freshmen orientation a few days ago?"
     show mc happy_casual with dissolve
-    mc " Yes I am, you don’t happen to be a Computer Science student as well, are you?"
+    mc "Yes I am, you don’t happen to be a Computer Science student as well, are you?"
     show mike happy_uniform with dissolve
     mike "What a coincidence I actually am! I am a third year student and it looks like you’d be calling me {i}“senpai”{/i} eyy! Just kidding."
     menu:
-        "Nice to meet you {i}“senpai”{/i}! I look forward to working with you in the future, I better":
+        "Nice to meet you {i}“senpai”{/i}! I look forward to working with you in the future, I better.":
             $ points += 1
             show mc happy_casual with dissolve
             show mike happy_uniform with dissolve
-            mike "I see! Take care my {i}\"kohai\"{/i}"
+            mike "I see! Take care my {i}\"kohai\".{/i}"
 
         "Ha! As if I'd call someone {i}\"senpai\".":
             $ points -= 1
@@ -916,11 +916,10 @@ label chapter1_2:
     mc "{b}Hays, is it really necessary that I still put a logo on this uniform? It’s not like the guard will notice me not having this already. Oh well, guess better keep doing this now.{/b}"
 
     hide mc
-    jump init_sewing
+    #jump init_sewing
     # "*MINI GAME (IF APPLICABLE), THERE WILL BE UNIQUE DIALOGUES IF MAKAGAWA MINI GAME, IF HINDI KAYA PROCEED LANG.*"
 
-label chapter1_3:
-    hide halfblack
+label chapter1_3: # 4/24 start of editting again
     scene bg roomaft
     show mc neutral_casual at center
     with dissolve
@@ -938,55 +937,79 @@ label chapter1_3:
     scene bg roomday with hpunch
     show mc sleepy_casual at center with dissolve
     mc "Uggggghhhhhhh……………"
-    mc "It’s really here, THE first day of classes, I just hope that the profs are nice."
+    mc "It’s really here, THE first day of classes, I just hope that the professor are nice."
     hide mc
-    show mc shocked_casual at left with dissolve
+    show mc shocked_casual with dissolve:
+        xalign 0.5
+        ease 0.8 xalign 0.1
     mc "Ohh [roommate] is almost awake, I must've been very noisy."
-    show roommate sleepy_casual at right with dissolve
+    show roommate sleepy_casual with dissolve:
+        xalign 0.9
     roommate "Uggghhhh…………… Good morning, want to go out for breakfast?"
     menu:
-        "I would love to! But I need to be early for the first day so I can’t . Let’s do it next time!":
+        "I would love to!":
             $ points += 1
-            show mc happy_casual at left with dissolve
-            show roommate happy_casual at right with dissolve
-            roommate "It’s alright, let’s eat next time then"
-            hide roommate
+            show mc neutral_casual with dissolve:
+                xalign 0.1
+            mc "It's a great way to start the day."
+            
+            show mc sad_casual with dissolve
+            mc "But I need to be early for the first day so I can’t. Let’s do it next time!"
+
+            show roommate happy_casual with dissolve:
+                xalign 0.9
+            show mc neutral_casual with dissolve
+            roommate "It’s alright, let’s eat next time then."
+            show roommate:
+                ease 1.9 xoffset 900
+            
             "*[roommate] leaves for breakfast.*"
 
         "No thanks, I’m not interested.":
             $ points -= 1
-            show mc angry_casual at left with dissolve
-            show roommate sad_casual at right with dissolve
-            roommate "Oh…… Ok."
-            hide roommate
+            show mc angry_casual with dissolve:
+                xalign 0.1
+            show roommate sad_casual with dissolve:
+                xalign 0.9
+            roommate "Oh... Okay."
+            show roommate:
+                ease 1.9 xoffset 900
             "*[roommate] leaves for breakfast.*"
 
     scene bg roomday with fade
     show mc happy_casual at center with dissolve
     mc "Ok now that I have finished preparing things, time to clean myself."
-    hide mc
+    show mc:
+        ease 2.8 xoffset 1600
     "*[mc] proceeds to go to the CR.*"
 
     scene bg crday with fade
+    show dormmate happy_casual:
+        xoffset -1300
+        ease 2.5 xoffset 0 xalign 0.9
+
+    show mc neutral_casual:
+        xoffset -900
+        ease 2.1 xoffset 0 xalign 0.1
+
     "*[mc] and [dormmate] bumps into each other.*"
-    show dormmate happy_casual at right with dissolve
-    dormmate " Oh hey there [mc]! What a coincidence you just woke up too?"
-    show mc neutral_casual at left with dissolve
+
+    dormmate "Oh hey there, [mc]! What a coincidence you just woke up, too?"
     mc "Nah, I just finished preparing my things for the first day of classes, you can never be too prepared."
-    show dormmate happy_casual at right with dissolve
+    show dormmate neutral_casual with dissolve
     dormmate "You seem to be super excited rather than nervous in the first day, huh?"
-    show mc neutral_casual at left with dissolve
+    show mc happy_casual with dissolve
     mc "Of course! It’s exciting to get to know more people other than the orientation, plus I am somehow excited on how our professors look like and how they act."
-    show dormmate happy_casual at right with dissolve
-    dormmate "Heh…. I wish I had your enthusiasm, anyways we better get going we might be late to class. Let’s go together going to class I am kinda nervous, hehe."
-    show mc neutral_casual at left with dissolve
+    dormmate "Heh... I wish I had your enthusiasm, anyways we better get going we might be late to class. Let’s go together going to class I am kinda nervous, hehe."
+    show mc neutral_casual with dissolve
     mc "Alright then. I’ll be going now as well!"
-    hide mc
-    hide dormmate
+    hide mc with dissolve
+    hide dormmate with dissolve
     "*[mc] goes to shower and finishes preparing, [pronoun_referred] goes to the lobby waiting for [pronoun_belonging] friend.*"
-    scene bg dormday with pushup
+    scene bg livday with pushup
     show mc angry_uniform at center with dissolve
-    mc "where the hell is [dormmate], were about to be late for the first day of class!"
+    mc "Where the in the world is [dormmate], we're about to be late for the first day of class!"
+    # this is where i end
     menu:
         "*Wait for [dormmate], even if you get late.*":
             $ points += 1

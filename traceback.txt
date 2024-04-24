@@ -1,75 +1,40 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-While loading <renpy.display.im.Image object ('images/Minigames Menu/line.png') at 0x0000000004f8f7f0>:
-  File "game/quiz_gen.rpy", line 413, in script
-    call screen save_quiz
-  File "renpy/common/000statements.rpy", line 670, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-OSError: Couldn't find file 'images/Minigames Menu/line.png'.
+Compiling ATL code at game/script.rpy:958
+  File "game/script.rpy", line 957, in script
+    show roommate:
+Exception: Not a displayable: <partial <class 'renpy.display.transition.NoTransition'> (2,) {}>
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/quiz_gen.rpy", line 413, in script
-    call screen save_quiz
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 2259, in execute
-    self.call("execute")
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 2241, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\statements.py", line 342, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 670, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 3347, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ui.py", line 299, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 3582, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 4175, in interact_core
-    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 2782, in draw_screen
-    surftree = renpy.display.render.render_screen(
-  File "render.pyx", line 492, in renpy.display.render.render_screen
-  File "render.pyx", line 266, in renpy.display.render.render
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\layout.py", line 888, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 266, in renpy.display.render.render
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\layout.py", line 888, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 266, in renpy.display.render.render
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\layout.py", line 888, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 266, in renpy.display.render.render
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\screen.py", line 731, in render
-    child = renpy.display.render.render(self.child, w, h, st, at)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 266, in renpy.display.render.render
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\layout.py", line 888, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 266, in renpy.display.render.render
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\transform.py", line 909, in render
-    return RenderTransform(self).render(width, height, st, at)
-  File "accelerator.pyx", line 979, in renpy.display.accelerator.RenderTransform.render
-  File "accelerator.pyx", line 404, in renpy.display.accelerator.RenderTransform.render_child
-  File "render.pyx", line 266, in renpy.display.render.render
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\im.py", line 676, in render
-    return cache.get(self, render=True)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\im.py", line 330, in get
-    surf = image.load()
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\im.py", line 803, in load
-    raise e
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\im.py", line 757, in load
-    filelike = renpy.loader.load(self.filename, directory="images")
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\loader.py", line 833, in load
-    raise IOError("Couldn't find file '%s'." % name)
-OSError: Couldn't find file 'images/Minigames Menu/line.png'.
+  File "game/script.rpy", line 957, in script
+    show roommate:
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1428, in execute
+    show_imspec(self.imspec, atl=getattr(self, "atl", None))
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1391, in show_imspec
+    renpy.config.show(name,
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 759, in show
+    sls.add(layer, img, key, zorder, behind, at_list=at_list, name=name, atl=atl, default_transform=default_transform, transient=transient)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 1280, in add
+    thing.visit_all(lambda d : None)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 674, in visit_all
+    for d in self.visit():
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 636, in visit
+    block = self.compile()
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 543, in compile
+    block = self.atl.compile(self.context)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 745, in compile
+    statements = [ i.compile(ctx) for i in self.statements ]
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 745, in <listcomp>
+    statements = [ i.compile(ctx) for i in self.statements ]
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 1051, in compile
+    child = renpy.easy.displayable(child)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\easy.py", line 145, in displayable
+    raise Exception("Not a displayable: %r" % (d,))
+Exception: Not a displayable: <partial <class 'renpy.display.transition.NoTransition'> (2,) {}>
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.1.3.23091805
 Kodigo 1.0
-Fri Mar 29 19:51:07 2024
+Wed Apr 24 21:06:50 2024
