@@ -1,40 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-Compiling ATL code at game/script.rpy:958
-  File "game/script.rpy", line 957, in script
-    show roommate:
-Exception: Not a displayable: <partial <class 'renpy.display.transition.NoTransition'> (2,) {}>
+While running game code:
+  File "game/script.rpy", line 1105, in script
+    hide michelle with face
+  File "game/script.rpy", line 1105, in <module>
+    hide michelle with face
+NameError: name 'face' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 957, in script
-    show roommate:
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1428, in execute
-    show_imspec(self.imspec, atl=getattr(self, "atl", None))
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1391, in show_imspec
-    renpy.config.show(name,
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\exports.py", line 759, in show
-    sls.add(layer, img, key, zorder, behind, at_list=at_list, name=name, atl=atl, default_transform=default_transform, transient=transient)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 1280, in add
-    thing.visit_all(lambda d : None)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\display\core.py", line 674, in visit_all
-    for d in self.visit():
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 636, in visit
-    block = self.compile()
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 543, in compile
-    block = self.atl.compile(self.context)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 745, in compile
-    statements = [ i.compile(ctx) for i in self.statements ]
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 745, in <listcomp>
-    statements = [ i.compile(ctx) for i in self.statements ]
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\atl.py", line 1051, in compile
-    child = renpy.easy.displayable(child)
-  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\easy.py", line 145, in displayable
-    raise Exception("Not a displayable: %r" % (d,))
-Exception: Not a displayable: <partial <class 'renpy.display.transition.NoTransition'> (2,) {}>
+  File "game/script.rpy", line 1105, in script
+    hide michelle with face
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\ast.py", line 1671, in execute
+    trans = renpy.python.py_eval(self.expr)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\python.py", line 1153, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "C:\Users\tagle\OneDrive\Desktop\renpy-8.1.3-sdk\renpy\python.py", line 1146, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/script.rpy", line 1105, in <module>
+    hide michelle with face
+NameError: name 'face' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.1.3.23091805
 Kodigo 1.0
-Wed Apr 24 21:06:50 2024
+Thu Apr 25 17:13:01 2024
