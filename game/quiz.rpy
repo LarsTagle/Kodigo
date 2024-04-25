@@ -1,14 +1,7 @@
 """
 things to fix:
-    1. polish quiz ui
-    2. integrate ai
-    3. fix assets
-    4. add toolkits
-    5. add comments
-    6. if possible, add mini text editor
+    1. edit quiz ui its shit
 """
-
-#back to status quo, error in mapping sentence
 
 init:
     $ question_num = 0
@@ -84,7 +77,7 @@ init python:
 
     def set_quiz_loc(type):
         global quiz_loc
-        quiz_loc  = type
+        quiz_loc = type
 
     def set_quiz(quiz):
         global current_quiz
@@ -104,7 +97,9 @@ init python:
         global answers
         global letters
         global options
+        global all_options
 
+        all_options = []
         letters = []
         options = []
 
@@ -118,12 +113,17 @@ init python:
         random.shuffle(q_and_a)
         questions, answers = zip(*q_and_a)
 
+        #get all options without repetition
+        for answer in answers:
+            if answer not in all_options:
+                all_options.append(answer)
+
         for i in range(len(questions)):
-            choices = random.sample(quiz_data["answers"], 3)
+            choices = random.sample(all_options, 3)
             if answers[i] in choices:
                 choices.remove(answers[i])
                 while True:
-                    choice = random.sample(quiz_data["answers"], 1)
+                    choice = random.sample(all_options, 1)
                     if choice not in choices:
                         choices.append(choice[0])
                         break
@@ -580,19 +580,18 @@ style init_quiz_font:
     color "#FFFFFF"
 
 label init_question:
+    show bg quiz main
     $ show_s("countdown")
     #show screen countdown with None
     call screen quiz_proper with dissolve
 
 screen countdown():
-    add "bg quiz main"
-    
     if timeout_label is not None:
         add "clock" xalign 0.85 yalign 0.85
-        timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Jump(timeout_label)]
+        timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Show(timeout_label, transition=dissolve)]
 
 screen quiz_proper:
-    imagebutton auto "images/Button/pause_quiz_%s.png" action Jump("pause_quiz"):
+    imagebutton auto "images/Button/pause_quiz_%s.png" action Function(hide_s, "countdown"), Show("pause_quiz"): #hide the countdown for now
         xalign 0.86
         yalign 0.04
 
@@ -628,7 +627,7 @@ screen quiz_proper:
                 $ letter = "D"
 
             textbutton "[letter]. " + option:
-                action If(letters[question_num] == letter, Jump("right"), Jump("wrong"))
+                action If(letters[question_num] == letter, (Show("right", transition=dissolve), SetVariable("score", score+1)), Show("wrong", transition=dissolve))
                     
             $ x += 1
 
@@ -637,101 +636,63 @@ style options_button_text:
     align (0.5, 0.5)
     size 50
     color "#ffffff"
+    insensitive_color "#ffffff"
     hover_color "#b1e7f5"
     selected_color "#7ceafd"
 
-label pause_quiz:
-    hide screen quiz_proper
-    #hide screen countdown
-    $ hide_s("countdown")
-    $ show_s("question_dull")
-
-    call screen paused_menu
-
-    screen paused_menu:
-        add "halfblack"
-
-        imagebutton auto "images/Button/pause_quiz_%s.png" action Jump("continue_quiz"):
-            xalign 0.86
-            yalign 0.04
-        frame:
-            xalign 0.82
-            yalign 0.136
-            xsize 489
-            ysize 421
-            background "#757274"
-
-            vbox:
-                xalign 0.5
-                yalign 0.5
-                imagebutton auto "images/Button/continue_quiz_%s.png" action Jump("continue_quiz"):
-                    xalign 0.5
-                    yalign 0.5
-                imagebutton auto "images/Button/exit_quiz_%s.png" action Jump("exit_quiz"):
-                    xalign 0.5
-                    yalign 0.5
-                    yoffset 20
-
-label continue_quiz:
-    hide paused_menu
-    $ hide_s("question_dull")
-    jump init_question
-
-label exit_quiz:
-    hide paused_menu
-    $ hide_s("question_dull")
-    call screen quiz_list_screen
-
-screen show_correction(is_correct):
-    if is_correct:
-        $ mc_reac = "mc_happy"
-        $ answer_is = "Your answer is {b}{color=#00008B}correct{/color}{/b}!"
-
-        button:
-            xysize(1920,1080)
-            action Jump("next_question")#[Hide("show_correction"), Jump("next_question")]
-    else:
-        $ mc_reac = "mc_sad"
-        $ answer_is = "Your answer is {b}{color=#FF0000}wrong{/color}{/b}."
-
-        button:
-            xysize(1920,1080)
-            action [Hide("show_correction"), Show("show_answer")]
-
+screen pause_quiz:
+    modal True
     add "halfblack"
-    add mc_reac
+
+    imagebutton auto "images/Button/pause_quiz_%s.png" action Function(show_s, "countdown"), Hide("pause_quiz"):
+        align (0.86, 0.04)
 
     frame:
-        xsize 1920
-        ysize 90
-        xalign 0.5
-        yalign 0.8
-        background "gui/nvl.png"
-        text answer_is style "correct"
+        align (0.82, 0.136)
+        xysize (489, 421)
+        background "#757274"
 
-screen show_answer:
+        vbox:
+            align (0.5, 0.5)
+            imagebutton auto "images/Button/continue_quiz_%s.png" action Function(show_s, "countdown"), Hide("pause_quiz"):
+                align (0.5, 0.5)
+            imagebutton auto "images/Button/exit_quiz_%s.png" action Hide("pause_quiz"), Hide("quiz_proper"), Show("quiz_list_screen", transition=dissolve):
+                align (0.5, 0.5)
+                yoffset 20
+
+screen right:
+    modal True
+    $ hide_s("countdown")
+
+    add "halfblack"
+    add "mc_happy"
+
+    button:
+        xysize(1920,1080)
+        action [Hide("right"), Jump("next_question")]
+
+    frame:
+        xysize (1920, 90)
+        align (0.5, 0.8)
+        background "gui/nvl.png"
+        text "Your answer is {b}{color=#00008B}correct{/color}{/b}!" style "correct"
+
+screen wrong:
+    modal True
+    $ hide_s("countdown")
+
     add "halfblack"
     add "mc_sad"
 
     button:
         xysize(1920,1080)
-        action [Hide("show_answer"), Jump("next_question")]
-
-    $ letter = letters[question_num]
-    $ answer = answers[question_num]
+        action [Hide("wrong"), Jump("next_question")]
 
     frame:
-        xsize 1920
-        ysize 90
-        xalign 0.5
-        yalign 0.8
-        background "gui/nvl.png" 
-        vbox:
-            xalign 0.5
-            yalign 0.5
-            spacing 5
-            text "The correct answer is " style "correct"
-            text "{b}{color=#FF0000}[letter]. [answer]{/color}{/b}." style "correct"
+        xysize (1920, 90)
+        align (0.5, 0.8)
+        background "gui/nvl.png"
+        text "Your answer is {b}{color=#FF0000}wrong{/color}{/b}." style "correct"
 
 style correct:
     font "KronaOne-Regular.ttf"
@@ -739,27 +700,6 @@ style correct:
     size 30
     xalign 0.5
     yalign 0.5
-
-label right:  
-    hide screen quiz_proper
-    #hide screen countdown
-    $ hide_s("countdown")
-    $ show_s("question_dull")
-
-    $ score += 1
-
-    call screen show_correction (True) with dissolve
-    jump next_question
-
-label wrong:
-    hide screen quiz_proper
-    #hide screen countdown
-    $ hide_s("countdown")
-    $ show_s("question_dull")
-
-    call screen show_correction (False) with dissolve
-    jump next_question
-
 
 label next_question:
     $ question_num += 1
@@ -776,7 +716,7 @@ label next_question:
     $ timeout = 12 # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
-    $ hide_s("question_dull")
+    #$ hide_s("question_dull")
     jump init_question 
 
 label results:
