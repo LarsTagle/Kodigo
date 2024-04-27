@@ -646,14 +646,6 @@ init -2 python:
     # по умолчанию для музыки music/*.ogg
     # по умолчанию для звуков audio/*.ogg
 
-    # запустить музыку или плейлист
-    def mplay(mname, fadein=1, fadeout=1, loop=True, channel="music", ext="ogg"):
-        list = []
-        mname = make_list(mname)
-        for i in mname:
-            list.append(music_dir + "/" + i + "." + ext)
-        renpy.music.play(list, channel=channel, loop=loop, fadein=fadein, fadeout=fadeout)
-
     # запустить музыку или случайно перемешанный плейлист
     def rndplay(mname, fadein=1, fadeout=1, loop=True, channel="music", ext="ogg"):
         list = make_list(mname)
@@ -686,25 +678,7 @@ init -2 python:
     # восстановить игравшую при сохранении мелодию
     def mrestore(fadein=1, fadeout=1, channel="music"):
         if last_music_fn:
-            fnplay(last_music_fn, fadein=fadein, fadeout=fadeout, channel=channel, restart=False)
-
-    # воспроизвести звук для канала audio, который поддерживает многопоточность
-    def splay(mname, fadein=0, fadeout=0, channel=config.play_channel, ext="ogg", audio_dir=audio_dir):
-        if mname:
-            mname = make_list(mname)
-            lst = []
-            for i in mname:
-                lst.append(audio_dir + "/" + i + "." + ext)
-            renpy.play(lst, channel=channel, fadein=fadein, fadeout=fadeout)
-
-    # воспроизвести звук
-    def sndplay(mname, fadein=0, fadeout=0, channel="sound", ext="ogg", audio_dir=audio_dir):
-        if mname:
-            mname = make_list(mname)
-            lst = []
-            for i in mname:
-                lst.append(audio_dir + "/" + i + "." + ext)
-            renpy.play(lst, channel=channel, fadein=fadein, fadeout=fadeout)
+            fnplay(last_music_fn, fadein=fadein, fadeout=fadeout, channel=channel, restart=False)    
 
     # голос
     def vplay(mname, fadein=0, fadeout=0, channel="voice", ext="ogg"):
@@ -713,10 +687,6 @@ init -2 python:
 
     # остановить звук
     def sstop(fadeout=None, channel='audio'):
-        renpy.music.stop(channel=channel, fadeout=fadeout)
-
-    # остановить звук
-    def sndstop(fadeout=0, channel='sound'):
         renpy.music.stop(channel=channel, fadeout=fadeout)
 
     # остановить музыку
@@ -728,10 +698,8 @@ init -2 python:
         renpy.music.stop(channel=channel, fadeout=fadeout)
 
     # превращаем функции в action для экранов screen
-    SPlay = renpy.curry(splay)
     SFXPlay = renpy.curry(sfxplay)
     SFXStop = renpy.curry(sfxstop)
-    MPlay = renpy.curry(mplay)
     FNPlay = renpy.curry(fnplay)
     VPlay = renpy.curry(vplay)
     SStop = renpy.curry(sstop)

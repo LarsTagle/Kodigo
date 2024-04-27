@@ -62,6 +62,7 @@ screen gender_choose:
 label start:
     with fade
     scene bg disclaimer with Pause(5)
+    play music "Day_Music.ogg"
     scene bg frontday
 
     n "It's been 2 long years since the pandemic wreaked havoc upon the world,
@@ -155,17 +156,19 @@ label start_2:
     hide mc
     hide mom
 
+    stop music fadeout 1.0
+    play music "sadboiera.ogg"
     scene bg luggage 
     n "[mcname], an incoming first year college student of Bicol University. It was [pronoun_belonging] first time being away from home and had no friends going to the new school [pronoun_referred] enrolled in..."
     scene bg luggage2
     n "and now that [pronoun_referred] has arrived [pronoun_referred] now has to face the challenges that every freshman must face."
-
-
     jump chapter1
 
 label chapter1:
     scene bg calendar_aug with dissolve
     scene bg calendar_aug with Pause(4)
+    stop music fadeout 1.0
+    play music "School.ogg"
     scene bg dormday with dissolve
 
     show mc happy_casual
@@ -1098,7 +1101,7 @@ label chapter1_3: # 4/24 start of editting again
     n "After a while, Ma'am Michelle arrived."
     show michelle neutral at center with dissolve
     mich "Hello class! My name is Michelle and I will be your teacher this semester for your Introduction to Computing subject,
-     this class won’t be as easy as you guys think. That is why I expect your full cooperation so that we may be able to get along well."
+    this class won’t be as easy as you guys think. That is why I expect your full cooperation so that we may be able to get along well."
     
     show michelle happy with dissolve
     mich "Now that I have introduced myself, how about you introduce yourselves this time."
@@ -1166,7 +1169,7 @@ label chapter1_3: # 4/24 start of editting again
     show mc neutral_uniform at left with dissolve
     mc "I think so too, maybe we're just being too you know"
     hide dormmate admiring_casual
-    show just sad_uniform at right with dissolve
+    show dormmate sad_uniform at right with dissolve
     dormmate "Being too what?"
     show mc neutral_uniform at left with dissolve
     mc "Nevermind, it’s nothing you really are slow when it comes to things at times lol"
@@ -1405,6 +1408,7 @@ label chapter1_3: # 4/24 start of editting again
     hide dormmate
     "*Fast forward to the quiz day.*"
     scene bg dormday with fade
+    play music "Afternoon_Music.ogg"
     "*[dormmate] and [mc] sees each other in the room."
     show mc happy_uniform at left with dissolve
     mc "Are you ready for the quiz [dormmate]?"
@@ -1419,19 +1423,22 @@ label chapter1_3: # 4/24 start of editting again
     "*play audible yes*"
     mich "Good, now that you are all here please keep your phones, put your bags in front, no cheating, and good luck everyone!"
     hide michelle
-    "*Madam Michelle opens the test on the class LMS.*"
+    "*madam michelle hands out the tests"
     show mc shocked_uniform with dissolve
+
     mc " Holy guacamole! What the hell, I have no idea what these are!"
     show halfblack 
     centered "{color=#ffffff}{size=+24}Answer each questions presented...{/color}"
     centered "{color=#ffffff}{size=+24}You'll only have 12 seconds for each. Good luck!{/color}"
 
     hide mc
-
+    hide halfblack
     $ in_story = True
     #set the quiz
     $ set_quiz_loc("standard") 
     $ set_quiz("Os Fundamentals")
+    stop music fadeout 1.0
+    play music "08a - Mystery.ogg"
     jump init_quiz
     "*MINI GAME QUIZ PLAYS*"
     "*CHAPTER 1 ends (after the choice)"
@@ -1439,13 +1446,30 @@ label chapter1_3: # 4/24 start of editting again
     #Based on his score/choice will chapter 2 start
 
 label cheat_quiz:
-    show bg comlab with fade
-    "add the choices here" #cheat starts during the 10th question or pwede namang baguhin
+    with Pause(1)
+    show mc sad_uniform with dissolve
+    mc "I'm not really sure about my answers so far..."
+    mc "I don't now what to do, I have to pass!"
+    mc "This is the first exam for the subject after all..."
+    
+    hide mc
+
+    menu:
+        "Ask [dormmate] for answers.":
+            show mc sad_uniform at left 
+            show dormmate neutral_uniform at right
+            with dissolve
+            n "Jasmine slids a piece of paper to [mc]'s way."
+            $ points -= 1
+        "Think harder.":
+            $ points += 1
 
     #to restart timer
     show screen countdown
     #return to quiz
-    call screen quiz_proper
+    hide mc
+    hide dormmate
+    jump init_question
 
 label chapter_2:
     "chapter 2"

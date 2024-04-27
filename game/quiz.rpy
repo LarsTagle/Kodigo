@@ -1,6 +1,8 @@
 """
 things to fix:
     1. edit quiz ui its shit
+    2. edit dormicleaning
+    3. add crumpled paper on the side for the cheating
 """
 
 init:
@@ -218,8 +220,8 @@ screen quiz_instructions:
     add "bg roomnight"
 
     imagebutton auto "images/Button/exit_%s.png" action ShowMenu("minigame"):
-        xalign 0.97
-        yalign 0.06
+        align (0.97, 0.06)
+        activate_sound "audio/click.ogg"
 
     frame:
         xpadding 40
@@ -247,8 +249,8 @@ screen quiz_instructions:
                 size 32
 
             imagebutton auto "images/Button/play_%s.png" action ShowMenu("program_quiz_protocol"):
-                xalign 0.5
-                yalign 0.5
+                align (0.5, 0.5)
+                activate_sound "audio/click.ogg"
 
 screen program_quiz_protocol():
     tag menu
@@ -256,28 +258,28 @@ screen program_quiz_protocol():
 
     $ get_quiz_list()
 
-    add "quiz title":
-        yalign 0.2
-        xalign 0.5
+    image "quiz title":
+        align (0.5, 0.2)
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action ShowMenu("minigame"):
-        xalign 0.86
-        yalign 0.04
+        align (0.86, 0.04)
+        activate_sound "audio/click.ogg"
 
     imagebutton auto "images/Button/standard_quiz_%s.png" action [Function(set_quiz_loc, "standard"), ShowMenu("quiz_list_screen")]:
-        yalign 0.55
-        xalign 0.5
+        align (0.5, 0.55)
+        activate_sound "audio/click.ogg"
+
     imagebutton auto "images/Button/custom_quiz_%s.png"action [Function(set_quiz_loc, "custom"), ShowMenu("quiz_list_screen")]:
-        yalign 0.7
-        xalign 0.5
+        align (0.5, 0.7)
+        activate_sound "audio/click.ogg"
 
 screen quiz_list_screen:
     tag menu
     add "bg quiz main"
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("custom_quizzes"), ShowMenu("program_quiz_protocol")]:
-        xalign 0.86
-        yalign 0.04
+        align (0.86, 0.04)
+        activate_sound "audio/click.ogg"
 
     if quiz_loc == "standard":
         $ screen_title = "STANDARD QU/ZZES"
@@ -290,8 +292,7 @@ screen quiz_list_screen:
         font "Copperplate Gothic Thirty-Three Regular.otf"
         size 50
         color "#FFFFFF"
-        xalign 0.199
-        yalign 0.0341
+        align (0.199, 0.0341)
 
     #ui is temporary
     if quiz_list[quiz_loc]:
@@ -299,40 +300,36 @@ screen quiz_list_screen:
             cols 3
             scrollbars "vertical"
             mousewheel True
-            xalign 0.5
-            yalign 0.44
+            align (0.5, 0.44)
             spacing 20
-            xsize 1449
-            ysize 740
+            xysize (1449, 740)
             yfill True
             for quiz in quiz_list[quiz_loc]:
                 #frame within a frame to add space away from the scrollbar
                 frame:
                     xpadding 40
                     ypadding 40
-                    xsize 420
-                    ysize 232
+                    xysize (420, 232)
                     background "#f7f2f200"
                     frame:
-                        xalign 0.5
-                        yalign 0.5
+                        align (0.5, 0.5)
                         xpadding 40
                         ypadding 40
-                        xsize 400
-                        ysize 212
+                        xysize (400, 212)
                         background "#D9D9D9"
                         vbox:
-                            xalign 0.5
-                            yalign 0.5
+                            align (0.5, 0.5)
                             spacing 6
                             text quiz style "title"
-                            imagebutton auto "images/Button/quiz_play_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Jump("init_quiz")]
-                            imagebutton auto "images/Button/status_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Show("quiz_status")]
-                            imagebutton auto "images/Button/notes_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Show("display_notes")]
+                            imagebutton auto "images/Button/quiz_play_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Jump("init_quiz")]:
+                                activate_sound "audio/click.ogg"
+                            imagebutton auto "images/Button/status_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Show("quiz_status", transition=dissolve)]:
+                                activate_sound "audio/click.ogg"
+                            imagebutton auto "images/Button/notes_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Show("display_notes", transition=dissolve)]:
+                                activate_sound "audio/click.ogg"
     else:
         frame:
-            xsize 1449
-            ysize 740
+            xysize (1449, 740)
             align (0.64, 0.5)
             background "#d9d9d900"
             text empty_list:
@@ -342,15 +339,14 @@ screen quiz_list_screen:
 
     if quiz_loc == "custom":
         imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:
-            xalign 0.95
-            yalign 0.984
+            align (0.95, 0.984)
+            activate_sound "audio/click.ogg"
 
 style title:
     font "Copperplate Gothic Thirty-Three Regular.otf"
     size 30
     color "#000000"
-    xalign 0.5
-    yalign 0.5    
+    align (0.5, 0.5) 
 
 #probobaly better if we separate it by sentences via bullets
 screen display_notes:
@@ -359,21 +355,18 @@ screen display_notes:
     $ notes = '\n\n'.join(get_boldened_notes()) #quiz_data["notes"]
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu("quiz_list_screen")]:
-        xalign 0.86
-        yalign 0.04
+        align (0.86, 0.04)
+        activate_sound "audio/click.ogg"
 
     text current_quiz:
         font "Copperplate Gothic Bold Regular.ttf"
         size 50
         color "#FFFFFF"
-        xalign 0.5
-        yalign 0.15
+        align (0.5, 0.15)
 
     frame:
-        xalign 0.523
-        yalign 0.55
-        xsize 1263
-        ysize 626
+        align (0.523, 0.55)
+        xysize (1263, 626)
         background "#D9D9D9"
 
         vpgrid:
@@ -386,8 +379,8 @@ screen display_notes:
                 text notes style "notes"
 
     imagebutton auto "images/Button/play_%s.png" action [Hide("display_notes"), Jump("init_quiz")]:
-        xalign 0.98
-        yalign 0.98
+        align (0.98, 0.98)
+        activate_sound "audio/click.ogg"
 
 style notes:
     font "KronaOne-Regular.ttf"
@@ -406,65 +399,59 @@ screen quiz_status:
             mastery = quiz_data["mastery"][-1]
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("quiz_status"), ShowMenu("quiz_list_screen")]: #don't know yet
-        xalign 0.86
-        yalign 0.04
+        align (0.86, 0.04)
+        activate_sound "audio/click.ogg"
 
     text current_quiz:
         font "Copperplate Gothic Bold Regular.ttf"
         size 50
         color "#FFFFFF"
-        xalign 0.5
-        yalign 0.15
+        align (0.5, 0.15)
 
     text "Mastery":
         font "Copperplate Gothic Bold Regular.ttf"
         size 40
         color "#FFFFFF"
-        xalign 0.5
-        yalign 0.3
+        align (0.5, 0.3)
 
     text "[mastery]%":
         font "Copperplate Gothic Bold Regular.ttf"
         size 30
         color "#FFFFFF"
-        xalign 0.5
-        yalign 0.38
+        align (0.5, 0.38)
 
     imagebutton auto "images/Button/retry_%s.png" action [Hide("quiz_status"), Call("init_quiz")]:
-        xalign 0.5
-        yalign 0.5
+        align (0.5, 0.5)
+        activate_sound "audio/click.ogg"
 
     imagebutton auto "images/Button/pass_attempts_%s.png" action [Hide("quiz_status"), ShowMenu("scoreboard")]:
-        xalign 0.5
-        yalign 0.65
+        align (0.5, 0.65)
+        activate_sound "audio/click.ogg"
 
 screen scoreboard:
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu("quiz_list_screen")]: #don't know yet
-        xalign 0.86
-        yalign 0.04
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu("quiz_status")]: #don't know yet
+        align (0.86, 0.04)
+        activate_sound "audio/click.ogg"
 
     text current_quiz:
         font "Copperplate Gothic Bold Regular.ttf"
         size 50
         color "#FFFFFF"
-        xalign 0.5
-        yalign 0.15
+        align (0.5, 0.15)
 
     text "Passed Attempts":
         font "Copperplate Gothic Bold Regular.ttf"
         size 40
         color "#FFFFFF"
-        xalign 0.5
-        yalign 0.25
+        align (0.5, 0.25)
 
     vpgrid:
         cols 1
         mousewheel True
         scrollbars "vertical"
-        xalign 0.5
-        yalign 0.5
+        align (0.5, 0.5)
         ysize 450
 
         vbox:
@@ -490,13 +477,12 @@ screen scoreboard:
             mastery = quiz_data['mastery'][-1]
 
     text "[mastery]%" style "status":
-        xalign 0.5
-        yalign 0.8
+        align (0.5, 0.8)
         yoffset 20
 
     imagebutton auto "images/Button/play_%s.png" action [Hide("scoreboard"), Jump("init_quiz")]:
-        xalign 0.98
-        yalign 0.98
+        align (0.98, 0.98)
+        activate_sound "audio/click.ogg"
 
 style status:
     font "Copperplate Gothic Bold Regular.ttf"
@@ -507,11 +493,14 @@ label init_quiz:
     $ time = 12
     $ question_num = 0
 
-    screen ready_set:
-        add "bg quiz main"
+    if not in_story:
+        show bg quiz main
 
+    screen ready:
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")]:
+                align (0.86, 0.04)
+                activate_sound "audio/click.ogg"
 
         text "READY...":
             style "init_quiz_font"
@@ -521,10 +510,10 @@ label init_quiz:
         timer 1.0 action [Hide("ready"), Show("one")]
 
     screen one:
-        add "bg quiz main"
-        
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu("quiz_list_screen")]:
+                align (0.86, 0.04)
+                activate_sound "audio/click.ogg"
 
         text "1...":
             style "init_quiz_font"
@@ -534,10 +523,10 @@ label init_quiz:
         timer 1.0 action [Hide("one"), Show("two")]
 
     screen two:
-        add "bg quiz main"
-        
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu("quiz_list_screen")]:
+                align (0.86, 0.04)
+                activate_sound "audio/click.ogg"
             
         text "2...":
             style "init_quiz_font"
@@ -547,10 +536,10 @@ label init_quiz:
         timer 1.0 action [Hide("two"), Show("three")]
 
     screen three:
-        add "bg quiz main"
-        
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu("quiz_list_screen")]:
+                align (0.86, 0.04)
+                activate_sound "audio/click.ogg"
 
         text "3...":
             style "init_quiz_font"
@@ -560,10 +549,10 @@ label init_quiz:
         timer 1.0 action [Hide("three"), Show("go")]
 
     screen go:
-        add "bg quiz main"
-        
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")] align (0.86, 0.04)
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu("quiz_list_screen")]:
+                align (0.86, 0.04)
+                activate_sound "audio/click.ogg"
             
         text "GO!":
             style "init_quiz_font"
@@ -572,7 +561,7 @@ label init_quiz:
 
         timer 1.0 action [Hide("go"), Jump("init_question")]
 
-    call screen ready_set with dissolve
+    call screen ready with dissolve
 
 style init_quiz_font:
     font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -580,24 +569,24 @@ style init_quiz_font:
     color "#FFFFFF"
 
 label init_question:
-    show bg quiz main
-    $ show_s("countdown")
+    show screen countdown with None
+    #$ show_s("countdown")
     #show screen countdown with None
     call screen quiz_proper with dissolve
 
 screen countdown():
     if timeout_label is not None:
         add "clock" xalign 0.85 yalign 0.85
-        timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Show(timeout_label, transition=dissolve)]
+        timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Show(timeout_label, transition=dissolve), SPlay("gameover"), Hide("countdown")]
 
 screen quiz_proper:
-    imagebutton auto "images/Button/pause_quiz_%s.png" action Function(hide_s, "countdown"), Show("pause_quiz"): #hide the countdown for now
-        xalign 0.86
-        yalign 0.04
+    if not in_story:
+        imagebutton auto "images/Button/pause_quiz_%s.png" action Hide("countdown"), Show("pause_quiz"): #hide the countdown for now
+            align (0.86, 0.04)
+            activate_sound "audio/click.ogg"
 
     frame:
-        xalign 0.5
-        yalign 0.15
+        align (0.5, 0.15)
         xsize 1241
         yminimum 163
         background "#D9D9D9"
@@ -606,8 +595,7 @@ screen quiz_proper:
 
         text "[number]. " + questions[question_num]:
             font "Copperplate Gothic Bold Regular.ttf"
-            xalign 0.5
-            yalign 0.5
+            align (0.5, 0.5)
 
     $ x = 0
     style_prefix "options"
@@ -627,7 +615,7 @@ screen quiz_proper:
                 $ letter = "D"
 
             textbutton "[letter]. " + option:
-                action If(letters[question_num] == letter, (Show("right", transition=dissolve), SetVariable("score", score+1)), Show("wrong", transition=dissolve))
+                action If(letters[question_num] == letter, (Show("right", transition=dissolve), SetVariable("score", score+1), SPlay("gamewin")), (Show("wrong", transition=dissolve), SPlay("gameover"))), Hide("countdown")
                     
             $ x += 1
 
@@ -644,8 +632,9 @@ screen pause_quiz:
     modal True
     add "halfblack"
 
-    imagebutton auto "images/Button/pause_quiz_%s.png" action Function(show_s, "countdown"), Hide("pause_quiz"):
+    imagebutton auto "images/Button/pause_quiz_%s.png" action Show("countdown"), Hide("pause_quiz"):
         align (0.86, 0.04)
+        activate_sound "audio/click.ogg"
 
     frame:
         align (0.82, 0.136)
@@ -654,22 +643,27 @@ screen pause_quiz:
 
         vbox:
             align (0.5, 0.5)
-            imagebutton auto "images/Button/continue_quiz_%s.png" action Function(show_s, "countdown"), Hide("pause_quiz"):
+            imagebutton auto "images/Button/continue_quiz_%s.png" action Show("countdown"), Hide("pause_quiz"):
                 align (0.5, 0.5)
+                activate_sound "audio/click.ogg"
             imagebutton auto "images/Button/exit_quiz_%s.png" action Hide("pause_quiz"), Hide("quiz_proper"), Show("quiz_list_screen", transition=dissolve):
                 align (0.5, 0.5)
                 yoffset 20
+                activate_sound "audio/click.ogg"
 
 screen right:
     modal True
-    $ hide_s("countdown")
 
     add "halfblack"
-    add "mc_happy"
+    if in_story:
+        add "mc happy_uniform"
+    else:
+        add "mc_happy"
 
     button:
         xysize(1920,1080)
-        action [Hide("right"), Jump("next_question")]
+        action [Hide("right", transition=fade), Jump("next_question")]
+        activate_sound "audio/click.ogg"
 
     frame:
         xysize (1920, 90)
@@ -679,14 +673,18 @@ screen right:
 
 screen wrong:
     modal True
-    $ hide_s("countdown")
 
     add "halfblack"
-    add "mc_sad"
+
+    if in_story:
+        add "mc sad_uniform"
+    else:
+        add "mc_sad"
 
     button:
         xysize(1920,1080)
-        action [Hide("wrong"), Jump("next_question")]
+        action [Hide("wrong", transition=fade), Jump("next_question")]
+        activate_sound "audio/click.ogg"
 
     frame:
         xysize (1920, 90)
@@ -706,7 +704,6 @@ label next_question:
 
     #cheat
     if in_story and question_num == 10:
-        $ hide_s("question_dull")
         jump cheat_quiz
 
     if question_num == len(questions):
@@ -716,25 +713,33 @@ label next_question:
     $ timeout = 12 # Sets how long in seconds the user has to make a choice
     $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
 
-    #$ hide_s("question_dull")
     jump init_question 
 
 label results:
+    pause 1.0
     hide screen countdown
-    $ hide_s("question_dull")
 
     $ total = len(quiz_data['questions'])
 
     python:
         L = learned
         if score/total >= 0.7:
-            mc_reac = "mc_happy"
+            if in_story:
+                mc_reac = "mc happy_uniform"
+            else:
+                mc_reac = "mc_happy"
+
             A = (L*(1-S)) / (L*(1-S) + (1-L)*G)
             L = A + (1-A)*T
+            sndplay("Win")
         else:
-            mc_reac = "mc_sad"
+            if in_story:
+                mc_reac = "mc sad_uniform"
+            else:
+                mc_reac = "mc_sad"
             A = (L*S) / ((L*S) + (1-L)*(1-G))
             L = A + (1-A)*T
+            sndplay("Lose")
         
     if in_story:
         $ global quiz_loc
@@ -749,64 +754,18 @@ label results:
 
     screen show_score:
         modal True
-        add "bg quiz main"
         image mc_reac:
             xalign 0.5
 
         button:
             xysize(1920,1080)
+            activate_sound "audio/click.ogg"
 
             if in_story:
-                action [Hide("show_score"), SetVariable("in_story", False), SetVariable("score", 0), Jump("chapter_2")] keysym ["K_SPACE"]
+                action [Hide("show_score"), SetVariable("in_story", False), SetVariable("score", 0), SNDstop(), Jump("chapter_2")] keysym ["K_SPACE"]
             else:
-                action [Hide("show_score"), SetVariable("score", 0), Show("quiz_status")] keysym ["K_SPACE"]
+                action [Hide("show_score"), SetVariable("score", 0), SNDstop(), Show("quiz_status", transition=dissolve)] keysym ["K_SPACE"]
         
         text "Your score is {b} [score] {/b}!" style "game_instruction"
 
     call screen show_score with dissolve
-
-screen question_dull:
-    add "bg quiz main"
-    $ timeout = 12 # Sets how long in seconds the user has to make a choice
-    $ timeout_label = 'wrong' #sets the label that is automatically jumped to if the user makes no choice
-
-    imagebutton auto "images/Button/pause_quiz_%s.png":
-        xalign 0.86
-        yalign 0.04
-
-    frame:
-        xalign 0.5
-        yalign 0.15
-        xsize 1241
-        ysize 163
-        background "#D9D9D9"
-
-        $ number = question_num + 1
-
-        text "[number]. " + questions[question_num]:
-            font "Copperplate Gothic Bold Regular.ttf"
-            xalign 0.5
-            yalign 0.5
-
-    $ x = 0
-    
-    style_prefix "options"
-
-    vbox:
-        align (0.5, 0.5)
-        spacing 20
-
-        for option in options[question_num]:
-            if x == 0:
-                $ letter = "A"
-            elif x == 1:
-                $ letter = "B"
-            elif x == 2:
-                $ letter = "C"
-            elif x == 3:
-                $ letter = "D"
-
-            textbutton "[letter]. " + option:
-                action If(letters[question_num] == letter, Jump("right"), Jump("wrong"))
-                    
-            $ x += 1
