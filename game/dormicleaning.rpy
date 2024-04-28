@@ -1,16 +1,21 @@
+"""
+todo:
+    1.  have a screen for the user to be able to choose a bg or difficulty
+    2. add a choice to skip cleaning
+"""
+
 screen dormicleaning_instructions:
     tag menu
     add "bg roomnight"
 
     imagebutton auto "images/Button/exit_%s.png" action ShowMenu("minigame"):
-        xalign 0.97
-        yalign 0.06
+        align (0.97, 0.06)
+        activate_sound "audio/click.ogg"
 
     frame:
         xpadding 40
         ypadding 50
-        xalign 0.5
-        yalign 0.60
+        align (0.5, 0.60)
         background "#D9D9D9"
 
         vbox:
@@ -19,8 +24,7 @@ screen dormicleaning_instructions:
             text "Dormicleaning":
                 style "minigame_title_font"
                 color "#000000"
-                xalign 0.5
-                yalign 0.5
+                align (0.5, 0.5)
 
             text "Objective: Find lost items in a dormitory room within a limited time.":
                 color "#000000"
@@ -32,434 +36,357 @@ screen dormicleaning_instructions:
                 font "Inter-Regular.ttf"
                 size 32
 
-            imagebutton auto "images/Button/play_%s.png" action ShowMenu("dormicleaning"):
-                xalign 0.5
-                yalign 0.5
+            imagebutton auto "images/Button/play_%s.png" action Jump("init_dormicleaning"):
+                align (0.5, 0.5)
+                activate_sound "audio/click.ogg"
 
+label init_dormicleaning:
+    show screen dormicleaning with None
+    call screen init_dc with dissolve
 
-label dormicleaning:
-    # define the game background, game time in seconds
-    # and set the game parameters - sprites and position for collected items
-    $ hf_init( "bg room" , 5 ,
-        ( "clock" , 425 , 380 , _( "Clock" )),
-        ( "laptop" , 240 , 60 , _( "Laptop" )),
-        ( "pillow" , 990 , 220 , _( "Pillow" )),
-        ( "shoe" , 1100 , 890 , _( "Shoe" )),
-        ( "backpack" , 200 , 760  , _( "Backpack" )),
-        # OPTIONAL PARAMETERS:
-        # enable cursor change when hovering
-        mouse = True ,
-        # enable inventory and remove found items from it
-        inventory = False ,
-        # disable hints
-        hint = True ,
-        # turn on item illumination when hovering
-        hover = brightness( 0.05),
-        # reduce the size of inventory cells so that they do not interfere with collecting items
-        w = 200 ,
-        h = 200
-    )
+    screen init_dc:
+        add "halfblack"
 
-    with fade
-    $ hf_bg()
-    with dissolve
+        button:
+            xysize(1920,1080)
+            action [Hide("init_dc"), SetVariable("dc_start", True)] keysym ["K_SPACE"]
 
-    centered "{color=#ffffff}{size=+24}You need to collect all the items in 7 seconds.\nLet's begin!{/color}"
+            vbox:
+                align (0.5, 0.5)
+                spacing 5
+                text "You need to collect all the items in" style "game_instruction"
+                text "7 seconds. Let's begin!" style "game_instruction"
 
-    $ hf_start()
+screen dormicleaning:
+    add "bg room"
 
-    $ renpy.pause(1, hard=True)
-
-    if hf_return == 0:
-        centered "{color=#ffffff}{size=+24}Yay! All items have been collected!{/color}"
-    else:
-        centered "{color=#ffffff}{size=+24}GAME OVER\nNo items left: [hf_return].{/color}"
-
-    menu:
-        "Try Again":
-            jump dormicleaning
-
-        "Exit":
-            pass
-
-    $ hf_hide()
-    with dissolve
-
-    if in_story:
-        $ in_story = False
-        jump chapter1_1
-    else:
-        call screen minigame()
-
-init 1 :
-    # define the game background, game time in seconds
-    # and set the game parameters - sprites and position for collected items
-    $ hf_init( "bg room" , 5 ,
-        ( "clock" , 0 , 0 , _( "Clock" )),
-        ( "laptop" , 111 , 560 , _( "Laptop" )),
-        ( "pillow" , 700 , 615 , _( "Pillow" )),
-        ( "shoe" , 1813 , 161 , _( "Shoe" )),
-        ( "backpack" , 355 , 240 , _( "Backpack" )),
-        # OPTIONAL PARAMETERS:
-        # enable cursor change when hovering
-        mouse = True ,
-        # enable inventory and remove found items from it
-        inventory = False ,
-        # disable hints
-        hint = False ,
-        # turn on item illumination when hovering
-        hover = brightness( 0.05),
-        # reduce the size of inventory cells so that they do not interfere with collecting items
-        w = 200 ,
-        h = 200
-    )
-
-# then the game will be called:
-    # $ hf_start()
-
-    # the number of uncollected items will be in hf_return
-
-    # transform to move the tooltip
-    transform hf_hint_at():
-        anchor( .5 , 1.25 )
-        function hf_hint_at_f
-
-    # style for the hint
-    style hint_style is frame:
-        # the yellow background is stretched to fit the text
-        background Frame( "#fe9" , 0 , 0 )
-        # padding from the edges to the text
-        xpadding 20
-        ypadding 15
-
-    # style for hint text
-    style hint_style_text is text:
-        color "#014"
-        outlines []
-
-init -2 python:
-    def images_auto(folders=["images"]):
-        config.automatic_images_minimum_components = 1
-        config.automatic_images = [' ', '_', '/']
-        config.automatic_images_strip = folders
-
-init python:
-    # automatic declaration of sprites (including webp)
-    images_auto()
-    # cursors
-    config . mouse = {
-        "hand" : [( "images/mouse/hand1.png" , 2 , 10 ),
-                ( "images/mouse/hand1.png" , 2 , 10 ), 
-                ( "images/mouse/hand1.png" , 2 , 10 ),
-                ( "images/mouse/hand1.png" , 2 , 10 ), 
-                ( "images/mouse/hand2.png" , 2 , 10 ),
-                ( "images/mouse/hand2.png" , 2 , 10 ), 
-                ( "images/mouse/hand3.png" , 2 , 10 ),
-                ( "images/mouse/hand3.png" , 2 , 10 ), 
-                ( "images/mouse/hand2.png" , 2 , 10 ),
-                ( "images/mouse/hand2.png" , 2 , 10 )],
-        "finger" : [( "images/mouse/finger.png" , 2 , 10 )],
-        "needle" : [("images/mouse/needle_1.png", 0, 194),
-                ("images/mouse/needle_1.png", 0, 194), 
-                ("images/mouse/needle_1.png", 0, 194),
-                ("images/mouse/needle_1.png", 0, 194),
-                ("images/mouse/needle_2.png", 0, 194),
-                ("images/mouse/needle_2.png", 0, 194),
-                ("images/mouse/needle_3.png", 0, 194),
-                ("images/mouse/needle_3.png", 0, 194),
-                ("images/mouse/needle_2.png", 0, 194),
-                ("images/mouse/needle_2.png", 0, 194)],
-        "needle_opposite" : [("images/mouse/needle_opposite_1.png", 107, 0),
-                ("images/mouse/needle_opposite_1.png", 107, 0), 
-                ("images/mouse/needle_opposite_1.png", 107, 0),
-                ("images/mouse/needle_opposite_1.png", 107, 0), 
-                ("images/mouse/needle_opposite_2.png", 107, 0),
-                ("images/mouse/needle_opposite_2.png", 107, 0), 
-                ("images/mouse/needle_opposite_3.png", 107, 0),
-                ("images/mouse/needle_opposite_3.png", 107, 0), 
-                ("images/mouse/needle_opposite_2.png", 107, 0),
-                ("images/mouse/needle_opposite_2.png", 107, 0)]}
-
-
-    # mouse coordinates
-    def  hf_hint_at_f (trans, st, at):
-        trans . pos = renpy . get_mouse_pos()
-        return  0
-
-# SETTINGS
-    # whether the cursor should change when hovering
-    hf_mouse =  True
-
-    # whether to display a hint
-    hf_hint =  False
-
-    # True - found items are added to inventory
-    # False - found items disappear from inventory
-    # None - inventory is not displayed
-    hf_inventory =  None
-
-    # transform for highlighting on hover
-    # could be, for example, brightness(.05)
-    hf_hover =  None
-
-    # name of the folder with game sprites in the images directory plus a space
-    hf_dir =  "minigame"
-
-    # sizes of items in inventory
-    hf_w, hf_h =  300 , 300
-
-    # timebar sizes
-    hf_t_w, hf_t_h =  1040 , 32
-
-    # indentation of items from inventory edges
-    hf_xpadding =  20
-    hf_ypadding =  40
-
-    # inventory window position
-    hf_xalign =  0.5
-    hf_yalign =  0.05
-
-    # timebar position
-    hf_t_xalign = 0.5
-    hf_t_yalign = 0.01
-
-# INTERNAL VARIABLES
-    # time for which items need to be collected
-    hf_time =  10
-
-    # time to reset for animation
-    hf_bar =  100
-
-    # game mode (False - background mode)
-    hf_game_mode =  False
-
-    # items to find
-    hf_needed = []
-
-    # items that have already been found
-    hf_picked = []
-
-    # game background
-    hf_back =  "black"
-
-    # whether the timebar needs to be repainted (a quarter of the time remains)
-    hf_warning =  False
-
-    # number of uncollected items
-    hf_return =  0
-
-    # initial number of items
-    hf_max_count =  0
-
-    # game initialization
-    def  hf_init (bg, time, * args, ** kwargs):
-        global hf_needed, hf_picked, hf_back, hf_time, hf_bar, hf_max_count
-        # reset lists and variables
-        hf_needed = []
-        hf_picked = []
-        hf_back = bg
-        hf_time = 7
-        hf_bar =  100
-        # add items to the list that need to be found
-        for item, x, y, h in args:
-            hf_needed . append((item, x, y, h))
-        hf_max_count =  len (hf_needed)
-        # apply optional game parameters
-        # essentially change the values ​​of similar variables,
-        # but they must start with hf_
-        for k, v in kwargs . items():
-            kk =  "hf_"  + k
-            if kk in  globals () . keys():
-                globals ()[kk] = kwargs . get(k)
-
-    # show the game as a background on the master layer
-    def  hf_bg ():
-        store . hf_game_mode =  False
-        show_s( "HiddenFolks" )
-
-    # hide the game background
-    # but first show if the game screen is hidden
-    def  hf_hide ():
-        hf_bg()
-        renpy . with_statement( None )
-        hide_s( "HiddenFolks" )
-
-    # start the game
-    # if some effect is specified, then first show the game with it
-    def  hf_start (effect = None ):
-        store . hf_game_mode =  False
-        store . hf_warning =  False
-        hf_bg()
-        renpy . with_statement(effect)
-        store . hf_game_mode =  True
-        store . hf_return =  len (hf_needed)
-        renpy . call_screen( "HiddenFolks" )
-        hf_bg()
-
-    # click on an item (move it to inventory or remove it from there)
-    def  hf_click (item, x, y, h):
-        store . hf_picked . append(store . hf_needed . pop(hf_needed . index((item, x, y, h))))
-        splay( "click" )
-        renpy . restart_interaction()
-        # remains to build
-        store . hf_return =  len (hf_needed)
-    HFClick = renpy . curry(hf_click)
-
-    # change the color of the timer
-    # or start an animation of decreasing time
-    def  hf_go (warning = False ):
-        if warning:
-            # change the color
-            store . hf_warning =  True
-        else :
-            # start the animation
-            store . hf_bar =  0
-        renpy . restart_interaction()
-    HFGo = renpy . curry(hf_go)
-
-    # get a sprite for inventory
-    def  hf_isprite (item):
-        # if there is the desired item in the inventory folder,
-        # then take it, otherwise - what is on the screen
-        i = hf_dir +  " inventory "  + item
-        if has_image(i):
-            item = i
-        # get the sprite size of the item
-        w, h = get_size(item)
-        # coefficients for zoom
-        zoom =  1
-        # if the item is larger than the cell, calculate a new zoom
-        if w > hf_w or h > hf_h:
-            # on the larger side
-            if w > h :
-                zoom = hf_w / w
-            else :
-                zoom = hf_h / h
-        # return the sprite fit into the inventory cell size
-        return Transform(item, zoom = zoom)
-
-    # hint text
-    hf_hint_text =  ""
-
-    # change the hint text
-    def  hf_set_hint (t = "" ):
-        if hf_hint and hf_hint_text != t:
-            store . hf_hint_text = t
-            renpy . restart_interaction()
-    SetHint = renpy . curry(hf_set_hint)
-
-screen HiddenFolks():
-    # game background
-    add hf_back
-
-    # all items on the screen
-    for i, x, y, h in hf_needed:
-
-        $ item = hf_dir +  " "  + i
-        # button item
+    for item, x, y in vars_needed:
         imagebutton:
-            style "empty"
-            # item sprite
-            idle item
-            # position of the object (coordinates of its center)
-            pos(x, y)
-            # hover over a pixel
+            idle f"minigame/{item}.png"
+            hover At(f"minigame/{item}.png", hovered)
+            xpos x ypos y 
             focus_mask True
-            # all actions only in game mode
-            if hf_game_mode:
+            mouse "hand"
+            tooltip item
+            action DCClick(item, x, y)
+    
+    if dc_start:
+        # inventory frame
+        frame:
+            xysize (max_count * 150 + dc_xpadding *  2 + max_count * 10, 150 + dc_ypadding *  2 )
+            # inventory position
+            align (0.5, 0.06)
+            background Frame(At("gui/frame.png", half_transparent) , 48 , 48 )
 
-                # change the cursor if necessary
-                if hf_mouse:
-                    mouse "hand"
-
-                # if hover selection is enabled
-                if  not hf_hover is  None :
-                    # if there is an image for the selected object, then display it
-                    if has_image(item +  " hover" ):
-                        hover item +  "hover"
-                    # otherwise highlight with the transform specified in the settings
-                    else :
-                        hover At(item, hf_hover)
-
-                # change the tooltip text on hover
-                hovered SetHint(h)
-                unhovered SetHint()
-
-                # click processing
-                action HFClick(i, x, y, h)
-
+            hbox:
+                align(0.5, 0.5)
+                spacing 10
+                # display collected items
+                for item, x, y in vars_needed:
+                    imagebutton:
+                        idle f"minigame/inventory/{item}.png"
+                        hover At(f"minigame/inventory/{item}.png", hovered)
+                        focus_mask True
+                        align (0.5, 0.5)
+                        tooltip item
+                        action NullAction()
+                            
     # timer animation
-    if hf_game_mode and hf_time >  0 :
-        # activation of the timer
-        timer 0.01 action HFGo()
+    if dc_start and dc_time >  0 :
 
-        # timer for repainting the bar (one third of the total time)
-        timer hf_time *  0.6666 action HFGo( True )
+        timer dc_time *  0.6666 action SetVariable("dc_warning", True)
 
         # visualization of the timer as a bar
         bar:
-            # position and size of the timebar
-            align(hf_t_xalign, hf_t_yalign)
-            xysize(hf_t_w, hf_t_h)
-            value AnimatedValue(hf_bar, 100 , hf_time)
+            value AnimatedValue(old_value=1.0, value=0.0, range=1.0, delay=dc_time)
 
             # recolor and flicker the left bar bar,
             # when less than a third of the time is left
-            if hf_warning:
-                left_bar Frame(At( "gui/bar/left.png" , paint2( "#e02" , "#e028" , 0.2 )), gui . bar_borders, tile = gui . bar_tile)
+            if dc_warning:
+                left_bar Frame(At("gui/bar/left.png" , paint2( "#e02" , "#e028" , 0.2 )), gui . bar_borders, tile = gui . bar_tile)
 
         # loss by timer
-        timer hf_time repeat True action SetHint(), SPlay( "gameover" ), Return("dormicleaning")
+        timer dc_time repeat True action SetVariable("dc_start", False), SPlay("gameover"), Show("dc_result", transition=dissolve)
 
         # we've collected everything, let's leave (Return()() from def no longer works)
-        if hf_return <  1 :
-            timer 0.01 repeat True action SetHint(), SPlay( "gamewin" ), Return("dormicleaning")
+        if len(vars_needed) <  1 :
+            timer 0.01 repeat True action SetVariable("dc_start", False), SPlay("gamewin"), Show("dc_result", transition=dissolve)
 
-        # inventory
-        if  not hf_inventory is  None :
-            # inventory frame
+    $ tooltip = GetTooltip()
+
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+            prefer_top True
+
             frame:
-                style "empty"
-                xysize (hf_max_count * hf_w + hf_xpadding *  2 , hf_h + hf_ypadding *  2 )
-                # inventory position
-                align(hf_xalign, hf_yalign)
-                background Frame( "framei" , 48 , 48 )
-                # container for items
-                hbox:
-                    align( 0.5 , 0.5 )
-                    # display collected items
-                    if hf_inventory:
-                        for item, x, y, h in hf_picked:
-                            # xysize(hf_w, hf_h)
-                            imagebutton idle hf_isprite(item) align( 0.5 , 0.5 ):
-                                # hover per pixel
-                                focus_mask True
-                                action NullAction()
-                                if hf_game_mode:
-                                    # change the cursor if necessary
-                                    if hf_mouse:
-                                        mouse "hand"
-                                    # change the tooltip text when hovering the cursor
-                                    hovered SetHint(h)
-                                    unhovered SetHint()
-                    # or display the items that remain to be collected
-                    else :
-                        for item, x, y, h in hf_needed:
-                            imagebutton idle hf_isprite(item) align( 0.5 , 0.5 ):
-                                # pixel targeting
-                                focus_mask True
-                                action NullAction()
-                                if hf_game_mode:
-                                    # change the cursor if necessary
-                                    if hf_mouse:
-                                        mouse "hand"
-                                    # change the tooltip text when hovering the cursor
-                                    hovered SetHint(h)
-                                    unhovered SetHint()
+                xalign 0.5
+                text tooltip:
+                    size 20
 
-    # if necessary, display a hint
-    if hf_hint and hf_hint_text:
-        frame:
-            style "hint_style"
-            text hf_hint_text style "hint_style_text" align( 0.5 , 0.5 )
-            at hf_hint_at()
+transform half_transparent:
+    matrixcolor OpacityMatrix(0.5)
+
+screen dc_result:
+    modal True
+    add "halfblack"
+    
+    $ uncollected = len(vars_needed)
+
+    if uncollected <  1 :
+        text "Yay! All items have been collected!" style "game_instruction"
+
+        button:
+            xysize(1920,1080)
+            
+            if in_story: 
+                action [SetVariable("in_story", False), Hide("dormicleaning"), Hide("dc_result"), Jump("chapter1_1")] keysym ["K_SPACE"]
+            else:
+                action [Hide("dormicleaning"), Hide("dc_result"), Show("minigame", transition=dissolve)] keysym ["K_SPACE"]
+
+    else:
+        vbox:
+            align (0.5, 0.5)
+            spacing 5
+            text "GAME OVER" style "game_instruction"
+            text "\nNo items left: [uncollected]." style "game_instruction"
+
+        button:
+            xysize(1920,1080)
+            action [Hide("dc_result"), Jump("dc_retry")] keysym ["K_SPACE"]
+
+label dc_retry:
+    show screen dim
+    if in_story:
+        menu:
+            "Try Again":
+                hide screen dim
+                hide screen dormicleaning
+                $ init_dc_vars()
+                jump init_dormicleaning
+    else:
+        menu:
+            "Try Again":
+                hide screen dim
+                hide screen dormicleaning
+                $ init_dc_vars()
+                jump init_dormicleaning
+            "Exit":
+                hide screen dim
+                hide screen dormicleaning
+                call screen minigame with dissolve
+    
+    screen dim:
+        add "halfblack"
+
+init -2 python:
+    global coordinates, objects, domains, constraints, object_loc, object_coord
+
+    object_coord = []
+    object_loc = []
+
+    coordinates = {
+            "bed": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722]],
+            "top_desk": [[375, 169]],
+            "bottom_desk": [[428, 398], [545, 370]],
+            "floor": [[159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970]],
+            "chair": [[517, 597], [626, 633]]
+            }
+
+    objects = ["bag", "cap", "fan",  "clock", "laptop", "pillow", "shoe", "mug", "pen", "phone", "psp", "rice cooker"]
+
+    domains = {
+        "bag": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], #top desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970] #floor
+                ], #everywhere except the chair and bottom desk
+        "cap": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], [626, 633] #chair
+                ], #lucy
+        "fan": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], #top desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597] #chair 
+                ], #everywhere except bottom desk, allowed in one of the chair coordinates - 517, 597
+        "clock": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], [626, 633] #chair
+                ], #lucy
+        "laptop": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], #top desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597] #chair 
+                ], #everywhere except bottom desk, allowed in one of the chair coordinates - 517, 597
+        "pillow": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], #top desk
+                [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                ], #bed floor upper desk, not allowed on = 159, 883
+        "shoe": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], [626, 633] #chair
+                ], #lucy
+        "backpack": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], #top desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970]#floor
+                ], #everywhere except bottom desk and chair 
+        "mug": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], [626, 633] #chair
+                ], #lucy
+        "pen": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], [626, 633] #chair
+                ], #lucy except only allowed in one coordinate on headboard - 829, 128
+        "phone": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], [626, 633] #chair
+                ], #lucy except only allowed in one coordinate on headboard - 829, 128
+        "psp": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], [626, 633] #chair
+                ], #lucy
+        "rice cooker": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
+                [375, 169], [428, 398], [545, 370], #top & bottom desk
+                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
+                [517, 597], #chair
+                ] #everywhere except bottom desk, allowed in one of the chair coordinates - 517, 597
+    }
+    
+    #lambda x, y: x != y
+    constraints = {
+        "bag": lambda x: x not in (coordinates["chair"] or coordinates["bottom_desk"]), #everywhere except the chair and bottom desk
+        "fan": lambda x: x not in coordinates["bottom_desk"] and x != [626, 633], #everywhere except bottom desk, allowed in one of the chair coordinates - 517, 597
+        "laptop": lambda x: x not in coordinates["bottom_desk"] and x != [626, 633], #everywhere except bottom desk, allowed in one of the chair coordinates - 517, 597
+        "pillow": lambda x: x in coordinates["bed"] + coordinates["floor"] + coordinates["top_desk"] and x != [159, 883] , #bed floor upper desk, not allowed on = 159, 883
+        "pen": lambda x: x not in [[700, 149], [926, 108]], #lucy except only allowed in one coordinate on headboard - 829, 128
+        "phone": lambda x: x not in [[700, 149], [926, 108]], #lucy except only allowed in one coordinate on headboard - 829, 128
+        "rice cooker": lambda x: x not in coordinates["bottom_desk"] and x != [626, 633],  #everywhere except bottom desk, allowed in one of the chair coordinates - 517, 597
+        "only_one": lambda x: x not in coordinates["top_desk"] if object_loc["pillow"] == "top_desk" else True
+        }
+    
+    class CSP: 
+        def __init__(self, variables, Domains,constraints): 
+            self.variables = variables 
+            self.domains = Domains 
+            self.constraints = constraints 
+            self.solution = None
+
+        def solve(self): 
+            assignment = {} 
+            self.solution = self.backtrack(assignment) 
+            return self.solution 
+
+        def backtrack(self, assignment): 
+            if len(assignment) == len(self.variables): 
+                return assignment 
+            
+            var = self.select_unassigned_variable(assignment)
+            
+            for value in self.order_domain_values(var, assignment): 
+                if self.is_consistent(var, value, assignment): 
+                    object_coord.append(value)
+                    self.save_loc(value)
+                    assignment[var] = value 
+                    result = self.backtrack(assignment) 
+                    if result is not None: 
+                        return result 
+                    del assignment[var] 
+            return None
+
+        def select_unassigned_variable(self, assignment): 
+            unassigned_vars = [var for var in self.variables if var not in assignment] 
+            return min(unassigned_vars, key=lambda var: len(self.domains[var])) 
+
+        def order_domain_values(self, var, assignment): 
+            return self.domains[var] 
+        
+        #check if all in constraint(that_object) is all true? or just the variable
+        def is_consistent(self, var, value, assignment): 
+            if var in self.constraints and not self.constraints[var](value):
+                return False
+            elif value in object_coord: 
+                return False
+            elif self.check_loc(value) in object_loc:
+                return False
+            return True
+
+        #check the location on the coordinate
+        def check_loc(self, value):
+            for key, points in coordinates.items():
+                if value in points:
+                    return key
+            return None
+        
+        def save_loc(self, value):
+            key = self.check_loc(value)
+            if key not in object_loc:
+                object_loc.append(key)
+
+init python:
+    dc_xpadding =  20
+    dc_ypadding =  40
+
+    def init_dc_vars():
+        global vars_needed, max_count, dc_start, dc_time, dc_bar, dc_warning
+
+        dc_start = False
+        dc_warning = False
+        dc_time = 7
+        dc_bar =  100
+        vars_needed = []
+        objs = get_objects(5)
+        coord = get_coordinates(objs)
+        X = []
+        Y = []
+
+        for obj in objs:
+            X.append(coord[obj][0])
+            Y.append(coord[obj][1])
+
+        for obj, x, y in zip(objs, X, Y):
+            vars_needed.append((obj, x, y))
+
+        max_count =  len(vars_needed)
+        
+    def get_objects(max):
+        renpy.random.shuffle(objects)
+        return objects[:max]
+
+    def get_coordinates(variables):
+        global object_coord, object_loc
+
+        for key in domains:
+            renpy.random.shuffle(domains[key])
+
+        csp = CSP(variables, domains, constraints) 
+
+        object_coord = []
+        object_loc = []
+
+        return csp.solve() 
+
+    def dc_click(item, x, y):
+        vars_needed.pop(vars_needed.index((item, x, y)))
+        #store . hf_picked . append()
+        splay("click")
+        renpy.restart_interaction()
+
+    DCClick = renpy.curry(dc_click)
+
+    def  dc_go (warning = False ):
+        if warning:
+            # change the color
+            dc_warning =  True
+        else :
+            # start the animation
+            dc_bar =  0
+        renpy.restart_interaction()
+    DCGo = renpy.curry(dc_go)

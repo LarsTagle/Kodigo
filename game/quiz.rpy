@@ -1,8 +1,9 @@
 """
 things to fix:
-    1. edit quiz ui its shit
-    2. edit dormicleaning
-    3. add crumpled paper on the side for the cheating
+    1. add crumpled paper on the side for the cheating
+    2. explain BKT in the tool tip
+    3. fix quiz ui (status/scoreboard screen)
+    4. add option to edit notes in Notes screen
 """
 
 init:
@@ -23,7 +24,7 @@ init:
     $ mastery_threshold = 0.8
 
 image halfblack = "#00000088"
-image clock:
+image clock_timer:
     'images/Minigames Menu/timer/12.png'
     pause 1.0
     'images/Minigames Menu/timer/11.png'
@@ -54,7 +55,7 @@ init python:
     import random
     import os
 
-    global time
+    global time, total
     time = 12
 
     def get_quiz_list():
@@ -434,6 +435,10 @@ screen scoreboard:
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu("quiz_status")]: #don't know yet
         align (0.86, 0.04)
         activate_sound "audio/click.ogg"
+    
+    imagebutton auto "images/Button/info_icon_%s.png" action NullAction():
+        tooltip "BKT is blah blah blah"
+        align(0.155, 0.04)
 
     text current_quiz:
         font "Copperplate Gothic Bold Regular.ttf"
@@ -483,6 +488,17 @@ screen scoreboard:
     imagebutton auto "images/Button/play_%s.png" action [Hide("scoreboard"), Jump("init_quiz")]:
         align (0.98, 0.98)
         activate_sound "audio/click.ogg"
+    
+    $ tooltip = GetTooltip()
+
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+            #prefer_top True
+            frame:
+                xalign 0.5
+                text tooltip:
+                    size 20
 
 style status:
     font "Copperplate Gothic Bold Regular.ttf"
@@ -495,7 +511,10 @@ label init_quiz:
 
     if not in_story:
         show bg quiz main
-
+        $ total = len(quiz_data['questions'])
+    else:
+        $ total = 15
+        
     screen ready:
         if not in_story:
             imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")]:
@@ -576,7 +595,10 @@ label init_question:
 
 screen countdown():
     if timeout_label is not None:
-        add "clock" xalign 0.85 yalign 0.85
+        if in_story:
+            add "clock_timer" xalign 0.9 yalign 0.05
+        else:
+            add "clock_timer" xalign 0.85 yalign 0.85
         timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Show(timeout_label, transition=dissolve), SPlay("gameover"), Hide("countdown")]
 
 screen quiz_proper:
@@ -618,6 +640,11 @@ screen quiz_proper:
                 action If(letters[question_num] == letter, (Show("right", transition=dissolve), SetVariable("score", score+1), SPlay("gamewin")), (Show("wrong", transition=dissolve), SPlay("gameover"))), Hide("countdown")
                     
             $ x += 1
+
+    if in_story:
+        bar value StaticValue(value=question_num, range=total)
+    else:
+        bar value StaticValue(value=question_num, range=total) yalign 1.0
 
 style options_button_text:
     font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -706,7 +733,7 @@ label next_question:
     if in_story and question_num == 10:
         jump cheat_quiz
 
-    if question_num == len(questions):
+    if question_num == total:
         $ question_num = 0
         jump results
     
@@ -719,15 +746,15 @@ label results:
     pause 1.0
     hide screen countdown
 
-    $ total = len(quiz_data['questions'])
-
     python:
         L = learned
         if score/total >= 0.7:
             if in_story:
                 mc_reac = "mc happy_uniform"
+                is_pass = "You passed!"
             else:
                 mc_reac = "mc_happy"
+                is_pass = "You didn't pass."
 
             A = (L*(1-S)) / (L*(1-S) + (1-L)*G)
             L = A + (1-A)*T
@@ -745,7 +772,7 @@ label results:
         $ global quiz_loc
         $ quiz_loc = "standard"
 
-    $ quiz_data['records'].append(score)
+    $ quiz_data['records'].append(f"{score}/{total}")
     $ mastery = round(L * 100, 2)
     $ learned = L
     $ quiz_data['mastery'].append(mastery)
@@ -754,8 +781,8 @@ label results:
 
     screen show_score:
         modal True
-        image mc_reac:
-            xalign 0.5
+        add "halfblack"
+        add mc_reac
 
         button:
             xysize(1920,1080)
@@ -766,6 +793,9 @@ label results:
             else:
                 action [Hide("show_score"), SetVariable("score", 0), SNDstop(), Show("quiz_status", transition=dissolve)] keysym ["K_SPACE"]
         
-        text "Your score is {b} [score] {/b}!" style "game_instruction"
+        vbox:
+            align (0.5, 0.5)
+            text is_pass style "game_instruction"
+            text "Your score is {b} [score] {/b}!" style "game_instruction"
 
     call screen show_score with dissolve

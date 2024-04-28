@@ -204,13 +204,16 @@ label chapter1:
             show mc angry_casual with dissolve
             emil "HUH! Is that how your mother taught you how to interact with others?! Anyways, here’s your key!"
 
+    stop music fadeout 1.0
+    play music "Afternoon_Music.ogg"
     scene bg roomday with fade
     show mc confused_casual
     mc "This room is kinda messy! I guess I need to clean up first since I’m the first one to arrive."
 
     hide mc
     $ in_story = True
-    jump dormicleaning
+    $ init_dc_vars()
+    jump init_dormicleaning
 
 label chapter1_1:
     show mc happy_casual with dissolve
@@ -1464,8 +1467,6 @@ label cheat_quiz:
         "Think harder.":
             $ points += 1
 
-    #to restart timer
-    show screen countdown
     #return to quiz
     hide mc
     hide dormmate

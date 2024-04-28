@@ -953,8 +953,8 @@ screen minigame():
     image "images/Minigames Menu/icon_white.png" xalign 0.5 yalign 0.01
 
     imagebutton auto "images/Button/exit_%s.png" action ShowMenu("main_menu"):
-        xalign 0.97
-        yalign 0.06
+        align (0.97, 0.06)
+        activate_sound "audio/click.ogg"
 
     viewport id "vp":
         xalign 0.5
@@ -994,15 +994,17 @@ screen minigame():
                         yoffset 30
                         spacing 20
 
-                        imagebutton auto "images/Button/play_%s.png" action Jump("dormicleaning"):
+                        imagebutton auto "images/Button/play_%s.png" action Function(init_dc_vars), Jump("init_dormicleaning"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 30
+                            activate_sound "audio/click.ogg"
 
-                        imagebutton auto "images/Button/instructions_%s.png" action ShowMenu("dormicleaning_instructions"):
+                        imagebutton auto "images/Button/instructions_%s.png" action Function(init_dc_vars), ShowMenu("dormicleaning_instructions"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 50
+                            activate_sound "audio/click.ogg"
 
             frame:
                 xpadding 40
@@ -1035,11 +1037,13 @@ screen minigame():
                             xalign 0.5
                             yalign 0.5
                             #yoffset 30
+                            activate_sound "audio/click.ogg"
 
                         imagebutton auto "images/Button/instructions_%s.png" action ShowMenu("quiz_instructions"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 50
+                            activate_sound "audio/click.ogg"
 
     bar value XScrollValue("vp") yalign 1.0
 
