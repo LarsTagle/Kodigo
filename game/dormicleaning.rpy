@@ -6,6 +6,7 @@ todo:
 
 screen dormicleaning_instructions:
     tag menu
+    modal True
     add "bg roomnight"
 
     imagebutton auto "images/Button/exit_%s.png" action ShowMenu("minigame"):
@@ -36,7 +37,7 @@ screen dormicleaning_instructions:
                 font "Inter-Regular.ttf"
                 size 32
 
-            imagebutton auto "images/Button/play_%s.png" action Jump("init_dormicleaning"):
+            imagebutton auto "images/Button/play_%s.png" action SaveMNCallerScreen("dormicleaning_instructions"), Jump("init_dormicleaning"):
                 align (0.5, 0.5)
                 activate_sound "audio/click.ogg"
 
@@ -79,7 +80,7 @@ screen dormicleaning:
             background Frame(At("gui/frame.png", half_transparent) , 48 , 48 )
 
             hbox:
-                align(0.5, 0.5)
+                align(0.1, 0.5)
                 spacing 10
                 # display collected items
                 for item, x, y in vars_needed:
@@ -142,7 +143,7 @@ screen dc_result:
             if in_story: 
                 action [SetVariable("in_story", False), Hide("dormicleaning"), Hide("dc_result"), Jump("chapter1_1")] keysym ["K_SPACE"]
             else:
-                action [Hide("dormicleaning"), Hide("dc_result"), Show("minigame", transition=dissolve)] keysym ["K_SPACE"]
+                action [Hide("dormicleaning"), Hide("dc_result"), Show(mn_caller_screen, transition=dissolve)] keysym ["K_SPACE"]
 
     else:
         vbox:
@@ -156,27 +157,36 @@ screen dc_result:
             action [Hide("dc_result"), Jump("dc_retry")] keysym ["K_SPACE"]
 
 label dc_retry:
-    show screen dim
+    show screen dim with None
+    hide screen dormicleaning with dissolve
+
     if in_story:
         menu:
             "Try Again":
+                $ points += 1
                 hide screen dim
-                hide screen dormicleaning
                 $ init_dc_vars()
                 jump init_dormicleaning
+            "Skip Cleaning":
+                $ points -= 1
+                hide screen dim
+                show mc sleepy_casual with dissolve
+                mc "I guess I’ll just go for a little campus tour first."
+                hide mc
+                jump chapter1_1
     else:
         menu:
             "Try Again":
                 hide screen dim
-                hide screen dormicleaning
                 $ init_dc_vars()
                 jump init_dormicleaning
             "Exit":
                 hide screen dim
-                hide screen dormicleaning
-                call screen minigame with dissolve
+                with dissolve
+                $ renpy.call_screen("%s"%(mn_caller_screen))
     
     screen dim:
+        add "bg room"
         add "halfblack"
 
 init -2 python:
@@ -223,16 +233,12 @@ init -2 python:
         "pillow": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
                 [375, 169], #top desk
                 [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
-                ], #bed floor upper desk, not allowed on = 159, 883
+                [428, 398]], #bed floor upper desk, not allowed on = 159, 883
         "shoe": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
                 [375, 169], [428, 398], [545, 370], #top & bottom desk
                 [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
                 [517, 597], [626, 633] #chair
                 ], #lucy
-        "backpack": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
-                [375, 169], #top desk
-                [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970]#floor
-                ], #everywhere except bottom desk and chair 
         "mug": [[1046, 252], [1451, 436], [1565, 371], [1746, 418], [1271, 424], [1521, 535], [1721, 626], [973, 435], [1111, 528], [1335, 626], [1583, 722], #bed
                 [375, 169], [428, 398], [545, 370], #top & bottom desk
                 [159, 883], [354, 313], [512, 887], [733, 948], [845, 745], [789, 791], [960, 845], [834, 970], [984, 932], [1159, 970], #floor
@@ -380,13 +386,3 @@ init python:
         renpy.restart_interaction()
 
     DCClick = renpy.curry(dc_click)
-
-    def  dc_go (warning = False ):
-        if warning:
-            # change the color
-            dc_warning =  True
-        else :
-            # start the animation
-            dc_bar =  0
-        renpy.restart_interaction()
-    DCGo = renpy.curry(dc_go)

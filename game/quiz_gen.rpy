@@ -9,6 +9,7 @@ define persistent.quiz_def_num = 1 #changes if the player want to save "Quiz 1",
 
 init:
     $ quiz_title = f"Quiz {persistent.quiz_def_num}"
+    $ edit_quiz = False
 
 init python:
     import json
@@ -27,6 +28,7 @@ init python:
         return process.poll() is not None
 
     def init_json(): #file path
+        edit_quiz = False
         global fp
         fp = get_path(f"kodigo/game/python/temp/{quiz_title}.json")
 
@@ -62,6 +64,19 @@ init python:
         with open(fp, 'w') as file:
             json.dump(init_data, file)
     
+    #if just editting a quiz then copy it to temp then edit there
+    def copy_json():
+        global fp 
+
+        with open(get_path(f"kodigo/game/python/quizzes/{quiz_loc}/{current_quiz}.json") , 'r') as file:
+            quiz = json.load(file)
+        
+        fp = get_path(f"kodigo/game/python/temp/{quiz_title}.json")
+
+        with open(fp, 'w') as file:
+            json.dump(quiz, file)
+    CopyJson = renpy.curry(copy_json)
+
     #check if text is uploaded
     def is_notes():
         with open(fp, 'r') as file:

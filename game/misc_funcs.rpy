@@ -1,4 +1,7 @@
 init -2 python:
+    global caller_screen, mn_caller_screen
+    caller_screen = "main_menu"
+    mn_caller_screen = "quiz_list_screen"
     #start music or playlist
     def mplay(mname, fadein=1, fadeout=1, loop=True, channel="music", ext="ogg"):
         list = []
@@ -32,6 +35,18 @@ init -2 python:
     SPlay = renpy.curry(splay)
     SNDstop = renpy.curry(sndstop)
     MPlay = renpy.curry(mplay)
+
+    #save current screen, for outer
+    def save_caller_screen(screen):
+        global caller_screen
+        caller_screen = screen
+    SaveCallerScreen = renpy.curry(save_caller_screen)
+
+    #save current screen, for quiz_game
+    def save_mn_caller_screen(screen):
+        global mn_caller_screen
+        mn_caller_screen = screen
+    SaveMNCallerScreen = renpy.curry(save_mn_caller_screen)
 
 init python:
     # cursors
@@ -67,3 +82,4 @@ init python:
                 ("images/mouse/needle_opposite_3.png", 107, 0), 
                 ("images/mouse/needle_opposite_2.png", 107, 0),
                 ("images/mouse/needle_opposite_2.png", 107, 0)]}
+    

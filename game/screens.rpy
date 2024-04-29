@@ -250,14 +250,19 @@ screen quick_menu():
             yalign 1.0
 
             textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
+            textbutton _("History") action SaveCallerScreen('history'), ShowMenu('history')
             textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
+            textbutton _("Save") action SaveCallerScreen('save'), ShowMenu('save')
             textbutton _("Q.Save") action QuickSave()
             textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("Prefs") action SaveCallerScreen('preferences'), ShowMenu('preferences')
+            textbutton _("Status") action SaveCallerScreen('story_status'), ShowMenu('story_status')
 
+screen story_status:
+    tag menu
+    
+    use game_menu(_("Status"), scroll=None, yinitial=1.0)
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -304,19 +309,19 @@ screen navigation():
 
             else:
 
-                textbutton _("History") action ShowMenu("history")
+                textbutton _("History") action SaveCallerScreen("history"), ShowMenu("history")
 
-                textbutton _("Save") action ShowMenu("save")
+                textbutton _("Save") action SaveCallerScreen("save"), ShowMenu("save")
 
             imagebutton:
                 ysize 55
                 auto "Button/load_%s.png"
-                action ShowMenu("load")
+                action SaveCallerScreen("load"), ShowMenu("load")
 
             imagebutton:
                 ysize 55
                 auto "Button/option_%s.png"
-                action ShowMenu("preferences")
+                action SaveCallerScreen("preferences"), ShowMenu("preferences")
 
             if _in_replay:
 
@@ -334,7 +339,7 @@ screen navigation():
             imagebutton:
                 ysize 55
                 auto "Button/about_%s.png"
-                action ShowMenu("about")
+                action SaveCallerScreen("about"), ShowMenu("about")
 
             if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
@@ -342,7 +347,7 @@ screen navigation():
                 imagebutton:
                     ysize 55
                     auto "Button/help_%s.png"
-                    action ShowMenu("help")
+                    action SaveCallerScreen("help"), ShowMenu("help")
 
             if renpy.variant("pc"):
 
@@ -367,29 +372,29 @@ screen navigation():
 
             else:
 
-                textbutton _("History") action ShowMenu("history")
+                textbutton _("History") action SaveCallerScreen("history"), ShowMenu("history")
 
-                textbutton _("Save") action ShowMenu("save")
+                textbutton _("Save") action SaveCallerScreen("save"), ShowMenu("save")
 
-            textbutton _("Load") action ShowMenu("load")
+            textbutton _("Load") action SaveCallerScreen("load"), ShowMenu("load")
 
-            textbutton _("Options") action ShowMenu("preferences")
+            textbutton _("Options") action SaveCallerScreen("preferences"), ShowMenu("preferences")
             if _in_replay:
 
                 textbutton _("End Replay") action EndReplay(confirm=True)
 
             elif not main_menu:
 
-                textbutton _("Main Menu") action MainMenu()
+                textbutton _("Main Menu") action SaveCallerScreen("main_menu"), MainMenu()
 
             textbutton _("Mini Games") action ShowMenu("minigame")
 
-            textbutton _("About") action ShowMenu("about")
+            textbutton _("About") action SaveCallerScreen("about"), ShowMenu("about")
 
             if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
                 ## Help isn't necessary or relevant to mobile devices.
-                textbutton _("Help") action ShowMenu("help")
+                textbutton _("Help") action SaveCallerScreen("help"), ShowMenu("help")
 
             if renpy.variant("pc"):
 
@@ -952,7 +957,7 @@ screen minigame():
 
     image "images/Minigames Menu/icon_white.png" xalign 0.5 yalign 0.01
 
-    imagebutton auto "images/Button/exit_%s.png" action ShowMenu("main_menu"):
+    imagebutton auto "images/Button/exit_%s.png" action ShowMenu(caller_screen):
         align (0.97, 0.06)
         activate_sound "audio/click.ogg"
 
@@ -994,7 +999,7 @@ screen minigame():
                         yoffset 30
                         spacing 20
 
-                        imagebutton auto "images/Button/play_%s.png" action Function(init_dc_vars), Jump("init_dormicleaning"):
+                        imagebutton auto "images/Button/play_%s.png" action SaveMNCallerScreen("minigame"), Function(init_dc_vars), Jump("init_dormicleaning"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 30

@@ -216,10 +216,11 @@ label chapter1:
     jump init_dormicleaning
 
 label chapter1_1:
-    show mc happy_casual with dissolve
-    mc "Whew, finally I’m done cleaning and unpacking, I guess I’ll go for a little campus tour first."
+    if len(vars_needed) <  1 :
+        show mc happy_casual with dissolve
+        mc "Whew, finally I’m done cleaning and unpacking, I guess I’ll go for a little campus tour first."
 
-    hide mc
+        hide mc
     # campus tour
     scene bg walkday with dissolve 
     scene bg walkday with Pause(3) 
@@ -679,12 +680,14 @@ label chapter1_1:
 label mom_convo:
     menu:
         "So far it’s been good ma! Our class haven’t officially started but so far it’s been great!":
+            $ points += 1
             show mom phonecall_happy with dissolve
             show mc happy_casual:
                 xalign 0.8
             mom "Oh that’s good to hear! Keep up the good work dear and remember to not pressure yourself that much and just have fun, alright?"
 
         "It’s been absolute mess! All the people here always rubs me of the wrong way!":
+            $ points -= 1
             show mom phonecall_sad with dissolve
             show mc angry_casual:
                 xalign 0.8
@@ -1430,12 +1433,14 @@ label chapter1_3: # 4/24 start of editting again
     show mc shocked_uniform with dissolve
 
     mc " Holy guacamole! What the hell, I have no idea what these are!"
+
     show halfblack 
     centered "{color=#ffffff}{size=+24}Answer each questions presented...{/color}"
     centered "{color=#ffffff}{size=+24}You'll only have 12 seconds for each. Good luck!{/color}"
 
     hide mc
     hide halfblack
+    #max points up to this poin it 18
     $ in_story = True
     #set the quiz
     $ set_quiz_loc("standard") 

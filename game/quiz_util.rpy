@@ -43,7 +43,7 @@ label quit_warning:
     else:
         $ del_json()
         $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
-        call screen quiz_list_screen
+        $ renpy.call_screen("%s"%(mn_caller_screen))
 
     screen warning:
         add "halfblack"
@@ -90,7 +90,14 @@ label warning_2:
         $ hide_s("preprocess_text_dull")
         #if player wants to exit
         if bool:
-            call screen quiz_list_screen with dissolve
+            $ del_json()
+            $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
+
+            #reset fp
+            if edit_quiz:
+                $ fp = get_path(f"kodigo/game/python/quizzes/{quiz_loc}/{current_quiz}.json") 
+                
+            $ renpy.call_screen("%s"%(mn_caller_screen))
         else:
             call screen preprocess_text
     else:

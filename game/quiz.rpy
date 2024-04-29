@@ -1,9 +1,7 @@
 """
 things to fix:
     1. add crumpled paper on the side for the cheating
-    2. explain BKT in the tool tip
-    3. fix quiz ui (status/scoreboard screen)
-    4. add option to edit notes in Notes screen
+    2. fix quiz ui (status/scoreboard screen)
 """
 
 init:
@@ -170,6 +168,13 @@ init python:
             
         return boldened
 
+    def get_dotted_notes(notes):
+        dotted = []
+        for note in notes:
+            dotted.append(" • " + note)
+
+        return dotted
+
     def get_words():
         with open(fp, 'r') as file:
             quiz_data = json.load(file)
@@ -322,7 +327,7 @@ screen quiz_list_screen:
                             align (0.5, 0.5)
                             spacing 6
                             text quiz style "title"
-                            imagebutton auto "images/Button/quiz_play_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Jump("init_quiz")]:
+                            imagebutton auto "images/Button/quiz_play_%s.png" xalign 0.5 yalign 0.5 action [SaveMNCallerScreen("quiz_list_screen"), Function(set_quiz, quiz), Jump("init_quiz")]:
                                 activate_sound "audio/click.ogg"
                             imagebutton auto "images/Button/status_%s.png" xalign 0.5 yalign 0.5 action [Function(set_quiz, quiz), Show("quiz_status", transition=dissolve)]:
                                 activate_sound "audio/click.ogg"
@@ -339,7 +344,7 @@ screen quiz_list_screen:
                 color "#FFFFFF"
 
     if quiz_loc == "custom":
-        imagebutton auto "images/Button/create_quiz_%s.png" action [Function(init_json), ShowMenu("preprocess_text")]:
+        imagebutton auto "images/Button/create_quiz_%s.png" action [SaveMNCallerScreen("quiz_list_screen"), SetVariable("edit_quiz", False), Function(init_json), ShowMenu("preprocess_text")]:
             align (0.95, 0.984)
             activate_sound "audio/click.ogg"
 
@@ -353,7 +358,11 @@ style title:
 screen display_notes:
     add "bg quiz main"
 
-    $ notes = '\n\n'.join(get_boldened_notes()) #quiz_data["notes"]
+    $ notes = '\n\n'.join(get_dotted_notes(get_boldened_notes()))
+
+    imagebutton auto "images/Button/edit_text_%s.png" action SetVariable("edit_quiz", True), SetVariable("quiz_title", current_quiz), SaveMNCallerScreen("display_notes"), Hide("display_notes"), CopyJson(), Show("preprocess_text", transition=dissolve):
+        tooltip "edit quiz"
+        align(0.83, 0.19)
 
     imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu("quiz_list_screen")]:
         align (0.86, 0.04)
@@ -379,9 +388,20 @@ screen display_notes:
             vbox:
                 text notes style "notes"
 
-    imagebutton auto "images/Button/play_%s.png" action [Hide("display_notes"), Jump("init_quiz")]:
+    imagebutton auto "images/Button/play_%s.png" action [SaveMNCallerScreen("display_notes"), Hide("display_notes"), Jump("init_quiz")]:
         align (0.98, 0.98)
         activate_sound "audio/click.ogg"
+    
+    $ tooltip = GetTooltip()
+
+    if tooltip:
+        nearrect:
+            focus "tooltip"
+            prefer_top True
+            frame:
+                xalign 0.1
+                text tooltip:
+                    size 20
 
 style notes:
     font "KronaOne-Regular.ttf"
@@ -421,7 +441,7 @@ screen quiz_status:
         color "#FFFFFF"
         align (0.5, 0.38)
 
-    imagebutton auto "images/Button/retry_%s.png" action [Hide("quiz_status"), Call("init_quiz")]:
+    imagebutton auto "images/Button/retry_%s.png" action [SaveMNCallerScreen("quiz_status"), Hide("quiz_status"), Call("init_quiz")]:
         align (0.5, 0.5)
         activate_sound "audio/click.ogg"
 
@@ -437,7 +457,7 @@ screen scoreboard:
         activate_sound "audio/click.ogg"
     
     imagebutton auto "images/Button/info_icon_%s.png" action NullAction():
-        tooltip "BKT is blah blah blah"
+        tooltip "The mastery for each quiz session is measured by Bayesian Knowledge Tracing (BKT). It's an AI-related algorithm that predicts if a student has learned a skill. It uses four parameters (values between 0 and 1): P(known), P(will learn), P(slip), and P(guess). After the quiz (either yields 1 for pass and 0 for not), BKT calculates P(learned), the chance the student learned the skill, based on these values."
         align(0.155, 0.04)
 
     text current_quiz:
@@ -485,7 +505,7 @@ screen scoreboard:
         align (0.5, 0.8)
         yoffset 20
 
-    imagebutton auto "images/Button/play_%s.png" action [Hide("scoreboard"), Jump("init_quiz")]:
+    imagebutton auto "images/Button/play_%s.png" action [SaveMNCallerScreen("scoreboard"), Hide("scoreboard"), Jump("init_quiz")]:
         align (0.98, 0.98)
         activate_sound "audio/click.ogg"
     
@@ -497,8 +517,9 @@ screen scoreboard:
             #prefer_top True
             frame:
                 xalign 0.5
+                xsize 600
                 text tooltip:
-                    size 20
+                    size 25
 
 style status:
     font "Copperplate Gothic Bold Regular.ttf"
@@ -517,7 +538,7 @@ label init_quiz:
         
     screen ready:
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu("quiz_list_screen")]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu(mn_caller_screen)]:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
 
@@ -530,7 +551,7 @@ label init_quiz:
 
     screen one:
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu("quiz_list_screen")]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu(mn_caller_screen)]:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
 
@@ -543,7 +564,7 @@ label init_quiz:
 
     screen two:
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu("quiz_list_screen")]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu(mn_caller_screen)]:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
             
@@ -556,7 +577,7 @@ label init_quiz:
 
     screen three:
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu("quiz_list_screen")]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu(mn_caller_screen)]:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
 
@@ -569,7 +590,7 @@ label init_quiz:
 
     screen go:
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu("quiz_list_screen")]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu(mn_caller_screen)]:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
             
@@ -673,7 +694,7 @@ screen pause_quiz:
             imagebutton auto "images/Button/continue_quiz_%s.png" action Show("countdown"), Hide("pause_quiz"):
                 align (0.5, 0.5)
                 activate_sound "audio/click.ogg"
-            imagebutton auto "images/Button/exit_quiz_%s.png" action Hide("pause_quiz"), Hide("quiz_proper"), Show("quiz_list_screen", transition=dissolve):
+            imagebutton auto "images/Button/exit_quiz_%s.png" action Hide("pause_quiz"), Hide("quiz_proper"), Show(mn_caller_screen, transition=dissolve):
                 align (0.5, 0.5)
                 yoffset 20
                 activate_sound "audio/click.ogg"
