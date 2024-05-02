@@ -58,13 +58,15 @@ define config.has_voice = True
 # define config.sample_sound = "sample-sound.ogg"
 # define config.sample_voice = "sample-voice.ogg"
 
-
 ## Uncomment the following line to set an audio file that will be played while
 ## the player is at the main menu. This file will continue playing into the
 ## game, until it is stopped or another file is played.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+define config.main_menu_music = "Silent.ogg"
+define config.game_menu_music = "Silent.ogg"
 
+#define config.main_menu_music = "School.ogg"
+#define config.game_menu_music = "School.ogg"
 
 ## Transitions #################################################################
 ##

@@ -64,7 +64,7 @@ label quit_warning:
                     xfill True
                     ysize 50
                     background "#0b5fbed8"
-                    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")]:
+                    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("warning"), Function(set_bool, False), Jump("warning_2")] keysym ['K_ESCAPE']:
                         xalign 1.0
 
                 text f"Are you sure you want to exit before [verb] '{quiz_title}'?":
@@ -124,6 +124,7 @@ screen input_title:
                     font "Copperplate Gothic Thirty-Three Regular.otf"
                     size 100
                     color "#FFFFFF"
+                    default_focus True
 
                 imagebutton auto "images/Button/pen_%s.png" action [Hide("input_title"), Jump("edit_title_2")]:
                     yoffset 5
@@ -192,7 +193,7 @@ screen empty(temp):
 
     button:
         xysize(1920,1080)
-        action [Hide("empty"), Call("exit_edit", temp)]
+        action [Hide("empty"), Call("exit_edit", temp)] keysym ['K_ESCAPE']
 
     vbox:
         xalign 0.5
@@ -218,7 +219,7 @@ screen duplicate(temp):
     
     button:
         xysize(1920,1080)
-        action [Hide("duplicate"), Call("exit_edit", temp)]
+        action [Hide("duplicate"), Call("exit_edit", temp)] keysym ['K_ESCAPE']
 
     vbox:
         xalign 0.5
@@ -265,7 +266,7 @@ screen input_keys(sentences, answers, i):
                 xfill True
                 ysize 50
                 background "#0b5fbed8"
-                imagebutton auto "images/Minigames Menu/exit_%s.png" action Hide("input_keys"):
+                imagebutton auto "images/Minigames Menu/exit_%s.png" action Hide("input_keys") keysym ['K_ESCAPE']:
                     xalign 1.0
             frame:
                 xfill True
@@ -304,7 +305,7 @@ screen input_text:
                 xfill True
                 ysize 50
                 background "#0b5fbed8"
-                imagebutton auto "images/Minigames Menu/exit_%s.png" action [SetVariable("current_text", ""), Hide("input_text")]:
+                imagebutton auto "images/Minigames Menu/exit_%s.png" action [SetVariable("current_text", ""), Hide("input_text")] keysym ['K_ESCAPE']:
                     xalign 1.0
                 imagebutton auto "images/Button/info_icon_%s.png" action NullAction():
                     tooltip "One sentence will do."

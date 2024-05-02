@@ -32,9 +32,37 @@ init -2 python:
     def sndstop(fadeout=0, channel='sound'):
         renpy.music.stop(channel=channel, fadeout=fadeout)
 
+    #stop the music
+    def mstop(fadeout=1, channel='music'):
+        renpy.music.stop(channel=channel, fadeout=fadeout)
+
+    # last saved music
+    last_music_fn = ""
+    
+    # save the playing music in memory
+    def msave(): 
+        # last saved music
+        global last_music_fn
+        last_music_fn = renpy.music.get_playing()
+
+    # restore the melody that was playing when saving
+    def mrestore(fadein=1, fadeout=1, channel="music"):
+        if last_music_fn:
+            renpy.music.play(last_music_fn, channel=channel, loop=True, fadein=fadein, fadeout=fadeout)
+            
+    #store then stop music
+    def mpause():
+        value = renpy.music.get_playing()
+        renpy.music.set_pause(value, channel='music')
+    
+    
     SPlay = renpy.curry(splay)
     SNDstop = renpy.curry(sndstop)
     MPlay = renpy.curry(mplay)
+    MStop = renpy.curry(mstop)
+    MRestore = renpy.curry(mrestore)
+    MSave = renpy.curry(msave)
+    MPause = renpy.curry(mpause)
 
     #save current screen, for outer
     def save_caller_screen(screen):
@@ -47,6 +75,12 @@ init -2 python:
         global mn_caller_screen
         mn_caller_screen = screen
     SaveMNCallerScreen = renpy.curry(save_mn_caller_screen)
+
+    def return_main():
+        Return()
+
+    ReturnMain = renpy.curry(return_main)
+
 
 init python:
     # cursors
@@ -82,4 +116,3 @@ init python:
                 ("images/mouse/needle_opposite_3.png", 107, 0), 
                 ("images/mouse/needle_opposite_2.png", 107, 0),
                 ("images/mouse/needle_opposite_2.png", 107, 0)]}
-    

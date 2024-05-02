@@ -668,17 +668,8 @@ init -2 python:
         if restart or (mdeletetags(old_fn) != mdeletetags(new_fn)):
             renpy.music.play(new_fn, channel=channel, loop=True, fadein=fadein, fadeout=fadeout)
 
-    # последняя сохраненная мелодия
-    last_music_fn = ""
-
-    # сохранить в памяти играющую мелодию
-    def msave():
-        store.last_music_fn = renpy.music.get_playing()
-
-    # восстановить игравшую при сохранении мелодию
-    def mrestore(fadein=1, fadeout=1, channel="music"):
-        if last_music_fn:
-            fnplay(last_music_fn, fadein=fadein, fadeout=fadeout, channel=channel, restart=False)    
+    
+    
 
     # голос
     def vplay(mname, fadein=0, fadeout=0, channel="voice", ext="ogg"):
@@ -687,10 +678,6 @@ init -2 python:
 
     # остановить звук
     def sstop(fadeout=None, channel='audio'):
-        renpy.music.stop(channel=channel, fadeout=fadeout)
-
-    # остановить музыку
-    def mstop(fadeout=1, channel='music'):
         renpy.music.stop(channel=channel, fadeout=fadeout)
 
     # остановить зацикленный эффект
@@ -703,8 +690,6 @@ init -2 python:
     FNPlay = renpy.curry(fnplay)
     VPlay = renpy.curry(vplay)
     SStop = renpy.curry(sstop)
-    MStop = renpy.curry(mstop)
-
     import re
 
     # получить словарь с найденными в строке тегами и их значением

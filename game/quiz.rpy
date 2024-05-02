@@ -222,10 +222,10 @@ init python:
     #def timer_function():
 
 screen quiz_instructions:
-    tag menu
+    tag minigame
     add "bg roomnight"
 
-    imagebutton auto "images/Button/exit_%s.png" action ShowMenu("minigame"):
+    imagebutton auto "images/Button/exit_%s.png" action ShowMenu("minigame") keysym ['K_ESCAPE']:
         align (0.97, 0.06)
         activate_sound "audio/click.ogg"
 
@@ -259,7 +259,7 @@ screen quiz_instructions:
                 activate_sound "audio/click.ogg"
 
 screen program_quiz_protocol():
-    tag menu
+    tag minigame
     add "bg quiz main"
 
     $ get_quiz_list()
@@ -267,7 +267,7 @@ screen program_quiz_protocol():
     image "quiz title":
         align (0.5, 0.2)
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action ShowMenu("minigame"):
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action ShowMenu("minigame") keysym ['K_ESCAPE']:
         align (0.86, 0.04)
         activate_sound "audio/click.ogg"
 
@@ -280,10 +280,10 @@ screen program_quiz_protocol():
         activate_sound "audio/click.ogg"
 
 screen quiz_list_screen:
-    tag menu
+    tag minigame
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("custom_quizzes"), ShowMenu("program_quiz_protocol")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action ShowMenu("program_quiz_protocol") keysym ['K_ESCAPE']:
         align (0.86, 0.04)
         activate_sound "audio/click.ogg"
 
@@ -344,7 +344,7 @@ screen quiz_list_screen:
                 color "#FFFFFF"
 
     if quiz_loc == "custom":
-        imagebutton auto "images/Button/create_quiz_%s.png" action [SaveMNCallerScreen("quiz_list_screen"), SetVariable("edit_quiz", False), Function(init_json), ShowMenu("preprocess_text")]:
+        imagebutton auto "images/Button/create_quiz_%s.png" action [SaveMNCallerScreen("quiz_list_screen"), SetVariable("edit_quiz", False), Function(init_json), Hide("quiz_list_screen"), ShowMenu("preprocess_text")]:
             align (0.95, 0.984)
             activate_sound "audio/click.ogg"
 
@@ -356,15 +356,19 @@ style title:
 
 #probobaly better if we separate it by sentences via bullets
 screen display_notes:
+    tag minigame
     add "bg quiz main"
 
     $ notes = '\n\n'.join(get_dotted_notes(get_boldened_notes()))
 
-    imagebutton auto "images/Button/edit_text_%s.png" action SetVariable("edit_quiz", True), SetVariable("quiz_title", current_quiz), SaveMNCallerScreen("display_notes"), Hide("display_notes"), CopyJson(), Show("preprocess_text", transition=dissolve):
-        tooltip "edit quiz"
-        align(0.83, 0.19)
+    #players can't edit built in quizzes
+    if quiz_loc != "standard":
+        imagebutton auto "images/Button/edit_text_%s.png" action SetVariable("edit_quiz", True), SetVariable("quiz_title", current_quiz), SaveMNCallerScreen("display_notes"), CopyJson(), Show("preprocess_text", transition=dissolve):
+            tooltip "edit quiz"
+            align(0.83, 0.19)
+            activate_sound "audio/click.ogg"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("display_notes"), ShowMenu("quiz_list_screen")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [ShowMenu("quiz_list_screen")] keysym ['K_ESCAPE']:
         align (0.86, 0.04)
         activate_sound "audio/click.ogg"
 
@@ -388,7 +392,7 @@ screen display_notes:
             vbox:
                 text notes style "notes"
 
-    imagebutton auto "images/Button/play_%s.png" action [SaveMNCallerScreen("display_notes"), Hide("display_notes"), Jump("init_quiz")]:
+    imagebutton auto "images/Button/play_%s.png" action [SaveMNCallerScreen("display_notes"), Jump("init_quiz")]:
         align (0.98, 0.98)
         activate_sound "audio/click.ogg"
     
@@ -411,6 +415,7 @@ style notes:
 
 #status of quiz etc
 screen quiz_status:
+    tag minigame
     add "bg quiz main"
 
     python:
@@ -419,7 +424,7 @@ screen quiz_status:
         else:
             mastery = quiz_data["mastery"][-1]
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("quiz_status"), ShowMenu("quiz_list_screen")]: #don't know yet
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("quiz_status"), ShowMenu("quiz_list_screen")] keysym ['K_ESCAPE']: #don't know yet
         align (0.86, 0.04)
         activate_sound "audio/click.ogg"
 
@@ -441,18 +446,19 @@ screen quiz_status:
         color "#FFFFFF"
         align (0.5, 0.38)
 
-    imagebutton auto "images/Button/retry_%s.png" action [SaveMNCallerScreen("quiz_status"), Hide("quiz_status"), Call("init_quiz")]:
+    imagebutton auto "images/Button/retry_%s.png" action [SaveMNCallerScreen("quiz_status"), Call("init_quiz")]:
         align (0.5, 0.5)
         activate_sound "audio/click.ogg"
 
-    imagebutton auto "images/Button/pass_attempts_%s.png" action [Hide("quiz_status"), ShowMenu("scoreboard")]:
+    imagebutton auto "images/Button/pass_attempts_%s.png" action ShowMenu("scoreboard"):
         align (0.5, 0.65)
         activate_sound "audio/click.ogg"
 
 screen scoreboard:
+    tag minigame
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("scoreboard"), ShowMenu("quiz_status")]: #don't know yet
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action ShowMenu("quiz_status") keysym ['K_ESCAPE']: #don't know yet
         align (0.86, 0.04)
         activate_sound "audio/click.ogg"
     
@@ -505,7 +511,7 @@ screen scoreboard:
         align (0.5, 0.8)
         yoffset 20
 
-    imagebutton auto "images/Button/play_%s.png" action [SaveMNCallerScreen("scoreboard"), Hide("scoreboard"), Jump("init_quiz")]:
+    imagebutton auto "images/Button/play_%s.png" action [SaveMNCallerScreen("scoreboard"), Jump("init_quiz")]:
         align (0.98, 0.98)
         activate_sound "audio/click.ogg"
     
@@ -537,8 +543,9 @@ label init_quiz:
         $ total = 15
         
     screen ready:
+        tag minigame
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("ready"), ShowMenu(mn_caller_screen)]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [ShowMenu(mn_caller_screen)] keysym ['K_ESCAPE']:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
 
@@ -550,8 +557,9 @@ label init_quiz:
         timer 1.0 action [Hide("ready"), Show("one")]
 
     screen one:
+        tag minigame
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("one"), ShowMenu(mn_caller_screen)]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [ShowMenu(mn_caller_screen)] keysym ['K_ESCAPE']:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
 
@@ -563,8 +571,9 @@ label init_quiz:
         timer 1.0 action [Hide("one"), Show("two")]
 
     screen two:
+        tag minigame
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("two"), ShowMenu(mn_caller_screen)]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [ShowMenu(mn_caller_screen)] keysym ['K_ESCAPE']:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
             
@@ -576,8 +585,9 @@ label init_quiz:
         timer 1.0 action [Hide("two"), Show("three")]
 
     screen three:
+        tag minigame
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("three"), ShowMenu(mn_caller_screen)]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [ShowMenu(mn_caller_screen)] keysym ['K_ESCAPE']:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
 
@@ -589,8 +599,9 @@ label init_quiz:
         timer 1.0 action [Hide("three"), Show("go")]
 
     screen go:
+        tag minigame
         if not in_story:
-            imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("go"), ShowMenu(mn_caller_screen)]:
+            imagebutton auto "images/Minigames Menu/exit_%s.png" action [ShowMenu(mn_caller_screen)] keysym ['K_ESCAPE']:
                 align (0.86, 0.04)
                 activate_sound "audio/click.ogg"
             
@@ -599,7 +610,7 @@ label init_quiz:
             xalign 0.5
             yalign 0.48
 
-        timer 1.0 action [Hide("go"), Jump("init_question")]
+        timer 1.0 action Jump("init_question")
 
     call screen ready with dissolve
 
@@ -623,8 +634,9 @@ screen countdown():
         timer timeout action [SetVariable("timeout", 10), SetVariable("timeout_label", None), Show(timeout_label, transition=dissolve), SPlay("gameover"), Hide("countdown")]
 
 screen quiz_proper:
+    tag minigame
     if not in_story:
-        imagebutton auto "images/Button/pause_quiz_%s.png" action Hide("countdown"), Show("pause_quiz"): #hide the countdown for now
+        imagebutton auto "images/Button/pause_quiz_%s.png" action Hide("countdown"), Show("pause_quiz") keysym ['K_ESCAPE']: #hide the countdown for now
             align (0.86, 0.04)
             activate_sound "audio/click.ogg"
 
@@ -694,7 +706,7 @@ screen pause_quiz:
             imagebutton auto "images/Button/continue_quiz_%s.png" action Show("countdown"), Hide("pause_quiz"):
                 align (0.5, 0.5)
                 activate_sound "audio/click.ogg"
-            imagebutton auto "images/Button/exit_quiz_%s.png" action Hide("pause_quiz"), Hide("quiz_proper"), Show(mn_caller_screen, transition=dissolve):
+            imagebutton auto "images/Button/exit_quiz_%s.png" action Hide("pause_quiz"), Show(mn_caller_screen, transition=dissolve) keysym ['K_ESCAPE']:
                 align (0.5, 0.5)
                 yoffset 20
                 activate_sound "audio/click.ogg"
@@ -710,7 +722,7 @@ screen right:
 
     button:
         xysize(1920,1080)
-        action [Hide("right", transition=fade), Jump("next_question")]
+        action [Hide("right", transition=fade), Jump("next_question")] keysym ['K_ESCAPE']
         activate_sound "audio/click.ogg"
 
     frame:
@@ -731,7 +743,7 @@ screen wrong:
 
     button:
         xysize(1920,1080)
-        action [Hide("wrong", transition=fade), Jump("next_question")]
+        action [Hide("wrong", transition=fade), Jump("next_question")] keysym ['K_ESCAPE']
         activate_sound "audio/click.ogg"
 
     frame:
@@ -801,6 +813,7 @@ label results:
     $ save_quiz_record()
 
     screen show_score:
+        tag minigame
         modal True
         add "halfblack"
         add mc_reac
@@ -810,9 +823,9 @@ label results:
             activate_sound "audio/click.ogg"
 
             if in_story:
-                action [Hide("show_score"), SetVariable("in_story", False), SetVariable("score", 0), SNDstop(), Jump("chapter_2")] keysym ["K_SPACE"]
+                action [Hide("show_score"), SetVariable("in_story", False), SetVariable("score", 0), SNDstop(), Jump("chapter_2")] keysym ["K_SPACE", 'K_ESCAPE']
             else:
-                action [Hide("show_score"), SetVariable("score", 0), SNDstop(), Show("quiz_status", transition=dissolve)] keysym ["K_SPACE"]
+                action [SetVariable("score", 0), SNDstop(), Show("quiz_status", transition=dissolve)] keysym ["K_SPACE", 'K_ESCAPE'] 
         
         vbox:
             align (0.5, 0.5)

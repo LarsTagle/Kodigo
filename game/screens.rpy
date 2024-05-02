@@ -249,15 +249,15 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action SaveCallerScreen('history'), ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action SaveCallerScreen('save'), ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action SaveCallerScreen('preferences'), ShowMenu('preferences')
-            textbutton _("Status") action SaveCallerScreen('story_status'), ShowMenu('story_status')
+            textbutton _("Back") action SPlay("click"), Rollback()
+            textbutton _("History") action MPause(), SPlay("click"), SaveCallerScreen('history'), ShowMenu('history')
+            textbutton _("Skip") action SPlay("click"), Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Auto") action SPlay("click"), Preference("auto-forward", "toggle")
+            textbutton _("Save") action SPlay("click"), SaveCallerScreen('save'), ShowMenu('save') keysym ['K_ESCAPE']
+            textbutton _("Q.Save") action SPlay("click"), QuickSave()
+            textbutton _("Q.Load") action SPlay("click"), QuickLoad()
+            textbutton _("Prefs") action SPlay("click"), SaveCallerScreen('preferences'), ShowMenu('preferences')
+            textbutton _("Status") action SPlay("click"), SaveCallerScreen('story_status'), ShowMenu('story_status')
 
 screen story_status:
     tag menu
@@ -305,23 +305,23 @@ screen navigation():
                 imagebutton:
                     ysize 55
                     auto "Button/start_%s.png"
-                    action Start()
+                    action SPlay("click"), SaveCallerScreen("save"), SetVariable("in_story", True), Start()
 
             else:
 
-                textbutton _("History") action SaveCallerScreen("history"), ShowMenu("history")
+                textbutton _("History") action SPlay("click"), SaveCallerScreen("history"), ShowMenu("history")
 
-                textbutton _("Save") action SaveCallerScreen("save"), ShowMenu("save")
+                textbutton _("Save") action SPlay("click"), SaveCallerScreen("save"), ShowMenu("save")
 
             imagebutton:
                 ysize 55
                 auto "Button/load_%s.png"
-                action SaveCallerScreen("load"), ShowMenu("load")
+                action SPlay("click"), SaveCallerScreen("load"), ShowMenu("load")
 
             imagebutton:
                 ysize 55
                 auto "Button/option_%s.png"
-                action SaveCallerScreen("preferences"), ShowMenu("preferences")
+                action SPlay("click"), SaveCallerScreen("preferences"), ShowMenu("preferences")
 
             if _in_replay:
 
@@ -329,17 +329,17 @@ screen navigation():
 
             elif not main_menu:
 
-                textbutton _("Main Menu") action MainMenu()
+                textbutton _("Main Menu") action SPlay("click"), MainMenu()
 
             imagebutton:
                 ysize 55
                 auto "Button/minigame_%s.png"
-                action ShowMenu("minigame")
-
+                action SPlay("click"), Hide("main_menu"), ShowMenu("minigame")
+        
             imagebutton:
                 ysize 55
                 auto "Button/about_%s.png"
-                action SaveCallerScreen("about"), ShowMenu("about")
+                action SPlay("click"), SaveCallerScreen("about"), ShowMenu("about")
 
             if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
@@ -347,7 +347,7 @@ screen navigation():
                 imagebutton:
                     ysize 55
                     auto "Button/help_%s.png"
-                    action SaveCallerScreen("help"), ShowMenu("help")
+                    action SPlay("click"), SaveCallerScreen("help"), ShowMenu("help")
 
             if renpy.variant("pc"):
 
@@ -356,7 +356,7 @@ screen navigation():
                 imagebutton:
                     ysize 55
                     auto "Button/quit_%s.png"
-                    action Quit(confirm=not main_menu)
+                    action SPlay("click"), Quit(confirm=not main_menu)
     else:
         vbox:
             style_prefix "navigation"
@@ -368,39 +368,40 @@ screen navigation():
 
             if main_menu:
 
-                textbutton _("Start") action Start()
+                textbutton _("Start") action SPlay("click"), SetVariable("in_story", True), Start()
 
             else:
 
-                textbutton _("History") action SaveCallerScreen("history"), ShowMenu("history")
+                textbutton _("History") action  SPlay("click"), SaveCallerScreen("history"), ShowMenu("history")
 
-                textbutton _("Save") action SaveCallerScreen("save"), ShowMenu("save")
+                textbutton _("Save") action SPlay("click"), SaveCallerScreen("save"), ShowMenu("save")
 
-            textbutton _("Load") action SaveCallerScreen("load"), ShowMenu("load")
+            textbutton _("Load") action SPlay("click"), SaveCallerScreen("load"), ShowMenu("load")
 
-            textbutton _("Options") action SaveCallerScreen("preferences"), ShowMenu("preferences")
+            textbutton _("Options") action SPlay("click"), SaveCallerScreen("preferences"), ShowMenu("preferences")
             if _in_replay:
 
                 textbutton _("End Replay") action EndReplay(confirm=True)
 
             elif not main_menu:
 
-                textbutton _("Main Menu") action SaveCallerScreen("main_menu"), MainMenu()
+                textbutton _("Main Menu") action SPlay("click"), SaveCallerScreen("main_menu"), MainMenu()
 
-            textbutton _("Mini Games") action ShowMenu("minigame")
+            if not in_story:
+                textbutton _("Mini Games") action SPlay("click"), Hide("game_menu"), ShowMenu("minigame")
 
-            textbutton _("About") action SaveCallerScreen("about"), ShowMenu("about")
+            textbutton _("About") action SPlay("click"), SaveCallerScreen("about"), ShowMenu("about")
 
             if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
                 ## Help isn't necessary or relevant to mobile devices.
-                textbutton _("Help") action SaveCallerScreen("help"), ShowMenu("help")
+                textbutton _("Help") action SPlay("click"), SaveCallerScreen("help"), ShowMenu("help")
 
             if renpy.variant("pc"):
 
                 ## The quit button is banned on iOS and unnecessary on Android and
                 ## Web.
-                textbutton _("Quit") action Quit(confirm=not main_menu)
+                textbutton _("Quit") action SPlay("click"), Quit(confirm=not main_menu)
 
 
 style navigation_button is gui_button
@@ -547,12 +548,14 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     textbutton _("Return"):
         style "return_button"
 
-        action Return()
+        action SaveCallerScreen("main_menu"), Return()
+
+        activate_sound "audio/click.ogg"
 
     label title
 
     if main_menu:
-        key "game_menu" action ShowMenu("main_menu")
+        key "game_menu" action SPlay("click"), ShowMenu("main_menu")
 
 
 style game_menu_outer_frame is empty
@@ -655,9 +658,8 @@ style about_label_text:
 ## www.renpy.org/doc/html/screen_special.html#load
 
 screen save():
-
     tag menu
-
+    
     use file_slots(_("Save"))
 
 
@@ -686,7 +688,7 @@ screen file_slots(title):
 
                 key_events True
                 xalign 0.5
-                action page_name_value.Toggle()
+                action SPlay("click"), page_name_value.Toggle()
 
                 input:
                     style "page_label_text"
@@ -706,7 +708,10 @@ screen file_slots(title):
                     $ slot = i + 1
 
                     button:
-                        action FileAction(slot)
+                        if title == "Load":
+                            action SPlay("click"), SetVariable("in_story", True), FileAction(slot)
+                        else:
+                            action SPlay("click"), FileAction(slot)
 
                         has vbox
 
@@ -718,7 +723,7 @@ screen file_slots(title):
                         text FileSaveName(slot):
                             style "slot_name_text"
 
-                        key "save_delete" action FileDelete(slot)
+                        key "save_delete" action SPlay("click"), FileDelete(slot)
 
             ## Buttons to access other pages.
             vbox:
@@ -732,28 +737,28 @@ screen file_slots(title):
 
                     spacing gui.page_spacing
 
-                    textbutton _("<") action FilePagePrevious()
+                    textbutton _("<") action SPlay("click"), FilePagePrevious()
 
                     if config.has_autosave:
-                        textbutton _("{#auto_page}A") action FilePage("auto")
+                        textbutton _("{#auto_page}A") action SPlay("click"), FilePage("auto")
 
                     if config.has_quicksave:
-                        textbutton _("{#quick_page}Q") action FilePage("quick")
+                        textbutton _("{#quick_page}Q") action SPlay("click"), FilePage("quick")
 
                     ## range(1, 10) gives the numbers from 1 to 9.
                     for page in range(1, 10):
-                        textbutton "[page]" action FilePage(page)
+                        textbutton "[page]" action SPlay("click"), FilePage(page)
 
-                    textbutton _(">") action FilePageNext()
+                    textbutton _(">") action SPlay("click"), FilePageNext()
 
                 if config.has_sync:
                     if CurrentScreenName() == "save":
                         textbutton _("Upload Sync"):
-                            action UploadSync()
+                            action SPlay("click"), UploadSync()
                             xalign 0.5
                     else:
                         textbutton _("Download Sync"):
-                            action DownloadSync()
+                            action SPlay("click"), DownloadSync()
                             xalign 0.5
 
 
@@ -812,15 +817,15 @@ screen preferences():
                     vbox:
                         style_prefix "radio"
                         label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
-                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                        textbutton _("Window") action SPlay("click"), Preference("display", "window")
+                        textbutton _("Fullscreen") action SPlay("click"), Preference("display", "fullscreen")
 
                 vbox:
                     style_prefix "check"
                     label _("Skip")
-                    textbutton _("Unseen Text") action Preference("skip", "toggle")
-                    textbutton _("After Choices") action Preference("after choices", "toggle")
-                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                    textbutton _("Unseen Text") action SPlay("click"), Preference("skip", "toggle")
+                    textbutton _("After Choices") action SPlay("click"), Preference("after choices", "toggle")
+                    textbutton _("Transitions") action SPlay("click"), InvertSelected(Preference("transitions", "toggle"))
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
@@ -848,7 +853,7 @@ screen preferences():
 
                         hbox:
                             bar value Preference("music volume")
-
+                            
                     if config.has_sound:
 
                         label _("Sound Volume")
@@ -857,7 +862,7 @@ screen preferences():
                             bar value Preference("sound volume")
 
                             if config.sample_sound:
-                                textbutton _("Test") action Play("sound", config.sample_sound)
+                                textbutton _("Test") action SPlay("click"), Play("sound", config.sample_sound)
 
 
                     if config.has_voice:
@@ -867,13 +872,13 @@ screen preferences():
                             bar value Preference("voice volume")
 
                             if config.sample_voice:
-                                textbutton _("Test") action Play("voice", config.sample_voice)
+                                textbutton _("Test") action SPlay("click"), Play("voice", config.sample_voice)
 
                     if config.has_music or config.has_sound or config.has_voice:
                         null height gui.pref_spacing
 
                         textbutton _("Mute All"):
-                            action Preference("all mute", "toggle")
+                            action SPlay("click"), Preference("all mute", "toggle")
                             style "mute_all_button"
 
 
@@ -952,14 +957,13 @@ style slider_vbox:
 ## This is a screen that displays the minigames that a player can proceed.
 ## This will be where additional activities of the user can enjoy.
 screen minigame():
-    tag menu
+    tag minigame
     add "bg roomnight"
 
     image "images/Minigames Menu/icon_white.png" xalign 0.5 yalign 0.01
 
-    imagebutton auto "images/Button/exit_%s.png" action ShowMenu(caller_screen):
+    imagebutton auto "images/Button/exit_%s.png" action SPlay("click"), Hide("minigame"), ShowMenu(caller_screen) keysym ['K_ESCAPE']:
         align (0.97, 0.06)
-        activate_sound "audio/click.ogg"
 
     viewport id "vp":
         xalign 0.5
@@ -999,17 +1003,15 @@ screen minigame():
                         yoffset 30
                         spacing 20
 
-                        imagebutton auto "images/Button/play_%s.png" action SaveMNCallerScreen("minigame"), Function(init_dc_vars), Jump("init_dormicleaning"):
+                        imagebutton auto "images/Button/play_%s.png" action SPlay("click"), SaveMNCallerScreen("minigame"), Function(init_dc_vars), Jump("init_dormicleaning"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 30
-                            activate_sound "audio/click.ogg"
 
-                        imagebutton auto "images/Button/instructions_%s.png" action Function(init_dc_vars), ShowMenu("dormicleaning_instructions"):
+                        imagebutton auto "images/Button/instructions_%s.png" action SPlay("click"), Function(init_dc_vars), ShowMenu("dormicleaning_instructions"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 50
-                            activate_sound "audio/click.ogg"
 
             frame:
                 xpadding 40
@@ -1038,17 +1040,15 @@ screen minigame():
                         yalign 0.5
                         yoffset 30
                         spacing 20
-                        imagebutton auto "images/Button/play_%s.png" action ShowMenu("program_quiz_protocol"):
+                        imagebutton auto "images/Button/play_%s.png" action Hide("minigame"), SPlay("click"), ShowMenu("program_quiz_protocol"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 30
-                            activate_sound "audio/click.ogg"
 
-                        imagebutton auto "images/Button/instructions_%s.png" action ShowMenu("quiz_instructions"):
+                        imagebutton auto "images/Button/instructions_%s.png" action Hide("minigame"), SPlay("click"), ShowMenu("quiz_instructions"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 50
-                            activate_sound "audio/click.ogg"
 
     bar value XScrollValue("vp") yalign 1.0
 
@@ -1173,11 +1173,11 @@ screen help():
 
             hbox:
 
-                textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
-                textbutton _("Mouse") action SetScreenVariable("device", "mouse")
+                textbutton _("Keyboard") action SPlay("click"), SetScreenVariable("device", "keyboard")
+                textbutton _("Mouse") action SPlay("click"), SetScreenVariable("device", "mouse")
 
                 if GamepadExists():
-                    textbutton _("Gamepad") action SetScreenVariable("device", "gamepad")
+                    textbutton _("Gamepad") action SPlay("click"), SetScreenVariable("device", "gamepad")
 
             if device == "keyboard":
                 use keyboard_help
@@ -1288,7 +1288,7 @@ screen gamepad_help():
         label _("Y/Top Button")
         text _("Hides the user interface.")
 
-    textbutton _("Calibrate") action GamepadCalibrate()
+    textbutton _("Calibrate") action SPlay("click"), GamepadCalibrate()
 
 
 style help_button is gui_button
@@ -1353,11 +1353,11 @@ screen confirm(message, yes_action, no_action):
                 xalign 0.5
                 spacing 150
 
-                textbutton _("Yes") action yes_action
-                textbutton _("No") action no_action
+                textbutton _("Yes") action SPlay("click"), yes_action
+                textbutton _("No") action SPlay("click"), no_action
 
     ## Right-click and escape answer "no".
-    key "game_menu" action no_action
+    key "game_menu" action SPlay("click"), no_action
 
 
 style confirm_frame is gui_frame
@@ -1454,7 +1454,7 @@ screen notify(message):
     frame at notify_appear:
         text "[message!tq]"
 
-    timer 3.25 action Hide('notify')
+    timer 3.25 action SPlay("click"), Hide('notify')
 
 
 transform notify_appear:
@@ -1517,7 +1517,7 @@ screen nvl(dialogue, items=None):
             for i in items:
 
                 textbutton i.caption:
-                    action i.action
+                    action SPlay("click"), i.action
                     style "nvl_button"
 
         add SideImage() xalign 0.0 yalign 1.0
@@ -1715,10 +1715,10 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Menu") action ShowMenu()
+            textbutton _("Back") action SPlay("click"), Rollback()
+            textbutton _("Skip") action SPlay("click"), Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Auto") action SPlay("click"), Preference("auto-forward", "toggle")
+            textbutton _("Menu") action SPlay("click"), ShowMenu()
 
 
 style window:

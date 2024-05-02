@@ -1,15 +1,16 @@
 """
 todo:
-    1.  have a screen for the user to be able to choose a bg or difficulty
+    1. have a screen for the user to be able to choose a bg or difficulty
     2. add a choice to skip cleaning
+    3. to fix the objects glitching, we can separate them in each screen call and hide it if it's clicked. no modal true
 """
 
 screen dormicleaning_instructions:
-    tag menu
+    tag minigame
     modal True
     add "bg roomnight"
 
-    imagebutton auto "images/Button/exit_%s.png" action ShowMenu("minigame"):
+    imagebutton auto "images/Button/exit_%s.png" action ShowMenu("minigame") keysym ['K_ESCAPE']:
         align (0.97, 0.06)
         activate_sound "audio/click.ogg"
 
@@ -48,6 +49,11 @@ label init_dormicleaning:
     screen init_dc:
         add "halfblack"
 
+        #button for exit
+        button:
+            xysize(0, 0)
+            action [Hide("init_dc"), Hide("dormicleaning"), Show(mn_caller_screen, transition=dissolve)] keysym ['K_ESCAPE']
+
         button:
             xysize(1920,1080)
             action [Hide("init_dc"), SetVariable("dc_start", True)] keysym ["K_SPACE"]
@@ -59,7 +65,13 @@ label init_dormicleaning:
                 text "7 seconds. Let's begin!" style "game_instruction"
 
 screen dormicleaning:
+    tag minigame
     add "bg room"
+
+    #button for exit
+    button:
+        xysize(0, 0)
+        action [Hide("init_dc"), Hide("dormicleaning"), Show(mn_caller_screen, transition=dissolve)] keysym ['K_ESCAPE']
 
     for item, x, y in vars_needed:
         imagebutton:

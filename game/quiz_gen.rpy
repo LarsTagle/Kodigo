@@ -215,10 +215,10 @@ init 1:
     $ python_path = get_path("Python311/python.exe")
 
 screen preprocess_text:
-    tag menu
+    tag minigame
     add "bg quiz main"
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Function(set_in_save, False), Hide("preprocess_text"), Jump("quit_warning")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Function(set_in_save, False), Hide("preprocess_text"), Jump("quit_warning")] keysym ['K_ESCAPE']:
         xalign 0.86
         yalign 0.04
 
@@ -363,7 +363,7 @@ label upload_file:
     $ process = subprocess.Popen([python_path, py_path, quiz_title], creationflags=subprocess.CREATE_NO_WINDOW)
 
     screen terminate_process:
-        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("terminate_process"), Function(terminate, process)]:
+        imagebutton auto "images/Minigames Menu/exit_%s.png" action [Hide("terminate_process"), Function(terminate, process)] keysym ['K_ESCAPE']:
             xalign 0.86
             yalign 0.04
 
@@ -562,6 +562,7 @@ label summarize:
                 color "#FFFFFF"
                 xalign 0.5
                 yalign 0.5
+
         hide screen summarizing
 
         jump get_keywords
@@ -591,11 +592,12 @@ label genarating_quiz:
     hide screen generating
 
     screen success:
+        tag minigame
         add "halfblack"
 
         button:
             xysize(1920,1080)
-            action [Hide("success"), Function(hide_s, "preprocess_text_dull"), Show("save_quiz", transition=dissolve)] keysym ["K_SPACE"]
+            action [Function(hide_s, "preprocess_text_dull"), Show("save_quiz", transition=dissolve)] keysym ['K_SPACE', 'K_ESCAPE']  
 
         text "Quiz successfully generated!":
             font "Copperplate Gothic Thirty-Three Regular.otf"
@@ -607,12 +609,12 @@ label genarating_quiz:
     call screen success
 
 screen save_quiz():
-    tag menu
+    tag minigame
     add "bg quiz main"
 
     $ questions, answers = get_quiz()
 
-    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Function(set_in_save, True), Hide("preprocess_text"), Jump("quit_warning")]:
+    imagebutton auto "images/Minigames Menu/exit_%s.png" action [Function(set_in_save, True), Jump("quit_warning")] keysym ['K_ESCAPE']:
         xalign 0.86
         yalign 0.04
 
@@ -739,7 +741,7 @@ screen choose_type:
 
             textbutton f"{choices[1]}" action [Function(set_type, choices[1]), Hide("choose_type")]
             textbutton f"{choices[2]}" action [Function(set_type, choices[2]), Hide("choose_type")]
-            
+
 style quiz_type_button_text:
     font "KronaOne-Regular.ttf"
     bold True
@@ -755,11 +757,12 @@ label confirm_save:
     call screen saved
 
     screen saved:
+        tag minigame
         add "halfblack"
 
         button:
             xysize(1920,1080)
-            action [Hide("saved"), Function(hide_s, "save_quiz_dull"), Function(reset_title), Show("quiz_list_screen", transition=dissolve)]
+            action [Hide("saved"), Function(hide_s, "save_quiz_dull"), Function(reset_title), Show(mn_caller_screen, transition=dissolve)] keysym ['K_ESCAPE']
 
         text "Quiz save successfully!":
             font "Copperplate Gothic Thirty-Three Regular.otf"
