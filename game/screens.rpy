@@ -1003,12 +1003,12 @@ screen minigame():
                         yoffset 30
                         spacing 20
 
-                        imagebutton auto "images/Button/play_%s.png" action SPlay("click"), SaveMNCallerScreen("minigame"), Function(init_dc_vars), Jump("init_dormicleaning"):
+                        imagebutton auto "images/Button/play_%s.png" action SPlay("click"), SaveMNCallerScreen("minigame"), InitDC(5), Jump("init_dormicleaning"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 30
 
-                        imagebutton auto "images/Button/instructions_%s.png" action SPlay("click"), Function(init_dc_vars), ShowMenu("dormicleaning_instructions"):
+                        imagebutton auto "images/Button/instructions_%s.png" action SPlay("click"), InitDC(5), ShowMenu("dormicleaning_instructions"):
                             xalign 0.5
                             yalign 0.5
                             #yoffset 50

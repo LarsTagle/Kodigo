@@ -213,6 +213,7 @@ label chapter1:
     hide mc
     $ in_story = True
     $ init_dc_vars()
+    with dissolve
     jump init_dormicleaning
 
 label chapter1_1:
