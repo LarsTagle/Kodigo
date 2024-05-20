@@ -10,6 +10,7 @@ define persistent.quiz_def_num = 1 #changes if the player want to save "Quiz 1",
 init:
     $ quiz_title = f"Quiz {persistent.quiz_def_num}"
     $ edit_quiz = False
+    $ quiz_type = "Multiple Choices"
 
 init python:
     import json
@@ -199,6 +200,7 @@ init python:
         
         if edit_sentence:
             quiz["sentences"][edit_sentence_index] = sent
+            quiz["answers"][edit_sentence_index] = ""
             with open(fp, 'w') as file:
                 json.dump(quiz, file)
         else:
@@ -225,7 +227,7 @@ screen preprocess_text:
     frame:
         xalign 0.5
         yalign 0.1
-        xsize 1200
+        xsize 1500
         ysize 135
         background "#ffffff00"
 
@@ -235,7 +237,7 @@ screen preprocess_text:
             spacing 5
             text "[quiz_title]": #specify with a number later
                 font "Copperplate Gothic Thirty-Three Regular.otf"
-                size 100
+                size 80
                 color "#FFFFFF"
 
             imagebutton auto "images/Button/pen_%s.png" action [Function(set_in_save, False), Jump("edit_title")]:
@@ -304,6 +306,7 @@ screen preprocess_text:
                                             imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]
                                         else:
                                             imagebutton auto "images/Button/edit_text_%s.png" action [SetVariable("current_text", sentences[i]), SetVariable("edit_sentence", True), SetVariable("edit_sentence_index", i), Show("input_text")]
+                                            imagebutton auto "images/Button/edit_icon_%s.png" action [Function(set_old_key, answers, i), ShowMenu("input_keys", sentences, answers, i)]
 
                                 else:          
                                     vbox: 

@@ -41,9 +41,10 @@ label quit_warning:
         
         call screen warning
     else:
+        $ hide_s("preprocess_text_dull")
         $ del_json()
         $ quiz_title = f"Quiz {persistent.quiz_def_num}" #resets
-        $ renpy.call_screen("%s"%(mn_caller_screen))
+        $ renpy.call_screen("%s"%(mn_caller_screen), _with_none=False)
 
     screen warning:
         add "halfblack"
@@ -112,7 +113,7 @@ screen input_title:
         frame:
             xalign 0.5
             yalign 0.1
-            xsize 1200
+            xsize 1500
             ysize 135
             background "#ffffff00"
 
@@ -120,9 +121,9 @@ screen input_title:
                 xalign 0.5
                 yalign 0.5
                 spacing 5
-                input value title length 15 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
+                input value title length 25 allow "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- ":
                     font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 100
+                    size 80
                     color "#FFFFFF"
                     default_focus True
 
@@ -368,7 +369,7 @@ screen preprocess_text_dull:
         frame:
             xalign 0.5
             yalign 0.1
-            xsize 1200
+            xsize 1500
             ysize 135
             background "#ffffff00"
 
@@ -378,30 +379,29 @@ screen preprocess_text_dull:
                 spacing 5
                 text "[quiz_title]": #specify with a number later
                     font "Copperplate Gothic Thirty-Three Regular.otf"
-                    size 100
+                    size 80
                     color "#FFFFFF"
 
-                imagebutton auto "images/Button/pen_%s.png" action [Function(set_in_save, False), Jump("edit_title")]:
+                imagebutton auto "images/Button/pen_%s.png":
                     yoffset 5
-
 
     #get the notes and keywords if they exists
     #$ notes = get_notes()
-    
     $ answers = get_answers()
 
     if answers:
-        $ sentences = get_boldened_notes()
+        $ highlighted_sentences = get_boldened_notes()
+        $ sentences = get_sentences()
     else:
         $ sentences = get_sentences()
 
     text "Notes":
-            font "Copperplate Gothic Thirty-Three Regular.otf"
-            size 48
-            color "#FFFFFF"
-            xalign 0.22
-            yalign 0.2
-    
+        font "Copperplate Gothic Thirty-Three Regular.otf"
+        size 48
+        color "#FFFFFF"
+        xalign 0.22
+        yalign 0.2
+
     if sentences:
         viewport:
             scrollbars "vertical"
@@ -413,7 +413,7 @@ screen preprocess_text_dull:
 
             vbox:
                 spacing 30
-                for i in range(len(sentences)):
+                for i in range(len(sentences)+1):
                     frame:
                         xpadding 10
                         xsize 1220
@@ -430,12 +430,34 @@ screen preprocess_text_dull:
                                 yalign 0.5
                                 xsize 1070
                                 spacing 10
-                                vbox: 
-                                    xsize 1000
-                                    text sentences[i] style "notes"
-                                imagebutton auto "images/Button/edit_icon_%s.png": 
-                                    xalign 1.0 
-                                    yalign 0.5
+
+                                if i != len(sentences):
+                                    vbox: 
+                                        xsize 1000
+                                        if answers: 
+                                            text highlighted_sentences[i] style "notes"
+                                        else:
+                                            text sentences[i] style "notes"
+                                    vbox:
+                                        xalign 1.0 
+                                        yalign 0.5
+                                        spacing 5
+
+                                        if answers and answers[i]:
+                                            imagebutton auto "images/Button/edit_text_%s.png"
+                                            imagebutton auto "images/Button/edit_icon_%s.png"
+                                        else:
+                                            imagebutton auto "images/Button/edit_text_%s.png"
+
+                                else:          
+                                    vbox: 
+                                        xsize 1000
+                                        text "Add another sentence..." style "notes"
+                                    vbox:
+                                        xalign 1.0 
+                                        yalign 0.5
+                                        spacing 5
+                                        imagebutton auto "images/Button/edit_text_%s.png"                        
     else:
         viewport:
             scrollbars "vertical"
@@ -464,18 +486,18 @@ screen preprocess_text_dull:
                         vbox: 
                             xsize 1000
                             text "Sentences will appear {b}{color=#007FFF}here{/color}{/b}..." style "notes"
-                        imagebutton auto "images/Button/edit_icon_%s.png":
+                        vbox:
                             xalign 1.0 
                             yalign 0.5
+                            spacing 5
+                            imagebutton auto "images/Button/edit_text_%s.png" action Show("input_text")
 
-    if not answers:
-        imagebutton auto "images/Button/upload_%s.png":
-            xalign 0.95
-            yalign 0.984
-    else:
+    if answers and answers[-1] != "":
         imagebutton auto "images/Button/create_quiz_%s.png": 
-            xalign 0.95
-            yalign 0.984
+            align (0.95, 0.984)
+    else:
+        imagebutton auto "images/Button/upload_%s.png":
+            align (0.95, 0.984)
 
 screen save_quiz_dull:
     add "bg quiz main"
