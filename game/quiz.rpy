@@ -114,6 +114,9 @@ init python:
         random.shuffle(q_and_a)
         questions, answers = zip(*q_and_a)
 
+        questions = questions[:15]
+        answers = answers[:15]
+
         #get all options without repetition
         for answer in answers:
             if answer not in all_options:
@@ -538,9 +541,8 @@ label init_quiz:
 
     if not in_story:
         show bg quiz main
-        $ total = len(quiz_data['questions'])
-    else:
-        $ total = 15
+
+    $ total = 15
         
     screen ready:
         tag minigame
@@ -782,17 +784,18 @@ label results:
     python:
         L = learned
         if score/total >= 0.7:
+            is_pass = "You passed!"
             if in_story:
                 mc_reac = "mc happy_uniform"
-                is_pass = "You passed!"
             else:
                 mc_reac = "mc_happy"
-                is_pass = "You didn't pass."
 
             A = (L*(1-S)) / (L*(1-S) + (1-L)*G)
             L = A + (1-A)*T
             sndplay("Win")
         else:
+            is_pass = "You didn't pass."
+
             if in_story:
                 mc_reac = "mc sad_uniform"
             else:
